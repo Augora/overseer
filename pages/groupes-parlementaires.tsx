@@ -3,16 +3,12 @@ import { useQuery } from "react-query";
 import { Box } from "@chakra-ui/core";
 import { Stack } from "@chakra-ui/core";
 import { useState, useEffect } from "react";
-import { GetAllGroupesParlementaires } from "../lib/groupes-parlementaires/DataResolver";
+import { IconButton } from "@chakra-ui/core";
 
+import { GetAllGroupesParlementaires } from "../lib/groupes-parlementaires/DataResolver";
 import GroupeEditable from "../components/groupes-parlementaires/GroupeEditable";
 
-function UpdateGroupeParlemetaire(
-  groupes,
-  id,
-  updatedGroupe,
-  where = "default"
-) {
+function UpdateGroupeParlemetaire(groupes, id, updatedGroupe) {
   const newGroupes = groupes.map((gp) => {
     if (gp._id === id) {
       return updatedGroupe;
@@ -20,8 +16,19 @@ function UpdateGroupeParlemetaire(
       return gp;
     }
   });
-  console.log(where, "UpdateGroupeParlemetaire", newGroupes);
   return newGroupes;
+}
+
+function AddNewGroupeParlementaire(groupes: any[]) {
+  return groupes.concat({
+    _id: Math.random(),
+    Sigle: "",
+    NomComplet: "",
+    Couleur: "hsla(0, 0%, 0%, 1)",
+    URLImage: "",
+    Order: 10,
+    Actif: true,
+  });
 }
 
 export default function Home() {
@@ -59,13 +66,32 @@ export default function Home() {
         <GroupeEditable
           key={gp._id}
           GroupeParlementaire={gp}
-          UpdateFn={(gp, where = "UpdateFn") => {
+          UpdateFn={(gp) => {
             setGroupesParlementaires(
-              UpdateGroupeParlemetaire(GroupesParlementaires, gp._id, gp, where)
+              UpdateGroupeParlemetaire(GroupesParlementaires, gp._id, gp)
             );
           }}
         />
       ))}
+      <Box
+        borderRadius="0.3em"
+        marginBottom={{ base: 4, md: 8 }}
+        width={["98%", "48%", "23%"]}
+        minHeight="250px"
+      >
+        <IconButton
+          aria-label="Add Groupe Parlementaire"
+          border="none"
+          icon="add"
+          width="100%"
+          height="100%"
+          onClick={() => {
+            setGroupesParlementaires(
+              AddNewGroupeParlementaire(GroupesParlementaires)
+            );
+          }}
+        />
+      </Box>
       {
         // ToDo: Trouver une meilleur façon de palier à ce problème. Parce que c'est dégueux mdr.
       }

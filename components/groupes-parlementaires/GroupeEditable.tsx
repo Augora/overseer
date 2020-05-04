@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { Box, Heading, Text } from "@chakra-ui/core";
 import { Editable, EditableInput, EditablePreview } from "@chakra-ui/core";
 import { useColorMode } from "@chakra-ui/core";
-import { useState } from "react";
 import { Button } from "@chakra-ui/core";
 import { ChromePicker } from "react-color";
 import { InputGroup, Input, InputLeftAddon } from "@chakra-ui/core";
@@ -28,26 +28,17 @@ function GroupeEditable(props: GroupeEditableProps) {
   const { colorMode } = useColorMode();
   const [IsEditing, setIsEditing] = useState(false);
 
-  const handleTamere = () => {
-    props.UpdateFn(
-      Object.assign({}, props.GroupeParlementaire, {
-        Actif: !props.GroupeParlementaire.Actif,
-      }),
-      "handleTamere"
-    );
-  };
-
   return (
     <Box
       borderWidth="1px"
       borderStyle="solid"
       borderColor="lightGray"
       borderRadius="0.3em"
+      minHeight="250px"
       p={5}
-      backgroundColor={props.GroupeParlementaire.Couleur}
-      mb={{ base: 4, md: 8 }}
+      marginBottom={{ base: 4, md: 8 }}
       width={["98%", "48%", "23%"]}
-      order={1}
+      backgroundColor={props.GroupeParlementaire.Couleur}
       style={{
         opacity: props.GroupeParlementaire.Actif ? 1 : 0.3,
         transition: "opacity 0.225s linear",
@@ -61,11 +52,19 @@ function GroupeEditable(props: GroupeEditableProps) {
             setIsEditing(!IsEditing);
           }}
         />
+
         <Switch
           isChecked={props.GroupeParlementaire.Actif}
-          onChange={() => handleTamere()}
+          onChange={() => {
+            props.UpdateFn(
+              Object.assign({}, props.GroupeParlementaire, {
+                Actif: !props.GroupeParlementaire.Actif,
+              })
+            );
+          }}
         />
       </Box>
+
       <Text mt={4}>
         <InputGroup>
           <InputLeftAddon children="Nom" />
@@ -88,6 +87,7 @@ function GroupeEditable(props: GroupeEditableProps) {
           />
         </InputGroup>
       </Text>
+
       <Text mt={4}>
         <InputGroup>
           <InputLeftAddon children="Sigle" />
@@ -107,6 +107,7 @@ function GroupeEditable(props: GroupeEditableProps) {
           />
         </InputGroup>
       </Text>
+
       {IsEditing ? (
         <ChromePicker
           defaultView="hsl"
