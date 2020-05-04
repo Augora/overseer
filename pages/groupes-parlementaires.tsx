@@ -56,8 +56,6 @@ export default function Home() {
     return <span>Error: {error}</span>;
   }
 
-  console.log("Home", GroupesParlementaires);
-
   return (
     <Stack
       display="flex"
