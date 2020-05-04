@@ -8,7 +8,7 @@ import { IconButton } from "@chakra-ui/core";
 import { GetAllGroupesParlementaires } from "../lib/groupes-parlementaires/DataResolver";
 import GroupeEditable from "../components/groupes-parlementaires/GroupeEditable";
 
-function UpdateGroupeParlemetaire(groupes, id, updatedGroupe) {
+function UpdateGroupeParlementaire(groupes, id, updatedGroupe) {
   const newGroupes = groupes.map((gp) => {
     if (gp._id === id) {
       return updatedGroupe;
@@ -19,9 +19,13 @@ function UpdateGroupeParlemetaire(groupes, id, updatedGroupe) {
   return newGroupes;
 }
 
+function RemoveGroupeParlementaire(groupes, id) {
+  return groupes.filter((gp) => gp._id !== id);
+}
+
 function AddNewGroupeParlementaire(groupes: any[]) {
   return groupes.concat({
-    _id: Math.random(),
+    _id: `CUSTOM_${Math.random()}`,
     Sigle: "",
     NomComplet: "",
     Couleur: "hsla(0, 0%, 0%, 1)",
@@ -68,7 +72,12 @@ export default function Home() {
           GroupeParlementaire={gp}
           UpdateFn={(gp) => {
             setGroupesParlementaires(
-              UpdateGroupeParlemetaire(GroupesParlementaires, gp._id, gp)
+              UpdateGroupeParlementaire(GroupesParlementaires, gp._id, gp)
+            );
+          }}
+          RemoveFn={(id) => {
+            setGroupesParlementaires(
+              RemoveGroupeParlementaire(GroupesParlementaires, id)
             );
           }}
         />

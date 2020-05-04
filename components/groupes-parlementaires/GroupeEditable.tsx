@@ -12,6 +12,7 @@ import { Switch } from "@chakra-ui/core";
 interface GroupeEditableProps {
   GroupeParlementaire: GroupeParlementaire;
   UpdateFn: Function;
+  RemoveFn: Function;
 }
 
 interface GroupeParlementaire {
@@ -46,12 +47,24 @@ function GroupeEditable(props: GroupeEditableProps) {
     >
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <IconButton
-          aria-label="Search database"
+          border="none"
+          aria-label="Edit"
           icon={IsEditing ? "check" : "settings"}
           onClick={() => {
             setIsEditing(!IsEditing);
           }}
         />
+
+        {IsEditing ? (
+          <IconButton
+            border="none"
+            aria-label="Remove"
+            icon="close"
+            onClick={() => {
+              props.RemoveFn(props.GroupeParlementaire._id);
+            }}
+          />
+        ) : null}
 
         <Switch
           isChecked={props.GroupeParlementaire.Actif}
