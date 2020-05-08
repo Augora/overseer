@@ -46,8 +46,6 @@ function GroupeEditable(props: GroupeEditableProps) {
       borderRadius="0.3em"
       minHeight="250px"
       p={5}
-      marginBottom={{ base: 4, md: 8 }}
-      width={["98%", "48%", "23%"]}
       backgroundColor={
         props.GroupeParlementaire.Actif
           ? props.GroupeParlementaire.Couleur

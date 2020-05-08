@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useQuery } from "react-query";
 import { Box } from "@chakra-ui/core";
-import { Stack } from "@chakra-ui/core";
+import { SimpleGrid } from "@chakra-ui/core";
 import { useState, useEffect } from "react";
 import { IconButton } from "@chakra-ui/core";
 
@@ -57,13 +57,7 @@ export default function Home() {
   }
 
   return (
-    <Stack
-      display="flex"
-      flexGrow={1}
-      flexWrap="wrap"
-      justifyContent="space-around"
-      flexDirection="row"
-    >
+    <SimpleGrid minChildWidth="300px" spacing="40px" p={5}>
       {GroupesParlementaires.map((gp) => (
         <GroupeEditable
           key={gp._id}
@@ -80,12 +74,7 @@ export default function Home() {
           }}
         />
       ))}
-      <Box
-        borderRadius="0.3em"
-        marginBottom={{ base: 4, md: 8 }}
-        width={["98%", "48%", "23%"]}
-        minHeight="250px"
-      >
+      <Box borderRadius="0.3em" minHeight="250px" width="100%" height="100%">
         <IconButton
           aria-label="Add Groupe Parlementaire"
           border="none"
@@ -99,13 +88,6 @@ export default function Home() {
           }}
         />
       </Box>
-      {
-        // ToDo: Trouver une meilleur façon de palier à ce problème. Parce que c'est dégueux mdr.
-      }
-      <Box mb={{ base: 4, md: 8 }} width={["98%", "48%", "23%"]} order={1} />
-      <Box mb={{ base: 4, md: 8 }} width={["98%", "48%", "23%"]} order={1} />
-      <Box mb={{ base: 4, md: 8 }} width={["98%", "48%", "23%"]} order={1} />
-      <Box mb={{ base: 4, md: 8 }} width={["98%", "48%", "23%"]} order={1} />
-    </Stack>
+    </SimpleGrid>
   );
 }
