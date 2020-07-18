@@ -9,22 +9,25 @@
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
-    "@chakra-ui/core": "^0.7.0",
+    "@chakra-ui/core": "^0.8.0",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
-    "apollo-boost": "^0.4.7",
+    "apollo-boost": "^0.4.9",
     "emotion-theming": "^10.0.27",
-    "graphql": "^15.0.0",
-    "next": "9.3.5",
+    "graphql": "^15.3.0",
+    "lodash": "^4.17.19",
+    "next": "9.4.4",
     "node-fetch": "^2.6.0",
+    "passport": "^0.4.1",
+    "passport-github": "^1.1.0",
     "react": "16.13.1",
-    "react-color": "^2.18.0",
+    "react-color": "^2.18.1",
     "react-dom": "16.13.1",
-    "react-query": "^1.2.9",
-    "styled-components": "^5.1.0"
+    "react-query": "^2.5.4",
+    "styled-components": "^5.1.1"
   },
   "devDependencies": {
-    "@types/react": "^16.9.34",
-    "typescript": "^3.8.3"
+    "@types/react": "^16.9.43",
+    "typescript": "^3.9.7"
   }
 }
