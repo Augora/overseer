@@ -4,9 +4,8 @@ import Providers from "next-auth/providers";
 const options = {
   providers: [
     Providers.GitHub({
-      clientId: process.env.GITHUB_ID || "Iv1.dde6a38e563b9363",
-      clientSecret:
-        process.env.GITHUB_SECRET || "39a01eec0329e26f561427ee6e4159c093460161",
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
   callbacks: {
