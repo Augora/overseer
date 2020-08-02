@@ -58,7 +58,7 @@ export default function Home() {
 
   return (
     <SimpleGrid minChildWidth="300px" spacing="40px" p={5}>
-      {GroupesParlementaires.map((gp) => (
+      {GroupesParlementaires.sort((a, b) => a.Ordre - b.Ordre).map((gp) => (
         <GroupeEditable
           key={gp._id}
           GroupeParlementaire={gp}
