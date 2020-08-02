@@ -2,15 +2,18 @@
 import { ThemeProvider, ColorModeProvider } from "@chakra-ui/core";
 import customTheme from "../config/theme";
 import Header from "../components/Header";
+import { Provider } from "next-auth/client";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ThemeProvider theme={customTheme}>
-      <ColorModeProvider>
-        <Header />
-        <Component {...pageProps} />
-      </ColorModeProvider>
-    </ThemeProvider>
+    <Provider session={pageProps.session}>
+      <ThemeProvider theme={customTheme}>
+        <ColorModeProvider>
+          <Header />
+          <Component {...pageProps} />
+        </ColorModeProvider>
+      </ThemeProvider>
+    </Provider>
   );
 }
 
