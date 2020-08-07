@@ -5,7 +5,6 @@ import { signIn, signOut, useSession } from "next-auth/client";
 export default function Home() {
   const [session, loading] = useSession();
   if (!loading) console.log("mdr:", session);
-  console.log(session && session.user.email);
   return (
     <div className="container">
       <Head>
@@ -20,7 +19,7 @@ export default function Home() {
       {session && (
         <>
           Signed in as {session.user.name} <br />
-          <button onClick={signOut}>Sign in</button>
+          <button onClick={signOut}>Sign out</button>
         </>
       )}
     </div>
