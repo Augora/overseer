@@ -4,7 +4,6 @@ import { signIn, signOut, useSession } from "next-auth/client";
 
 export default function Home() {
   const [session, loading] = useSession();
-  if (!loading) console.log("mdr:", session);
   return (
     <div className="container">
       <Head>
