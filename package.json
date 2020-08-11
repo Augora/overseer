@@ -11,7 +11,7 @@
   "dependencies": {
     "@apollo/react-hooks": "^4.0.0",
     "@chakra-ui/core": "^0.8.0",
-    "@emotion/core": "^10.0.28",
+    "@emotion/core": "^10.0.34",
     "@emotion/styled": "^10.0.27",
     "apollo-boost": "^0.4.9",
     "emotion-theming": "^10.0.27",
