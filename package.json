@@ -18,7 +18,7 @@
     "faunadb": "^2.14.2",
     "graphql": "^15.3.0",
     "lodash": "^4.17.19",
-    "next": "9.5.1",
+    "next": "9.5.2",
     "next-auth": "^3.1.0",
     "node-fetch": "^2.6.0",
     "passport": "^0.4.1",
