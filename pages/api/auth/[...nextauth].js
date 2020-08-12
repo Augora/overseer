@@ -4,8 +4,8 @@ import Providers from "next-auth/providers";
 const options = {
   providers: [
     Providers.GitHub({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+      clientId: process.env.OVERSEER_APP_CLIENTID,
+      clientSecret: process.env.OVERSEER_APP_CLIENTSECRET,
     }),
   ],
   callbacks: {
@@ -18,11 +18,12 @@ const options = {
       return Promise.resolve(baseUrl);
     },
     session: async (session, user) => {
-      // console.log("session:", session, user);
+      console.log("session:", session, user);
       return Promise.resolve(Object.assign({}, session, { user }));
     },
     jwt: async (token, user, account, profile, isNewUser) => {
       // console.log("jwt:", token, user, account, profile, isNewUser);
+      console.log("jwt:", token, account);
       return Promise.resolve(Object.assign({}, token, account));
     },
   },

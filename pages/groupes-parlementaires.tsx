@@ -5,7 +5,7 @@ import { SimpleGrid } from "@chakra-ui/core";
 import { useState, useEffect } from "react";
 import { IconButton } from "@chakra-ui/core";
 
-import { GetAllGroupesParlementaires } from "../lib/groupes-parlementaires/DataResolver";
+import { GetAllGroupesParlementaires } from "../lib/faunadb/groupes-parlementaires/DataResolver";
 import GroupeEditable from "../components/groupes-parlementaires/GroupeEditable";
 
 function UpdateGroupeParlementaire(groupes, id, updatedGroupe) {

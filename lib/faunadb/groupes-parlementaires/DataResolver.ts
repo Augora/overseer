@@ -1,4 +1,4 @@
-import { GetGraphQLClient } from "../faunadb/FaunaGraphQLClient";
+import { GetGraphQLClient } from "../FaunaGraphQLClient";
 import { gql } from "apollo-boost";
 
 export async function GetAllGroupesParlementaires() {

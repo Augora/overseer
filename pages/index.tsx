@@ -20,7 +20,7 @@ export default function Home() {
       {session && (
         <>
           Signed in as {session.user.name} <br />
-          <button onClick={signOut}>Sign in</button>
+          <button onClick={signOut}>Sign out</button>
         </>
       )}
     </div>
