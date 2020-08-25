@@ -11,13 +11,13 @@
   "dependencies": {
     "@apollo/react-hooks": "^4.0.0",
     "@chakra-ui/core": "^0.8.0",
-    "@emotion/core": "^10.0.34",
+    "@emotion/core": "^10.0.35",
     "@emotion/styled": "^10.0.27",
     "apollo-boost": "^0.4.9",
     "emotion-theming": "^10.0.27",
     "faunadb": "^2.14.2",
     "graphql": "^15.3.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.20",
     "next": "9.5.2",
     "next-auth": "^3.1.0",
     "node-fetch": "^2.6.0",
@@ -26,7 +26,7 @@
     "react": "16.13.1",
     "react-color": "^2.18.1",
     "react-dom": "16.13.1",
-    "react-query": "^2.5.13",
+    "react-query": "^2.12.1",
     "styled-components": "^5.1.1"
   },
   "devDependencies": {
