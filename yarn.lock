@@ -5225,10 +5225,10 @@ react-is@16.13.1, react-is@^16.7.0, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-query@^2.13.1:
-  version "2.13.1"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.13.1.tgz#1232dadcfded18d7bd886f421a4a4662f0992830"
-  integrity sha512-PosCQJ3ENaT6+vVaN79rGtpZ0BOeaREQuM/iiuNMQi+XWQVWMJBmDiZin4yk046CjbSTQy6lm7kS8QI5XiuivA==
+react-query@^2.14.0:
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.14.0.tgz#8d050ef92e8e0385b056b31b98330ff096a61b0f"
+  integrity sha512-bKga3293aXX2SDmseVnKRbqjSi8oYmtEo4OY65fi47a+qbK5b/+PJNnagfaUoqiEiCOrt/jFP5SY1hhdiwzkRw==
 
 react-refresh@0.8.3:
   version "0.8.3"
