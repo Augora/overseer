@@ -15,10 +15,10 @@
     "@emotion/styled": "^10.0.27",
     "apollo-boost": "^0.4.9",
     "emotion-theming": "^10.0.27",
-    "faunadb": "^2.14.2",
+    "faunadb": "^3.0.1",
     "graphql": "^15.3.0",
     "lodash": "^4.17.20",
-    "next": "9.5.2",
+    "next": "9.5.3",
     "next-auth": "^3.1.0",
     "node-fetch": "^2.6.1",
     "passport": "^0.4.1",
@@ -31,6 +31,6 @@
   },
   "devDependencies": {
     "@types/react": "^16.9.49",
-    "typescript": "^3.9.7"
+    "typescript": "^4.0.2"
   }
 }
