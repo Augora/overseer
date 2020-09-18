@@ -23,8 +23,8 @@ function RemoveGroupeParlementaire(groupes, id) {
   return groupes.filter((gp) => gp._id !== id);
 }
 
-function AddNewGroupeParlementaire(groupes: any[]) {
-  return groupes.concat({
+function GenerateNewGroupeParlementaire() {
+  return {
     _id: `CUSTOM_${Math.random()}`,
     Sigle: "",
     NomComplet: "",
@@ -32,7 +32,7 @@ function AddNewGroupeParlementaire(groupes: any[]) {
     URLImage: "",
     Order: 10,
     Actif: true,
-  });
+  };
 }
 
 export default function Home() {
@@ -41,6 +41,9 @@ export default function Home() {
     GetAllGroupesParlementaires
   );
   const [GroupesParlementaires, setGroupesParlementaires] = useState([]);
+  const [GroupesToAdd, setGroupesToAdd] = useState([]);
+  const [GroupesToRemove, setGroupesToRemove] = useState([]);
+  const [GroupesToUpdate, setGroupesToUpdate] = useState([]);
 
   useEffect(() => {
     if (status === "success") {
@@ -63,11 +66,13 @@ export default function Home() {
           key={gp._id}
           GroupeParlementaire={gp}
           UpdateFn={(gp) => {
+            setGroupesToUpdate(GroupesToUpdate.concat(gp._id));
             setGroupesParlementaires(
               UpdateGroupeParlementaire(GroupesParlementaires, gp._id, gp)
             );
           }}
           RemoveFn={(id) => {
+            setGroupesToRemove(GroupesToRemove.concat(id));
             setGroupesParlementaires(
               RemoveGroupeParlementaire(GroupesParlementaires, id)
             );
@@ -82,9 +87,9 @@ export default function Home() {
           width="100%"
           height="100%"
           onClick={() => {
-            setGroupesParlementaires(
-              AddNewGroupeParlementaire(GroupesParlementaires)
-            );
+            const newGroupe = GenerateNewGroupeParlementaire();
+            setGroupesToAdd(GroupesToAdd.concat(newGroupe._id));
+            setGroupesParlementaires(GroupesParlementaires.concat(newGroupe));
           }}
         />
       </Box>
