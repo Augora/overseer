@@ -1,10 +1,10 @@
 import Head from 'next/head';
-import { useQuery } from 'react-query';
 import { Box } from '@chakra-ui/core';
 import { SimpleGrid } from '@chakra-ui/core';
 import { useState, useEffect } from 'react';
 import { IconButton } from '@chakra-ui/core';
 import { useSession } from 'next-auth/client';
+import sortBy from 'lodash/sortBy';
 
 import { GetAllGroupesParlementaires } from '../lib/faunadb/groupes-parlementaires/DataResolver';
 import GroupeEditable from '../components/groupes-parlementaires/GroupeEditable';
@@ -38,32 +38,31 @@ function GenerateNewGroupeParlementaire() {
 
 export default function Home() {
   const [session, loading] = useSession();
-  const { status, data, error } = useQuery(
-    'GroupesParlementaires',
-    GetAllGroupesParlementaires(session.user.faunaDBToken)
-  );
   const [GroupesParlementaires, setGroupesParlementaires] = useState([]);
   const [GroupesToAdd, setGroupesToAdd] = useState([]);
   const [GroupesToRemove, setGroupesToRemove] = useState([]);
   const [GroupesToUpdate, setGroupesToUpdate] = useState([]);
 
   useEffect(() => {
-    if (status === 'success') {
-      setGroupesParlementaires(data.data.GroupesParlementairesDetails.data);
+    console.log('loading', loading);
+    if (!loading) {
+      GetAllGroupesParlementaires(session.user.faunaDBToken)
+        .then((data) => {
+          setGroupesParlementaires(data.data.GroupesParlementairesDetails.data);
+        })
+        .catch((err) => console.error(err));
     }
-  }, [status]);
+  }, [loading]);
 
-  if (status === 'loading') {
-    return <span>Loading...</span>;
-  }
+  console.log('GroupesParlementaires', GroupesParlementaires);
 
-  if (status === 'error') {
-    return <span>Error: {error}</span>;
+  if (loading || GroupesParlementaires.length === 0) {
+    return 'Loading';
   }
 
   return (
     <SimpleGrid minChildWidth="300px" spacing="40px" p={5}>
-      {GroupesParlementaires.sort((a, b) => a.Ordre - b.Ordre).map((gp) => (
+      {sortBy(GroupesParlementaires, ['Ordre']).map((gp) => (
         <GroupeEditable
           key={gp._id}
           GroupeParlementaire={gp}

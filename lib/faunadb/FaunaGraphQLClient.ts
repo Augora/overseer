@@ -1,22 +1,22 @@
-import ApolloClient from 'apollo-boost';
-import fetch from 'node-fetch';
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 
+const cache = new InMemoryCache();
 var client = null;
 var previousToken = null;
 
 export function GetGraphQLClient(token) {
   if (!client || previousToken !== token) {
     previousToken = token;
-    client = new ApolloClient({
+    const link = createHttpLink({
       uri: 'https://graphql.fauna.com/graphql',
-      fetch: fetch,
-      request: (operation) => {
-        operation.setContext({
-          headers: {
-            authorization: token ? `Bearer ${token}` : '',
-          },
-        });
+      headers: {
+        authorization: token ? `Bearer ${token}` : '',
       },
+    });
+
+    client = new ApolloClient({
+      cache: cache,
+      link: link,
     });
   }
   return client;

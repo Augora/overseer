@@ -42,11 +42,11 @@ const options = {
       return Promise.resolve(baseUrl);
     },
     session: async (session, user) => {
-      console.log('session:', session, user);
+      // console.log('session:', session, user);
       return Promise.resolve(Object.assign({}, session, { user }));
     },
     jwt: async (token, user, account, profile, isNewUser) => {
-      console.log('jwt:', token, user, account, profile, isNewUser);
+      // console.log('jwt:', token, user, account, profile, isNewUser);
       if (token && token.faunaDBToken && !user && !account && !profile) {
         return Promise.resolve(token);
       }
