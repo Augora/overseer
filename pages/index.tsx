@@ -9,18 +9,6 @@ export default function Home() {
       <Head>
         <title>Dashboard Home</title>
       </Head>
-      {!session && (
-        <>
-          Not signed in <br />
-          <button onClick={signIn}>Sign in</button>
-        </>
-      )}
-      {session && (
-        <>
-          Signed in as {session.user.name} <br />
-          <button onClick={signOut}>Sign out</button>
-        </>
-      )}
     </div>
   );
 }
