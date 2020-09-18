@@ -4,6 +4,7 @@ import { Box } from '@chakra-ui/core';
 import { SimpleGrid } from '@chakra-ui/core';
 import { useState, useEffect } from 'react';
 import { IconButton } from '@chakra-ui/core';
+import { useSession } from 'next-auth/client';
 
 import { GetAllGroupesParlementaires } from '../lib/faunadb/groupes-parlementaires/DataResolver';
 import GroupeEditable from '../components/groupes-parlementaires/GroupeEditable';
@@ -36,7 +37,11 @@ function GenerateNewGroupeParlementaire() {
 }
 
 export default function Home() {
-  const { status, data, error } = useQuery('GroupesParlementaires', GetAllGroupesParlementaires);
+  const [session, loading] = useSession();
+  const { status, data, error } = useQuery(
+    'GroupesParlementaires',
+    GetAllGroupesParlementaires(session.user.faunaDBToken)
+  );
   const [GroupesParlementaires, setGroupesParlementaires] = useState([]);
   const [GroupesToAdd, setGroupesToAdd] = useState([]);
   const [GroupesToRemove, setGroupesToRemove] = useState([]);
