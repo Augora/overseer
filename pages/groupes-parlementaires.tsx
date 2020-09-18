@@ -1,12 +1,12 @@
-import Head from "next/head";
-import { useQuery } from "react-query";
-import { Box } from "@chakra-ui/core";
-import { SimpleGrid } from "@chakra-ui/core";
-import { useState, useEffect } from "react";
-import { IconButton } from "@chakra-ui/core";
+import Head from 'next/head';
+import { useQuery } from 'react-query';
+import { Box } from '@chakra-ui/core';
+import { SimpleGrid } from '@chakra-ui/core';
+import { useState, useEffect } from 'react';
+import { IconButton } from '@chakra-ui/core';
 
-import { GetAllGroupesParlementaires } from "../lib/faunadb/groupes-parlementaires/DataResolver";
-import GroupeEditable from "../components/groupes-parlementaires/GroupeEditable";
+import { GetAllGroupesParlementaires } from '../lib/faunadb/groupes-parlementaires/DataResolver';
+import GroupeEditable from '../components/groupes-parlementaires/GroupeEditable';
 
 function UpdateGroupeParlementaire(groupes, id, updatedGroupe) {
   const newGroupes = groupes.map((gp) => {
@@ -26,36 +26,33 @@ function RemoveGroupeParlementaire(groupes, id) {
 function GenerateNewGroupeParlementaire() {
   return {
     _id: `CUSTOM_${Math.random()}`,
-    Sigle: "",
-    NomComplet: "",
-    Couleur: "hsla(0, 0%, 0%, 1)",
-    URLImage: "",
+    Sigle: '',
+    NomComplet: '',
+    Couleur: 'hsla(0, 0%, 0%, 1)',
+    URLImage: '',
     Order: 10,
     Actif: true,
   };
 }
 
 export default function Home() {
-  const { status, data, error } = useQuery(
-    "GroupesParlementaires",
-    GetAllGroupesParlementaires
-  );
+  const { status, data, error } = useQuery('GroupesParlementaires', GetAllGroupesParlementaires);
   const [GroupesParlementaires, setGroupesParlementaires] = useState([]);
   const [GroupesToAdd, setGroupesToAdd] = useState([]);
   const [GroupesToRemove, setGroupesToRemove] = useState([]);
   const [GroupesToUpdate, setGroupesToUpdate] = useState([]);
 
   useEffect(() => {
-    if (status === "success") {
+    if (status === 'success') {
       setGroupesParlementaires(data.data.GroupesParlementairesDetails.data);
     }
   }, [status]);
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return <span>Loading...</span>;
   }
 
-  if (status === "error") {
+  if (status === 'error') {
     return <span>Error: {error}</span>;
   }
 
@@ -67,15 +64,11 @@ export default function Home() {
           GroupeParlementaire={gp}
           UpdateFn={(gp) => {
             setGroupesToUpdate(GroupesToUpdate.concat(gp._id));
-            setGroupesParlementaires(
-              UpdateGroupeParlementaire(GroupesParlementaires, gp._id, gp)
-            );
+            setGroupesParlementaires(UpdateGroupeParlementaire(GroupesParlementaires, gp._id, gp));
           }}
           RemoveFn={(id) => {
             setGroupesToRemove(GroupesToRemove.concat(id));
-            setGroupesParlementaires(
-              RemoveGroupeParlementaire(GroupesParlementaires, id)
-            );
+            setGroupesParlementaires(RemoveGroupeParlementaire(GroupesParlementaires, id));
           }}
         />
       ))}

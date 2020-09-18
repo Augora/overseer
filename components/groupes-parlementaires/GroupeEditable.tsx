@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Box } from "@chakra-ui/core";
-import { useColorMode } from "@chakra-ui/core";
-import { ChromePicker } from "react-color";
-import { InputGroup, Input, InputLeftAddon } from "@chakra-ui/core";
-import { IconButton } from "@chakra-ui/core";
-import { Switch } from "@chakra-ui/core";
+import { useState } from 'react';
+import { Box } from '@chakra-ui/core';
+import { useColorMode } from '@chakra-ui/core';
+import { ChromePicker } from 'react-color';
+import { InputGroup, Input, InputLeftAddon } from '@chakra-ui/core';
+import { IconButton } from '@chakra-ui/core';
+import { Switch } from '@chakra-ui/core';
 
 interface GroupeEditableProps {
   GroupeParlementaire: GroupeParlementaire;
@@ -26,11 +26,11 @@ interface GroupeParlementaire {
 // 2,10,20,1
 function ChangeOpacity(color: string, opacity: string) {
   const newColor = color
-    .replace("hsla(", "")
-    .replace(")", "")
-    .replace(" ", "")
-    .replace("%", "")
-    .split(",");
+    .replace('hsla(', '')
+    .replace(')', '')
+    .replace(' ', '')
+    .replace('%', '')
+    .split(',');
   return `hsla(${newColor[0]}, ${newColor[1]}%, ${newColor[2]}, ${opacity})`;
 }
 
@@ -41,7 +41,7 @@ function GroupeEditable(props: GroupeEditableProps) {
   return (
     <Box
       borderWidth="2px"
-      borderStyle={props.GroupeParlementaire.Actif ? "solid" : "dashed"}
+      borderStyle={props.GroupeParlementaire.Actif ? 'solid' : 'dashed'}
       borderColor="lightGray"
       borderRadius="0.3em"
       minHeight="250px"
@@ -49,14 +49,14 @@ function GroupeEditable(props: GroupeEditableProps) {
       backgroundColor={
         props.GroupeParlementaire.Actif
           ? props.GroupeParlementaire.Couleur
-          : ChangeOpacity(props.GroupeParlementaire.Couleur, "0.3")
+          : ChangeOpacity(props.GroupeParlementaire.Couleur, '0.3')
       }
     >
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <IconButton
           border="none"
           aria-label="Edit"
-          icon={IsEditing ? "check" : "settings"}
+          icon={IsEditing ? 'check' : 'settings'}
           onClick={() => {
             setIsEditing(!IsEditing);
           }}
@@ -88,7 +88,7 @@ function GroupeEditable(props: GroupeEditableProps) {
       <Box
         style={{
           opacity: props.GroupeParlementaire.Actif ? 1 : 0.3,
-          transition: "opacity 0.225s linear",
+          transition: 'opacity 0.225s linear',
         }}
       >
         <InputGroup mt={4}>
@@ -101,7 +101,7 @@ function GroupeEditable(props: GroupeEditableProps) {
             type="text"
             roundedLeft="0"
             defaultValue={props.GroupeParlementaire.NomComplet}
-            color={colorMode === "light" ? "black" : "white"}
+            color={colorMode === 'light' ? 'black' : 'white'}
             onChange={(v) =>
               props.UpdateFn(
                 Object.assign({}, props.GroupeParlementaire, {
@@ -119,7 +119,7 @@ function GroupeEditable(props: GroupeEditableProps) {
             type="text"
             roundedLeft="0"
             defaultValue={props.GroupeParlementaire.Sigle}
-            color={colorMode === "light" ? "black" : "white"}
+            color={colorMode === 'light' ? 'black' : 'white'}
             onChange={(v) =>
               props.UpdateFn(
                 Object.assign({}, props.GroupeParlementaire, {

@@ -1,16 +1,17 @@
-import NextAuth from "next-auth";
-import Providers from "next-auth/providers";
+import NextAuth from 'next-auth';
+import Providers from 'next-auth/providers';
 import {
   UpdateUserPassword,
   DoesUserExists,
   GetUserPassword,
-} from "../../../lib/faunadb/users/DataResolver";
+} from '../../../lib/faunadb/users/DataResolver';
 
 const options = {
   providers: [
     Providers.GitHub({
-      clientId: process.env.OVERSEER_APP_CLIENTID,
-      clientSecret: process.env.OVERSEER_APP_CLIENTSECRET,
+      clientId: process.env.OVERSEER_APP_CLIENTID || 'Iv1.dde6a38e563b9363',
+      clientSecret:
+        process.env.OVERSEER_APP_CLIENTSECRET || '9d1ea96a37889c19c561c0622b1c98b066ceb5e1',
     }),
   ],
   callbacks: {
@@ -41,11 +42,11 @@ const options = {
       return Promise.resolve(baseUrl);
     },
     session: async (session, user) => {
-      console.log("session:", session, user);
+      console.log('session:', session, user);
       return Promise.resolve(Object.assign({}, session, { user }));
     },
     jwt: async (token, user, account, profile, isNewUser) => {
-      // console.log("jwt:", token, user, account, profile, isNewUser);
+      console.log('jwt:', token, user, account, profile, isNewUser);
       if (token && token.faunaDBToken && !user && !account && !profile) {
         return Promise.resolve(token);
       }
@@ -58,15 +59,10 @@ const options = {
         account.accessToken !== null &&
         account.accessToken.length > 0
       ) {
-        const userPassword = await GetUserPassword(
-          user.email,
-          account.accessToken
-        );
+        const userPassword = await GetUserPassword(user.email, account.accessToken);
         userToken = userPassword.secret;
       }
-      return Promise.resolve(
-        Object.assign({}, token, account, { faunaDBToken: userToken })
-      );
+      return Promise.resolve(Object.assign({}, token, account, { faunaDBToken: userToken }));
     },
   },
 };

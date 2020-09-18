@@ -1,8 +1,8 @@
 // import App from 'next/app'
-import { ThemeProvider, ColorModeProvider } from "@chakra-ui/core";
-import customTheme from "../config/theme";
-import Header from "../components/Header";
-import { Provider } from "next-auth/client";
+import { ThemeProvider, ColorModeProvider } from '@chakra-ui/core';
+import customTheme from '../config/theme';
+import Header from '../components/Header';
+import { Provider } from 'next-auth/client';
 
 function MyApp({ Component, pageProps }) {
   return (
