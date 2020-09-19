@@ -9,9 +9,8 @@ import {
 const options = {
   providers: [
     Providers.GitHub({
-      clientId: process.env.OVERSEER_APP_CLIENTID || 'Iv1.dde6a38e563b9363',
-      clientSecret:
-        process.env.OVERSEER_APP_CLIENTSECRET || '9d1ea96a37889c19c561c0622b1c98b066ceb5e1',
+      clientId: process.env.OVERSEER_APP_CLIENTID,
+      clientSecret: process.env.OVERSEER_APP_CLIENTSECRET,
     }),
   ],
   callbacks: {
