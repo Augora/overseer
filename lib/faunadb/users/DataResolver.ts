@@ -3,7 +3,6 @@ import fauna from 'faunadb';
 const { Update, Match, Select, Get, Index, Exists, Login } = fauna.query;
 
 export function UpdateUserPassword(userEmail: string, newPassword: string) {
-  console.log(`Updating ${userEmail} with new password ${newPassword}`);
   return GetProvidedFaunaDBClient().query(
     Update(Select('ref', Get(Match(Index('users_by_email'), userEmail))), {
       credentials: { password: newPassword },

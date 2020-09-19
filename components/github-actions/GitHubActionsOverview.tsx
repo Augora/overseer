@@ -12,8 +12,6 @@ export default function GitHubActionsOverview({ RepositoryName }) {
     GetWorkflows(RepositoryName)
   );
 
-  console.log(`${RepositoryName}-data`, data);
-
   return (
     <>
       <Heading pl="10" mb="0">

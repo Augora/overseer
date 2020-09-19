@@ -44,7 +44,6 @@ export default function Home() {
   const [GroupesToUpdate, setGroupesToUpdate] = useState([]);
 
   useEffect(() => {
-    console.log('loading', loading);
     if (!loading && session) {
       GetAllGroupesParlementaires(session.user.faunaDBToken)
         .then((data) => {
@@ -53,8 +52,6 @@ export default function Home() {
         .catch((err) => console.error(err));
     }
   }, [loading]);
-
-  console.log('GroupesParlementaires', GroupesParlementaires);
 
   if (loading) {
     return 'Loading';
