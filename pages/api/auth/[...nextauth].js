@@ -15,6 +15,7 @@ const options = {
   ],
   callbacks: {
     signIn: async (user, account, profile) => {
+      console.log('signIn:', user, account, profile);
       if (
         user.email !== null &&
         user.email.length > 0 &&
@@ -37,15 +38,15 @@ const options = {
       }
     },
     redirect: async (url, baseUrl) => {
-      // console.log("redirect:", url, baseUrl);
+      console.log('redirect:', url, baseUrl);
       return Promise.resolve(baseUrl);
     },
     session: async (session, user) => {
-      // console.log('session:', session, user);
+      console.log('session:', session, user);
       return Promise.resolve(Object.assign({}, session, { user }));
     },
     jwt: async (token, user, account, profile, isNewUser) => {
-      // console.log('jwt:', token, user, account, profile, isNewUser);
+      console.log('jwt:', token, user, account, profile, isNewUser);
       if (token && token.faunaDBToken && !user && !account && !profile) {
         return Promise.resolve(token);
       }
