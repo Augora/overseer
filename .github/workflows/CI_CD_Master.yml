@@ -38,13 +38,11 @@ jobs:
       - name: yarn install
         env:
           CI: 'true'
-          NODE_ENV: 'staging'
         run: yarn install
 
       - name: yarn build
         env:
           CI: 'true'
-          NODE_ENV: 'production'
           FAUNADB_TOKEN: ${{ secrets.FAUNADB_TOKEN_ADMIN_STAGING }}
         run: yarn build
 
@@ -83,13 +81,11 @@ jobs:
       - name: yarn install
         env:
           CI: 'true'
-          NODE_ENV: 'production'
         run: yarn install
 
       - name: yarn build
         env:
           CI: 'true'
-          NODE_ENV: 'production'
           FAUNADB_TOKEN: ${{ secrets.FAUNADB_TOKEN_ADMIN_STAGING }}
         run: yarn build
 
