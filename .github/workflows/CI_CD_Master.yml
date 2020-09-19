@@ -1,8 +1,6 @@
-name: CI/CD Production
+name: Push CI/CD Production
 
 on:
-  repository_dispatch:
-    types: build-backend-production
   push:
     branches:
       - master
@@ -39,20 +37,69 @@ jobs:
 
       - name: yarn install
         env:
-          CI: "true"
-          NODE_ENV: "staging"
+          CI: 'true'
+          NODE_ENV: 'staging'
         run: yarn install
 
       - name: yarn build
         env:
-          CI: "true"
-          NODE_ENV: "staging"
-          FAUNADB_TOKEN: ${{ secrets.FAUNADB_TOKEN_PRODUCTION_ADMIN }}
+          CI: 'true'
+          NODE_ENV: 'production'
+          FAUNADB_TOKEN: ${{ secrets.FAUNADB_TOKEN_ADMIN_STAGING }}
         run: yarn build
 
       - name: yarn test
         env:
-          CI: "true"
-          NODE_ENV: "staging"
-          FAUNADB_TOKEN: ${{ secrets.FAUNADB_TOKEN_PRODUCTION_ADMIN }}
+          CI: 'true'
+          NODE_ENV: 'production'
+          FAUNADB_TOKEN: ${{ secrets.FAUNADB_TOKEN_ADMIN_STAGING }}
         run: yarn test
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Yarn cache directory
+        id: yarn-cache-dir
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Yarn cache
+        uses: actions/cache@v1
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir.outputs.dir }}
+          key: ubuntu-latest-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ubuntu-latest-yarn-${{ hashFiles('**/yarn.lock') }}
+            ubuntu-latest-yarn-
+
+      - name: yarn install
+        env:
+          CI: 'true'
+          NODE_ENV: 'production'
+        run: yarn install
+
+      - name: yarn build
+        env:
+          CI: 'true'
+          NODE_ENV: 'production'
+          FAUNADB_TOKEN: ${{ secrets.FAUNADB_TOKEN_ADMIN_STAGING }}
+        run: yarn build
+
+      - uses: amondnet/vercel-action@v19
+        with:
+          vercel-token: ${{ secrets.ZEIT_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-comment: false
+          vercel-org-id: ${{ secrets.ZEIT_ORGID_AUGORA }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECTID_OVERSEER }}
+          scope: augora
+          alias-domains: |
+            backoffice.augora.fr
