@@ -86,6 +86,8 @@ jobs:
       - name: yarn build
         env:
           CI: 'true'
+          OVERSEER_APP_CLIENTID: ${{ secrets.OVERSEER_APP_CLIENTID }}
+          OVERSEER_APP_CLIENTSECRET: ${{ secrets.OVERSEER_APP_CLIENTSECRET }}
           FAUNADB_TOKEN: ${{ secrets.FAUNADB_TOKEN_ADMIN_STAGING }}
         run: yarn build
 

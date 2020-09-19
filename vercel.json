@@ -1,0 +1,7 @@
+{
+  "env": {
+    "FAUNADB_TOKEN": "@faunadb_token",
+    "OVERSEER_APP_CLIENTID": "@overseer_app_clientid",
+    "OVERSEER_APP_CLIENTSECRET": "@overseer_app_clientsecret"
+  }
+}
