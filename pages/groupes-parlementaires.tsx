@@ -45,7 +45,7 @@ export default function Home() {
 
   useEffect(() => {
     console.log('loading', loading);
-    if (!loading) {
+    if (!loading && session) {
       GetAllGroupesParlementaires(session.user.faunaDBToken)
         .then((data) => {
           setGroupesParlementaires(data.data.GroupesParlementairesDetails.data);
@@ -56,8 +56,12 @@ export default function Home() {
 
   console.log('GroupesParlementaires', GroupesParlementaires);
 
-  if (loading || GroupesParlementaires.length === 0) {
+  if (loading) {
     return 'Loading';
+  }
+
+  if (!session) {
+    return 'Please log in';
   }
 
   return (
