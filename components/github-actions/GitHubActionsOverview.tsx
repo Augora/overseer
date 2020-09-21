@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heading, Divider, Stack } from '@chakra-ui/core';
+import { Heading, Divider, Stack, Skeleton, Box } from '@chakra-ui/core';
 import { useSession } from 'next-auth/client';
 
 import GitHubActionsBox from './GitHubActionsBox';
@@ -8,8 +8,10 @@ import { useQuery } from 'react-query';
 
 export default function GitHubActionsOverview({ RepositoryName }) {
   const [session] = useSession();
-  const { isLoading, isError, data, error } = useQuery(`${RepositoryName}-workflows`, () =>
-    GetWorkflows(RepositoryName)
+  const { isLoading, isError, data, error, isFetching } = useQuery(
+    `${RepositoryName}-workflows`,
+    () => GetWorkflows(RepositoryName),
+    { refetchInterval: 10000 }
   );
 
   return (
@@ -18,22 +20,21 @@ export default function GitHubActionsOverview({ RepositoryName }) {
         {RepositoryName}
       </Heading>
       <Divider ml="6" mr="6" />
-      {isLoading ? (
-        'Loading...'
-      ) : (
-        <Stack isInline direction="row" overflow="scroll">
-          {data.workflow_runs.map((wd) => (
-            <GitHubActionsBox
-              key={wd.id}
-              createdAt={wd.created_at}
-              branch={wd.head_branch}
-              status={wd.status}
-              conclusion={wd.conclusion}
-              htmlUrl={wd.html_url}
-            />
-          ))}
+      <Skeleton isLoaded={!isLoading}>
+        <Stack isInline direction="row" overflow="scroll" height="100px">
+          {data &&
+            data.workflow_runs.map((wd) => (
+              <GitHubActionsBox
+                key={wd.id}
+                createdAt={wd.created_at}
+                branch={wd.head_branch}
+                status={wd.status}
+                conclusion={wd.conclusion}
+                htmlUrl={wd.html_url}
+              />
+            ))}
         </Stack>
-      )}
+      </Skeleton>
     </>
   );
 }
