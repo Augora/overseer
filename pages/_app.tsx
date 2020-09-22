@@ -3,6 +3,7 @@ import { ThemeProvider, ColorModeProvider } from '@chakra-ui/core';
 import customTheme from '../config/theme';
 import Header from '../components/Header';
 import { Provider } from 'next-auth/client';
+import { ReactQueryDevtools } from 'react-query-devtools';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -11,6 +12,7 @@ function MyApp({ Component, pageProps }) {
         <ColorModeProvider>
           <Header />
           <Component {...pageProps} />
+          <ReactQueryDevtools initialIsOpen={false} />
         </ColorModeProvider>
       </ThemeProvider>
     </Provider>
