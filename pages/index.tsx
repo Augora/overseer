@@ -2,6 +2,7 @@ import Head from 'next/head';
 import React from 'react';
 import { useSession } from 'next-auth/client';
 import GitHubActionsOverview from '../components/github-actions/GitHubActionsOverview';
+import { Spinner, Skeleton } from '@chakra-ui/core';
 
 export default function Home() {
   const [session, loading] = useSession();
@@ -10,16 +11,22 @@ export default function Home() {
       <Head>
         <title>Dashboard Home</title>
       </Head>
-      {loading ? (
-        'Loading session informations.'
-      ) : !session ? (
+      {!loading && !session ? (
         'You must log in first.'
       ) : (
         <>
-          <GitHubActionsOverview RepositoryName="Augora" />
-          <GitHubActionsOverview RepositoryName="Nucleus" />
-          <GitHubActionsOverview RepositoryName="Overseer" />
-          <GitHubActionsOverview RepositoryName="Convey" />
+          <Skeleton isLoaded={!loading}>
+            <GitHubActionsOverview RepositoryName="Augora" />
+          </Skeleton>
+          <Skeleton isLoaded={!loading}>
+            <GitHubActionsOverview RepositoryName="Nucleus" />
+          </Skeleton>
+          <Skeleton isLoaded={!loading}>
+            <GitHubActionsOverview RepositoryName="Overseer" />
+          </Skeleton>
+          <Skeleton isLoaded={!loading}>
+            <GitHubActionsOverview RepositoryName="Convey" />
+          </Skeleton>
         </>
       )}
     </div>
