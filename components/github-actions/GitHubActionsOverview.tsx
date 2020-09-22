@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heading, Divider, Stack, Skeleton, Box } from '@chakra-ui/core';
+import { Heading, Divider, Stack, Skeleton, Box, Spinner } from '@chakra-ui/core';
 import { useSession } from 'next-auth/client';
 
 import GitHubActionsBox from './GitHubActionsBox';
@@ -17,7 +17,7 @@ export default function GitHubActionsOverview({ RepositoryName }) {
   return (
     <>
       <Heading pl="10" mb="0">
-        {RepositoryName}
+        {RepositoryName} {isFetching && <Spinner />}
       </Heading>
       <Divider ml="6" mr="6" />
       <Skeleton isLoaded={!isLoading}>
