@@ -1,15 +1,15 @@
-// import App from 'next/app'
 import { ThemeProvider, ColorModeProvider } from '@chakra-ui/core';
 import customTheme from '../config/theme';
 import Header from '../components/Header';
-import { Provider } from 'next-auth/client';
+import { Provider, getSession } from 'next-auth/client';
 import { ReactQueryDevtools } from 'react-query-devtools';
+import { NextPageContext } from 'next';
 
 function MyApp({ Component, pageProps }) {
   return (
     <Provider session={pageProps.session}>
       <ThemeProvider theme={customTheme}>
-        <ColorModeProvider>
+        <ColorModeProvider value={'dark'}>
           <Header />
           <Component {...pageProps} />
           <ReactQueryDevtools initialIsOpen={false} />
@@ -19,16 +19,10 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-// Only uncomment this method if you have blocking data requirements for
-// every single page in your application. This disables the ability to
-// perform automatic static optimization, causing every page in your app to
-// be server-side rendered.
-//
-// MyApp.getInitialProps = async (appContext) => {
-//   // calls page's `getInitialProps` and fills `appProps.pageProps`
-//   const appProps = await App.getInitialProps(appContext);
-//
-//   return { ...appProps }
-// }
+MyApp.getInitialProps = async (ctx: NextPageContext) => {
+  const session = await getSession(ctx);
+
+  return { pageProps: { session } };
+};
 
 export default MyApp;
