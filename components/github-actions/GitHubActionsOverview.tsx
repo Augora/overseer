@@ -5,11 +5,14 @@ import GitHubActionsBox from './GitHubActionsBox';
 import { GetWorkflows } from '../../lib/github/Workflows';
 import { useQuery } from 'react-query';
 
-export default function GitHubActionsOverview({ RepositoryName }) {
-  const { isLoading, isError, data, error, isFetching } = useQuery(
+export default function GitHubActionsOverview({ RepositoryName, prefecthedData, GitHubToken }) {
+  const { isLoading, data, isFetching } = useQuery(
     `${RepositoryName}-workflows`,
-    () => GetWorkflows(RepositoryName),
-    { refetchInterval: 10000 }
+    () => GetWorkflows(GitHubToken, RepositoryName),
+    {
+      refetchInterval: 10000,
+      initialData: prefecthedData,
+    }
   );
 
   return (

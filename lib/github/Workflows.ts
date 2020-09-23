@@ -1,7 +1,11 @@
 import axios from 'axios';
 
-export function GetWorkflows(repoName: string) {
+export function GetWorkflows(token: string, repoName: string) {
   return axios
-    .get(`https://api.github.com/repos/Augora/${repoName}/actions/runs`)
+    .get(`https://api.github.com/repos/Augora/${repoName}/actions/runs`, {
+      headers: {
+        Authorization: `token ${token}`,
+      },
+    })
     .then((d) => d.data);
 }
