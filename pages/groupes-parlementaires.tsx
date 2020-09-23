@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
 import { Spinner } from '@chakra-ui/core';
 import { useSession } from 'next-auth/client';
 import GroupesHandler from '../components/groupes-parlementaires/GroupesHandler';
+import { getSession } from 'next-auth/client';
+import { NextPageContext } from 'next';
 
 export default function GroupesParlementaires() {
   const [session, loading] = useSession();
@@ -15,4 +16,10 @@ export default function GroupesParlementaires() {
   }
 
   return <GroupesHandler faunaToken={session.user.faunaDBToken} />;
+}
+
+export async function getServerSideProps(ctx: NextPageContext) {
+  const session = await getSession(ctx);
+
+  return { props: { session } };
 }

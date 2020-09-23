@@ -2,9 +2,12 @@ import Head from 'next/head';
 import React from 'react';
 import { useSession } from 'next-auth/client';
 import GitHubActionsOverview from '../components/github-actions/GitHubActionsOverview';
-import { Spinner, Skeleton } from '@chakra-ui/core';
+import { Skeleton } from '@chakra-ui/core';
+import { getSession } from 'next-auth/client';
+import { NextPageContext } from 'next';
 
-export default function Home() {
+export default function Home(props) {
+  console.log(props);
   const [session, loading] = useSession();
   return (
     <div className="container">
@@ -31,4 +34,10 @@ export default function Home() {
       )}
     </div>
   );
+}
+
+export async function getServerSideProps(ctx: NextPageContext) {
+  const session = await getSession(ctx);
+
+  return { props: { session } };
 }
