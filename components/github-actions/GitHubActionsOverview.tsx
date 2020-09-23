@@ -14,12 +14,12 @@ export default function GitHubActionsOverview({ RepositoryName }) {
 
   return (
     <>
-      <Heading pl="10" mb="0">
-        {RepositoryName} {isFetching && <Spinner />}
+      <Heading m="0" pl="10">
+        {RepositoryName} {isFetching ? <Spinner /> : null}
       </Heading>
       <Divider ml="6" mr="6" />
       <Skeleton isLoaded={!isLoading}>
-        <Stack isInline direction="row" overflow="scroll" height="100px">
+        <Stack direction="row" overflowX="scroll">
           {data &&
             data.workflow_runs.map((wd) => (
               <GitHubActionsBox
