@@ -20,3 +20,53 @@ export async function GetAllGroupesParlementaires(token) {
     `,
   });
 }
+
+export async function CreateGroupeParlementaire(token, groupe) {
+  return GetGraphQLClient(token).mutate({
+    mutation: gql`
+      mutation CreateGroupeParlementaire {
+        createGroupeParlementaire(data: {
+          Actif: ${groupe.Actif}
+          Couleur: "${groupe.Couleur}"
+          NomComplet: "${groupe.NomComplet}"
+          Ordre: ${groupe.Ordre}
+          Sigle: "${groupe.Sigle}"
+          URLImage: "${groupe.URLImage}"
+        }) {
+          Sigle
+        }
+      }
+    `,
+  });
+}
+
+export async function UpdateGroupeParlementaire(token, groupe) {
+  return GetGraphQLClient(token).mutate({
+    mutation: gql`
+      mutation UpdateGroupeParlementaire {
+        updateGroupeParlementaire(id: "${groupe._id}", data: {
+          Actif: ${groupe.Actif}
+          Couleur: "${groupe.Couleur}"
+          NomComplet: "${groupe.NomComplet}"
+          Ordre: ${groupe.Ordre}
+          Sigle: "${groupe.Sigle}"
+          URLImage: "${groupe.URLImage}"
+        }) {
+          Sigle
+        }
+      }
+    `,
+  });
+}
+
+export async function RemoveGroupeParlementaire(token, groupe) {
+  return GetGraphQLClient(token).mutate({
+    mutation: gql`
+      mutation UpdateGroupeParlementaire {
+        updateGroupeParlementaire(id: "${groupe._id}") {
+          Sigle
+        }
+      }
+    `,
+  });
+}
