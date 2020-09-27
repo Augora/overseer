@@ -4,17 +4,6 @@ import { signIn, signOut, useSession } from 'next-auth/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-function ColorModeExample() {
-  const { colorMode, toggleColorMode } = useColorMode();
-  return (
-    <header>
-      <Button size="sm" onClick={toggleColorMode} color={colorMode === 'light' ? 'black' : 'white'}>
-        Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
-      </Button>
-    </header>
-  );
-}
-
 const GlobalStyle = createGlobalStyle`
   html,body {
     padding: 0;
@@ -46,18 +35,13 @@ function Header() {
       mb={8}
       p={8}
       bg={['primary.500', 'primary.500', 'transparent', 'transparent']}
+      boxShadow="0 0 10px rgba(0,0,0,.2)"
     >
       <GlobalStyle colorMode={colorMode}></GlobalStyle>
-      {/* <ColorModeExample /> */}
       {!session && (
         <>
           Not signed in <br />
-          <Button
-            onClick={signIn}
-            variant="solid"
-            size="lg"
-            color={colorMode === 'light' ? 'black' : 'white'}
-          >
+          <Button onClick={signIn} variant="solid" size="lg">
             Sign in
           </Button>
         </>
@@ -72,13 +56,7 @@ function Header() {
             <div>GitHub Token {session.user.accessToken}</div>
           </div>
           <Link href="/">
-            <Button
-              variant="solid"
-              size="lg"
-              bg={colorMode === 'light' ? 'black' : 'white'}
-              color={colorMode === 'light' ? 'white' : 'black'}
-              isDisabled={router.pathname === '/'}
-            >
+            <Button variant="solid" size="lg" isDisabled={router.pathname === '/'}>
               Home
             </Button>
           </Link>
@@ -86,20 +64,12 @@ function Header() {
             <Button
               variant="solid"
               size="lg"
-              bg={colorMode === 'light' ? 'black' : 'white'}
-              color={colorMode === 'light' ? 'white' : 'black'}
               isDisabled={router.pathname === '/groupes-parlementaires'}
             >
               Groupes Parlementaires
             </Button>
           </Link>
-          <Button
-            onClick={signOut}
-            variant="solid"
-            size="lg"
-            bg={colorMode === 'light' ? 'black' : 'white'}
-            color={colorMode === 'light' ? 'white' : 'black'}
-          >
+          <Button onClick={signOut} variant="solid" size="lg">
             Sign out
           </Button>
         </>
