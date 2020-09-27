@@ -62,7 +62,7 @@ function GroupeEditable(props: GroupeEditableProps) {
           }}
         />
 
-        {IsEditing ? (
+        {/* {IsEditing ? (
           <IconButton
             border="none"
             aria-label="Remove"
@@ -71,7 +71,7 @@ function GroupeEditable(props: GroupeEditableProps) {
               props.RemoveFn(props.GroupeParlementaire._id);
             }}
           />
-        ) : null}
+        ) : null} */}
 
         <Switch
           isChecked={props.GroupeParlementaire.Actif}

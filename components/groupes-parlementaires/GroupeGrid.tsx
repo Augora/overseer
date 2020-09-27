@@ -10,9 +10,9 @@ interface IGroupeGrid {
   RemoveFn: Function;
 }
 
-export default function GroupeGrid(props) {
+export default function GroupeGrid(props: IGroupeGrid) {
   return (
-    <SimpleGrid minChildWidth="300px" spacing="40px" p={5}>
+    <SimpleGrid minChildWidth="300px" spacing="40px">
       {sortBy(props.GroupesParlementaires, ['Ordre']).map((gp) => (
         <GroupeEditable
           key={gp._id}
@@ -21,7 +21,7 @@ export default function GroupeGrid(props) {
           RemoveFn={props.RemoveFn}
         />
       ))}
-      <Box borderRadius="0.3em" minHeight="250px" width="100%" height="100%">
+      {/* <Box borderRadius="0.3em" minHeight="250px" width="100%" height="100%">
         <IconButton
           aria-label="Add Groupe Parlementaire"
           border="none"
@@ -30,7 +30,7 @@ export default function GroupeGrid(props) {
           height="100%"
           onClick={props.CreateFn}
         />
-      </Box>
+      </Box> */}
     </SimpleGrid>
   );
 }
