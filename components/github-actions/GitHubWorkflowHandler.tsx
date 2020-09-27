@@ -28,7 +28,7 @@ export default function GitHubWorkflowHandler(props: IGitHubWorkflowHandlerProps
     <GitHubWorkflowCard
       repositoryName={props.repositoryName}
       repositoryUrl={latestWorkflow.repository.html_url}
-      lastRunStatus={latestWorkflow.conclusion}
+      lastRunStatus={latestWorkflow.conclusion ? latestWorkflow.conclusion : latestWorkflow.status}
       branchName={latestWorkflow.head_branch}
       createdAt={latestWorkflow.updated_at}
       isFetching={isFetching}
