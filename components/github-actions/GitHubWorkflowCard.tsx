@@ -67,7 +67,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
         props.manualStagingFunction ||
         props.refreshDataFunction ? (
           <Menu>
-            <MenuButton as={IconButton} icon="chevron-down" border="none" bg="gray.400" />
+            <MenuButton as={IconButton} border="none" bg="gray.400" />
             <MenuList p="0">
               {props.manualProductionFunction && (
                 <MenuItem border="none" onClick={() => props.manualProductionFunction()}>
