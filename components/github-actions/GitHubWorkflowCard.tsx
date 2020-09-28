@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Badge,
   Box,
+  Button,
   Heading,
   IconButton,
   Link,
@@ -22,6 +23,7 @@ interface IGitHubWorkflowCardProps {
   branchName: string;
   createdAt: string;
   isFetching: boolean;
+  logsUrl: string;
   refreshDataFunction?: Function;
   manualProductionFunction?: Function;
   manualStagingFunction?: Function;
@@ -90,8 +92,25 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
       </Box>
 
       <Text>Branch: {props.branchName}</Text>
-      <Box as="span" color="gray.500" fontSize="sm">
+      <Text color="gray.500" fontSize="sm">
         {moment(props.createdAt).fromNow()}
+      </Text>
+
+      <Box display="flex" justifyContent="start" alignItems="center">
+        <Link href={props.logsUrl} target="_blank" color="inherit" textDecoration="inherit">
+          <Button rightIcon="arrow-forward" variantColor="teal" variant="outline" mr="20px">
+            <Text>Logs</Text>
+          </Button>
+        </Link>
+        <Button
+          rightIcon="arrow-forward"
+          variantColor="teal"
+          variant="outline"
+          mr="20px"
+          isDisabled
+        >
+          <Text>Runs details</Text>
+        </Button>
       </Box>
     </PseudoBox>
   );
