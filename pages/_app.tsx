@@ -1,4 +1,4 @@
-import { ThemeProvider, ColorModeProvider, Box } from '@chakra-ui/core';
+import { ThemeProvider, ColorModeProvider, CSSReset } from '@chakra-ui/core';
 import customTheme from '../config/theme';
 import Header from '../components/Header';
 import { Provider } from 'next-auth/client';
@@ -8,11 +8,10 @@ export default function MyApp({ Component, pageProps }) {
   return (
     <Provider session={pageProps.session}>
       <ThemeProvider theme={customTheme}>
-        <ColorModeProvider value="light">
+        <ColorModeProvider value="dark">
+          <CSSReset />
           <Header />
-          <Box p="5">
-            <Component {...pageProps} />
-          </Box>
+          <Component {...pageProps} />
           <ReactQueryDevtools initialIsOpen={false} />
         </ColorModeProvider>
       </ThemeProvider>

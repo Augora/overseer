@@ -39,7 +39,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
       minHeight="250px"
       p={5}
       width="100%"
-      _hover={{ bg: 'gray.100' }}
+      _hover={{ bg: 'gray.700' }}
     >
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Heading m="0" size="lg">
@@ -51,13 +51,14 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
           <Badge
             rounded="full"
             px="2"
+            py="1"
             mr="10px"
             bg={
               props.lastRunStatus === 'success'
-                ? 'green.300'
+                ? 'green.500'
                 : props.lastRunStatus === 'failure'
-                ? 'red.300'
-                : 'orange.300'
+                ? 'red.500'
+                : 'orange.500'
             }
           >
             {props.lastRunStatus}
@@ -69,7 +70,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
         props.manualStagingFunction ||
         props.refreshDataFunction ? (
           <Menu>
-            <MenuButton as={IconButton} border="none" bg="gray.400" />
+            <MenuButton as={IconButton} icon="triangle-down" border="none" bg="gray.700" color="gray.100" />
             <MenuList p="0">
               {props.manualProductionFunction && (
                 <MenuItem border="none" onClick={() => props.manualProductionFunction()}>
@@ -91,7 +92,8 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
         ) : null}
       </Box>
 
-      <Text>Branch: {props.branchName}</Text>
+      <Text>{props.branchName}</Text>
+
       <Text color="gray.500" fontSize="sm">
         {moment(props.createdAt).fromNow()}
       </Text>

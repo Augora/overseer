@@ -3,6 +3,7 @@ import React from 'react';
 import { getSession } from 'next-auth/client';
 import { NextPageContext } from 'next';
 import GitHubWorkflowGrid from '../components/github-actions/GitHubWorkflowGrid';
+import { Box } from '@chakra-ui/core';
 
 export default function Home(props) {
   return (
@@ -13,7 +14,9 @@ export default function Home(props) {
       {props.session === null ? (
         'You must log in first.'
       ) : (
-        <GitHubWorkflowGrid githubToken={props.session.user.accessToken} />
+        <Box padding="0 7vw">
+          <GitHubWorkflowGrid githubToken={props.session.user.accessToken} />
+        </Box>
       )}
     </div>
   );

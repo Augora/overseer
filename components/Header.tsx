@@ -1,4 +1,4 @@
-import { useColorMode, Button, Flex, Text } from '@chakra-ui/core';
+import { useColorMode, Button, Flex, Text, Box, Heading } from '@chakra-ui/core';
 import { createGlobalStyle } from 'styled-components';
 import { signIn, signOut, useSession } from 'next-auth/client';
 import Link from 'next/link';
@@ -35,7 +35,7 @@ function Header() {
       mb={8}
       p={8}
       bg={['primary.500', 'primary.500', 'transparent', 'transparent']}
-      boxShadow="0 0 10px rgba(0,0,0,.2)"
+      boxShadow="0 0 10px rgba(0,0,0,.5)"
     >
       <GlobalStyle colorMode={colorMode}></GlobalStyle>
       {!session && (
@@ -48,27 +48,27 @@ function Header() {
       )}
       {session && (
         <>
-          <div>
-            <div>
-              Signed in as {session.user.name} ({session.user.email})
-            </div>
-            <div>FaunaDB Token {session.user.faunaDBToken}</div>
-            <div>GitHub Token {session.user.accessToken}</div>
-          </div>
-          <Link href="/">
-            <Button variant="solid" size="lg" isDisabled={router.pathname === '/'}>
-              Home
-            </Button>
-          </Link>
-          <Link href="/groupes-parlementaires">
-            <Button
-              variant="solid"
-              size="lg"
-              isDisabled={router.pathname === '/groupes-parlementaires'}
-            >
-              Groupes Parlementaires
-            </Button>
-          </Link>
+          <Flex align="center" mr={5}>
+            <Heading as="h1" size="lg">
+              {session.user.name}
+            </Heading>
+          </Flex>
+          <Flex align="center" mr={5}>
+            <Link href="/">
+              <Button variant="solid" size="lg" isDisabled={router.pathname === '/'}>
+                Home
+              </Button>
+            </Link>
+            <Link href="/groupes-parlementaires">
+              <Button
+                variant="solid"
+                size="lg"
+                isDisabled={router.pathname === '/groupes-parlementaires'}
+              >
+                Groupes Parlementaires
+              </Button>
+            </Link>
+          </Flex>
           <Button onClick={signOut} variant="solid" size="lg">
             Sign out
           </Button>

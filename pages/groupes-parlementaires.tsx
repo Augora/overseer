@@ -1,4 +1,4 @@
-import { Spinner } from '@chakra-ui/core';
+import { Box, Spinner } from '@chakra-ui/core';
 import { useSession } from 'next-auth/client';
 import GroupesHandler from '../components/groupes-parlementaires/GroupesHandler';
 import { getSession } from 'next-auth/client';
@@ -15,7 +15,11 @@ export default function GroupesParlementaires() {
     return <Spinner size="xl" label="Loading user informations..." />;
   }
 
-  return <GroupesHandler faunaToken={session.user.faunaDBToken} />;
+  return (
+    <Box padding="0 7vw 70px">
+      <GroupesHandler faunaToken={session.user.faunaDBToken} />
+    </Box>
+  );
 }
 
 export async function getServerSideProps(ctx: NextPageContext) {
