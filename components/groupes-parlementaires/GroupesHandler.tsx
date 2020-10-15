@@ -1,4 +1,4 @@
-import { Spinner, IconButton, Box } from '@chakra-ui/core';
+import { Spinner, Button, Box } from '@chakra-ui/core';
 import React, { useState, useEffect } from 'react';
 import {
   GetAllGroupesParlementaires,
@@ -96,8 +96,18 @@ export default function GroupesHandler(props: IGroupesHandler) {
     <Spinner />
   ) : (
     <>
-      <Box>
-        <IconButton aria-label="Update staging" icon="arrow-up" onClick={updateRemoteFunction} />
+      <Box my="10">
+        <Button
+          aria-label="Update staging"
+          rightIcon="arrow-up"
+          onClick={updateRemoteFunction}
+          mr="20"
+        >
+          Update staging
+        </Button>
+        <Button aria-label="Update staging" rightIcon="arrow-up" mr="20" isDisabled>
+          Update production
+        </Button>
       </Box>
       <GroupeGrid
         GroupesParlementaires={GroupesParlementaires}
