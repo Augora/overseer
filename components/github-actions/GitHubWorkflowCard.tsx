@@ -30,20 +30,14 @@ interface IGitHubWorkflowCardProps {
   manualStagingFunction?: Function;
 }
 
-function TriangleDownButton(props) {
-  return <IconButton {...props} icon="triangle-down" />;
-}
-
 export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
   return (
     <PseudoBox
-      borderWidth="2px"
-      borderStyle="solid"
-      borderColor="lightGray"
-      borderRadius="0.3em"
+      borderRadius="5px"
       minHeight="250px"
       p="5"
       width="100%"
+      bg="gray.900"
       _hover={{ bg: 'gray.700' }}
     >
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -75,8 +69,10 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
         props.manualStagingFunction ||
         props.refreshDataFunction ? (
           <Menu>
-            <MenuButton as={TriangleDownButton} />
-            <MenuList>
+            <MenuButton>
+              <IconButton aria-label="Open menu" icon="triangle-down" />
+            </MenuButton>
+            <MenuList p="0">
               {props.manualProductionFunction && (
                 <MenuItem border="none" onClick={() => props.manualProductionFunction()}>
                   Trigger production workflow
