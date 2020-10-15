@@ -1,3 +1,4 @@
+/* tslint:disable */
 import React from 'react';
 import {
   Badge,
@@ -27,6 +28,10 @@ interface IGitHubWorkflowCardProps {
   refreshDataFunction?: Function;
   manualProductionFunction?: Function;
   manualStagingFunction?: Function;
+}
+
+function TriangleDownButton(props) {
+  return <IconButton {...props} icon="triangle-down" />;
 }
 
 export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
@@ -70,8 +75,8 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
         props.manualStagingFunction ||
         props.refreshDataFunction ? (
           <Menu>
-            <MenuButton as={IconButton} icon="triangle-down" border="none" bg="gray.700" color="gray.100" />
-            <MenuList p="0">
+            <MenuButton as={TriangleDownButton} />
+            <MenuList>
               {props.manualProductionFunction && (
                 <MenuItem border="none" onClick={() => props.manualProductionFunction()}>
                   Trigger production workflow
