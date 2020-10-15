@@ -42,7 +42,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
       borderColor="lightGray"
       borderRadius="0.3em"
       minHeight="250px"
-      p={5}
+      p="5"
       width="100%"
       _hover={{ bg: 'gray.700' }}
     >
@@ -97,18 +97,22 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
         ) : null}
       </Box>
 
-      <Text>{props.branchName}</Text>
+      <Text my="2">{props.branchName}</Text>
 
-      <Text color="gray.500" fontSize="sm">
+      <Text my="2" color="gray.500" fontSize="sm">
         {moment(props.createdAt).fromNow()}
       </Text>
 
-      <Box display="flex" justifyContent="start" alignItems="center">
-        <Link href={props.logsUrl} target="_blank" color="inherit" textDecoration="inherit">
-          <Button rightIcon="arrow-forward" variantColor="teal" variant="outline" mr="20px">
-            <Text>Logs</Text>
-          </Button>
-        </Link>
+      <Box my="4" display="flex" justifyContent="start" alignItems="center">
+        <Button
+          rightIcon="arrow-forward"
+          variantColor="teal"
+          variant="outline"
+          mr="20px"
+          onClick={() => window.open(props.logsUrl, '_blank')}
+        >
+          <Text>Logs</Text>
+        </Button>
         <Button
           rightIcon="arrow-forward"
           variantColor="teal"
