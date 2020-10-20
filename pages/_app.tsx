@@ -10,7 +10,7 @@ export default function MyApp({ Component, pageProps }) {
       <ThemeProvider theme={customTheme}>
         <ColorModeProvider value="dark">
           <CSSReset />
-          <Header />
+          <Header session={pageProps.session} />
           <Component {...pageProps} />
           <ReactQueryDevtools initialIsOpen={false} />
         </ColorModeProvider>

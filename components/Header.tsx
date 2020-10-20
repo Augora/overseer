@@ -1,11 +1,9 @@
-import { useColorMode, Button, Flex, Text, Box, Heading, PseudoBox } from '@chakra-ui/core';
+import { Button, Flex, Text, Heading, PseudoBox } from '@chakra-ui/core';
 import { signIn, signOut, useSession } from 'next-auth/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-function Header() {
-  const { colorMode } = useColorMode();
-  const [session, loading] = useSession();
+function Header(props) {
   const router = useRouter();
 
   return (
@@ -20,7 +18,7 @@ function Header() {
       bg={['primary.500', 'primary.500', 'transparent', 'transparent']}
       boxShadow="0 0 10px rgba(0,0,0,.5)"
     >
-      {!session && (
+      {!props.session && (
         <>
           <Heading as="h1" size="lg">
             Overseer
@@ -30,7 +28,7 @@ function Header() {
           </Button>
         </>
       )}
-      {session && (
+      {props.session && (
         <>
           <Flex alignItems="center" justifyContent="space-between" w="100%">
             <Link href="/">
