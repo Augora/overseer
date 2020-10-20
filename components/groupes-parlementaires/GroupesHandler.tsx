@@ -1,4 +1,4 @@
-import { Spinner, Button, Box } from '@chakra-ui/core';
+import { Spinner, Button, Box, Switch, FormLabel } from '@chakra-ui/core';
 import React, { useState, useEffect } from 'react';
 import {
   GetAllGroupesParlementaires,
@@ -71,6 +71,7 @@ interface IGroupesHandler {
 export default function GroupesHandler(props: IGroupesHandler) {
   const [IsLoading, setIsLoading] = useState(true);
   const [GroupesParlementaires, setGroupesParlementaires] = useState([]);
+  const [DisplayInactiveGroupes, setDisplayInactiveGroupes] = useState(true);
 
   useEffect(() => {
     GetAllGroupesParlementaires(props.faunaToken).then((data) => {
@@ -108,9 +109,18 @@ export default function GroupesHandler(props: IGroupesHandler) {
         <Button aria-label="Update staging" rightIcon="arrow-up" mr="20" isDisabled>
           Update production
         </Button>
+        <FormLabel htmlFor="active-groupes">Display inactive groupes</FormLabel>
+        <Switch
+          id="active-groupes"
+          size="lg"
+          isChecked={DisplayInactiveGroupes}
+          onChange={() => setDisplayInactiveGroupes(!DisplayInactiveGroupes)}
+        />
       </Box>
       <GroupeGrid
-        GroupesParlementaires={GroupesParlementaires}
+        GroupesParlementaires={GroupesParlementaires.filter(
+          (gp) => gp.Actif || (DisplayInactiveGroupes && !gp.Actif)
+        )}
         CreateFn={() => {
           const newGroupe = GenerateNewGroupeParlementaire();
           setGroupesParlementaires(GroupesParlementaires.concat(newGroupe));
