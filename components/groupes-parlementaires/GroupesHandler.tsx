@@ -97,13 +97,17 @@ export default function GroupesHandler(props: IGroupesHandler) {
     <Spinner />
   ) : (
     <>
-      <Flex my={{ sm: 5, md: 10 }} justifyContent="space-between">
-        <Box>
+      <Flex
+        my={{ sm: 5, md: 10 }}
+        justifyContent="space-between"
+        direction={{ sm: 'column', md: 'row' }}
+      >
+        <Flex>
           <Button
             aria-label="Update staging"
             rightIcon="arrow-up"
             onClick={updateRemoteFunction}
-            mr={{ sm: 0, md: 20 }}
+            mr={{ sm: 10, md: 20 }}
             mb={{ sm: 5, md: 0 }}
           >
             Update staging
@@ -111,13 +115,13 @@ export default function GroupesHandler(props: IGroupesHandler) {
           <Button
             aria-label="Update staging"
             rightIcon="arrow-up"
-            mr={{ sm: 0, md: 20 }}
+            mr={{ sm: 10, md: 20 }}
             mb={{ sm: 5, md: 0 }}
             isDisabled
           >
             Update production
           </Button>
-        </Box>
+        </Flex>
         <Box>
           <FormLabel htmlFor="active-groupes">Display inactive groupes</FormLabel>
           <Switch
@@ -125,8 +129,6 @@ export default function GroupesHandler(props: IGroupesHandler) {
             size="lg"
             isChecked={DisplayInactiveGroupes}
             onChange={() => setDisplayInactiveGroupes(!DisplayInactiveGroupes)}
-            mr="0"
-            pr="0"
           />
         </Box>
       </Flex>
