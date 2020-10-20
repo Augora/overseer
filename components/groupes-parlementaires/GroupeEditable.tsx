@@ -73,16 +73,18 @@ function GroupeEditable(props: GroupeEditableProps) {
           />
         ) : null} */}
 
-        <Switch
-          isChecked={props.GroupeParlementaire.Actif}
-          onChange={() => {
-            props.UpdateFn(
-              Object.assign({}, props.GroupeParlementaire, {
-                Actif: !props.GroupeParlementaire.Actif,
-              })
-            );
-          }}
-        />
+        {/* {IsEditing ? (
+          <Switch
+            isChecked={props.GroupeParlementaire.Actif}
+            onChange={() => {
+              props.UpdateFn(
+                Object.assign({}, props.GroupeParlementaire, {
+                  Actif: !props.GroupeParlementaire.Actif,
+                })
+              );
+            }}
+          />
+        ) : null} */}
       </Box>
 
       <Box
