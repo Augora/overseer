@@ -1,4 +1,4 @@
-import { Spinner, Button, Box, Switch, FormLabel } from '@chakra-ui/core';
+import { Spinner, Button, Box, Switch, FormLabel, Stack, Flex } from '@chakra-ui/core';
 import React, { useState, useEffect } from 'react';
 import {
   GetAllGroupesParlementaires,
@@ -97,26 +97,39 @@ export default function GroupesHandler(props: IGroupesHandler) {
     <Spinner />
   ) : (
     <>
-      <Box my="10">
-        <Button
-          aria-label="Update staging"
-          rightIcon="arrow-up"
-          onClick={updateRemoteFunction}
-          mr="20"
-        >
-          Update staging
-        </Button>
-        <Button aria-label="Update staging" rightIcon="arrow-up" mr="20" isDisabled>
-          Update production
-        </Button>
-        <FormLabel htmlFor="active-groupes">Display inactive groupes</FormLabel>
-        <Switch
-          id="active-groupes"
-          size="lg"
-          isChecked={DisplayInactiveGroupes}
-          onChange={() => setDisplayInactiveGroupes(!DisplayInactiveGroupes)}
-        />
-      </Box>
+      <Flex my={{ sm: 5, md: 10 }} justifyContent="space-between">
+        <Box>
+          <Button
+            aria-label="Update staging"
+            rightIcon="arrow-up"
+            onClick={updateRemoteFunction}
+            mr={{ sm: 0, md: 20 }}
+            mb={{ sm: 5, md: 0 }}
+          >
+            Update staging
+          </Button>
+          <Button
+            aria-label="Update staging"
+            rightIcon="arrow-up"
+            mr={{ sm: 0, md: 20 }}
+            mb={{ sm: 5, md: 0 }}
+            isDisabled
+          >
+            Update production
+          </Button>
+        </Box>
+        <Box>
+          <FormLabel htmlFor="active-groupes">Display inactive groupes</FormLabel>
+          <Switch
+            id="active-groupes"
+            size="lg"
+            isChecked={DisplayInactiveGroupes}
+            onChange={() => setDisplayInactiveGroupes(!DisplayInactiveGroupes)}
+            mr="0"
+            pr="0"
+          />
+        </Box>
+      </Flex>
       <GroupeGrid
         GroupesParlementaires={GroupesParlementaires.filter(
           (gp) => gp.Actif || (DisplayInactiveGroupes && !gp.Actif)

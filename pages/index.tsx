@@ -11,13 +11,13 @@ export default function Home(props) {
       <Head>
         <title>Dashboard Home</title>
       </Head>
-      {props.session === null ? (
-        'You must log in first.'
-      ) : (
-        <Box padding="0 7vw">
+      <Box padding={{ sm: '0 15px', md: '0 7vw' }}>
+        {props.session === null ? (
+          'You must log in first.'
+        ) : (
           <GitHubWorkflowGrid githubToken={props.session.user.accessToken} />
-        </Box>
-      )}
+        )}
+      </Box>
     </div>
   );
 }

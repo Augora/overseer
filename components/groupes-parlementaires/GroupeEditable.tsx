@@ -94,6 +94,23 @@ function GroupeEditable(props: GroupeEditableProps) {
         }}
       >
         <InputGroup mt={4}>
+          <InputLeftAddon children="Sigle" />
+          <Input
+            isReadOnly={true}
+            type="text"
+            roundedLeft="0"
+            defaultValue={props.GroupeParlementaire.Sigle}
+            // onChange={(v) =>
+            //   props.UpdateFn(
+            //     Object.assign({}, props.GroupeParlementaire, {
+            //       Sigle: v.target.value,
+            //     })
+            //   )
+            // }
+          />
+        </InputGroup>
+
+        <InputGroup mt={4}>
           <InputLeftAddon children="Nom" />
           <Input
             style={{
@@ -103,29 +120,10 @@ function GroupeEditable(props: GroupeEditableProps) {
             type="text"
             roundedLeft="0"
             defaultValue={props.GroupeParlementaire.NomComplet}
-            color={colorMode === 'light' ? 'black' : 'white'}
             onChange={(v) =>
               props.UpdateFn(
                 Object.assign({}, props.GroupeParlementaire, {
                   NomComplet: v.target.value,
-                })
-              )
-            }
-          />
-        </InputGroup>
-
-        <InputGroup mt={4}>
-          <InputLeftAddon children="Sigle" />
-          <Input
-            isDisabled={!IsEditing}
-            type="text"
-            roundedLeft="0"
-            defaultValue={props.GroupeParlementaire.Sigle}
-            color={colorMode === 'light' ? 'black' : 'white'}
-            onChange={(v) =>
-              props.UpdateFn(
-                Object.assign({}, props.GroupeParlementaire, {
-                  Sigle: v.target.value,
                 })
               )
             }

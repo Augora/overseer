@@ -1,5 +1,4 @@
 import { useColorMode, Button, Flex, Text, Box, Heading, PseudoBox } from '@chakra-ui/core';
-import { createGlobalStyle } from 'styled-components';
 import { signIn, signOut, useSession } from 'next-auth/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
