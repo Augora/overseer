@@ -4,7 +4,6 @@ import { useColorMode } from '@chakra-ui/core';
 import { ChromePicker } from 'react-color';
 import { InputGroup, Input, InputLeftAddon } from '@chakra-ui/core';
 import { IconButton } from '@chakra-ui/core';
-import { Switch } from '@chakra-ui/core';
 
 interface GroupeEditableProps {
   GroupeParlementaire: GroupeParlementaire;
@@ -114,7 +113,7 @@ function GroupeEditable(props: GroupeEditableProps) {
           <InputLeftAddon children="Nom" />
           <Input
             style={{
-              opacity: IsEditing ? 1 : 0.7,
+              opacity: IsEditing ? 1 : 0.5,
             }}
             isDisabled={!IsEditing}
             type="text"
