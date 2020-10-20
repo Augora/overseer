@@ -71,7 +71,7 @@ interface IGroupesHandler {
 export default function GroupesHandler(props: IGroupesHandler) {
   const [IsLoading, setIsLoading] = useState(true);
   const [GroupesParlementaires, setGroupesParlementaires] = useState([]);
-  const [DisplayInactiveGroupes, setDisplayInactiveGroupes] = useState(true);
+  const [DisplayInactiveGroupes, setDisplayInactiveGroupes] = useState(false);
 
   useEffect(() => {
     GetAllGroupesParlementaires(props.faunaToken).then((data) => {
