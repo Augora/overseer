@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Box } from '@chakra-ui/core';
-import { useColorMode } from '@chakra-ui/core';
 import { ChromePicker } from 'react-color';
 import { InputGroup, Input, InputLeftAddon } from '@chakra-ui/core';
 import { IconButton } from '@chakra-ui/core';
@@ -34,7 +33,6 @@ function ChangeOpacity(color: string, opacity: string) {
 }
 
 function GroupeEditable(props: GroupeEditableProps) {
-  const { colorMode } = useColorMode();
   const [IsEditing, setIsEditing] = useState(false);
 
   return (
@@ -97,7 +95,6 @@ function GroupeEditable(props: GroupeEditableProps) {
           <Input
             isReadOnly={true}
             type="text"
-            roundedLeft="0"
             defaultValue={props.GroupeParlementaire.Sigle}
             // onChange={(v) =>
             //   props.UpdateFn(
