@@ -50,17 +50,13 @@ async function UpdateRemoteGroupes(token, groupes) {
           Sigle: res.data.updateGroupeParlementaire.Sigle,
         },
       });
-    } else {
-      console.log(`Creating ${gp.Sigle}...`);
-      const res = await CreateGroupeParlementaire(token, gp);
-      console.log(`Created ${res.data.createGroupeParlementaire.Sigle}!`);
-      return Promise.resolve({
-        Action: 'Create',
-        Data: {
-          Sigle: res.data.createGroupeParlementaire.Sigle,
-        },
-      });
     }
+    return Promise.resolve({
+      Action: 'Nothing',
+      Data: {
+        Sigle: res.data.updateGroupeParlementaire.Sigle,
+      },
+    });
   });
 }
 

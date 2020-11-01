@@ -47,6 +47,21 @@ export async function UpdateGroupeParlementaire(token, groupe) {
         updateGroupeParlementaire(id: "${groupe._id}", data: {
           Actif: ${groupe.Actif}
           Couleur: "${groupe.Couleur}"
+          CouleurDetail: {
+            HEX: "${groupe.CouleurDetail.HEX}"
+            HSL: {
+              Full: "${groupe.CouleurDetail.HSL.Full}"
+              H: ${groupe.CouleurDetail.HSL.H}
+              S: ${groupe.CouleurDetail.HSL.S}
+              L: ${groupe.CouleurDetail.HSL.L}
+            }
+            RGB: {
+              Full: "${groupe.CouleurDetail.RGB.Full}"
+              R: ${groupe.CouleurDetail.RGB.R}
+              G: ${groupe.CouleurDetail.RGB.G}
+              B: ${groupe.CouleurDetail.RGB.B}
+            },
+          }
           NomComplet: "${groupe.NomComplet}"
           Ordre: ${groupe.Ordre}
           Sigle: "${groupe.Sigle}"
