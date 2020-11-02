@@ -24,17 +24,6 @@ export default function Home(props) {
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const session = await getSession(ctx);
-  if (session !== null) {
-    return {
-      props: {
-        session,
-      },
-    };
-  } else {
-    return {
-      props: {
-        session,
-      },
-    };
-  }
+
+  return { props: { session } };
 }
