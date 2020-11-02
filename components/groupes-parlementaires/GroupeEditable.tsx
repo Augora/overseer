@@ -53,7 +53,6 @@ function GroupeEditable(props: GroupeEditableProps) {
       borderRadius="0.3em"
       minHeight="250px"
       p={5}
-      // opacity={props.GroupeParlementaire.Actif ? 1 : 0.3}
       backgroundColor={props.GroupeParlementaire.Couleur}
     >
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -65,30 +64,6 @@ function GroupeEditable(props: GroupeEditableProps) {
             setIsEditing(!IsEditing);
           }}
         />
-
-        {/* {IsEditing ? (
-          <IconButton
-            border="none"
-            aria-label="Remove"
-            icon="close"
-            onClick={() => {
-              props.RemoveFn(props.GroupeParlementaire._id);
-            }}
-          />
-        ) : null} */}
-
-        {/* {IsEditing ? (
-          <Switch
-            isChecked={props.GroupeParlementaire.Actif}
-            onChange={() => {
-              props.UpdateFn(
-                Object.assign({}, props.GroupeParlementaire, {
-                  Actif: !props.GroupeParlementaire.Actif,
-                })
-              );
-            }}
-          />
-        ) : null} */}
       </Box>
 
       <Box
@@ -98,18 +73,7 @@ function GroupeEditable(props: GroupeEditableProps) {
       >
         <InputGroup mt={4}>
           <InputLeftAddon children="Sigle" />
-          <Input
-            isReadOnly={true}
-            type="text"
-            defaultValue={props.GroupeParlementaire.Sigle}
-            // onChange={(v) =>
-            //   props.UpdateFn(
-            //     Object.assign({}, props.GroupeParlementaire, {
-            //       Sigle: v.target.value,
-            //     })
-            //   )
-            // }
-          />
+          <Input isReadOnly={true} type="text" defaultValue={props.GroupeParlementaire.Sigle} />
         </InputGroup>
 
         <InputGroup mt={4}>
@@ -123,6 +87,23 @@ function GroupeEditable(props: GroupeEditableProps) {
               props.UpdateFn(
                 Object.assign({}, props.GroupeParlementaire, {
                   NomComplet: v.target.value,
+                })
+              )
+            }
+          />
+        </InputGroup>
+
+        <InputGroup mt={4}>
+          <InputLeftAddon children="Ordre" />
+          <Input
+            isDisabled={!IsEditing}
+            type="number"
+            roundedLeft="0"
+            defaultValue={props.GroupeParlementaire.Ordre}
+            onChange={(v) =>
+              props.UpdateFn(
+                Object.assign({}, props.GroupeParlementaire, {
+                  Ordre: v.target.value,
                 })
               )
             }
