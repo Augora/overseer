@@ -3,6 +3,8 @@
     "FAUNADB_TOKEN": "@faunadb_token",
     "OVERSEER_APP_CLIENTID": "@overseer_app_clientid",
     "OVERSEER_APP_CLIENTSECRET": "@overseer_app_clientsecret",
-    "NEXTAUTH_URL": "https://backoffice.augora.fr"
+    "NEXTAUTH_URL": "https://backoffice.augora.fr",
+    "AZURE_STORAGE_ACCOUNT": "@azure_storage_account",
+    "AZURE_STORAGE_ACCESS_KEY": "@azure_storage_access_key"
   }
 }
