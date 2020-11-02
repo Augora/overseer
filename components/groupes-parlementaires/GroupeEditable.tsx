@@ -47,11 +47,8 @@ function GroupeEditable(props: GroupeEditableProps) {
 
   return (
     <Box
-      borderWidth="2px"
-      borderStyle={props.GroupeParlementaire.Actif ? 'solid' : 'dashed'}
-      borderColor="lightGray"
-      borderRadius="0.3em"
-      minHeight="250px"
+      border={props.GroupeParlementaire.Actif ? 'none' : '2px dashed lightGray'}
+      borderRadius="5px"
       p={5}
       backgroundColor={props.GroupeParlementaire.Couleur}
     >
@@ -68,12 +65,17 @@ function GroupeEditable(props: GroupeEditableProps) {
 
       <Box
         style={{
-          transition: 'opacity 0.225s linear',
+          transition: 'opacity 250ms linear',
         }}
       >
         <InputGroup mt={4}>
           <InputLeftAddon children="Sigle" />
-          <Input isReadOnly={true} type="text" defaultValue={props.GroupeParlementaire.Sigle} />
+          <Input
+            roundedLeft="0"
+            isReadOnly={true}
+            type="text"
+            defaultValue={props.GroupeParlementaire.Sigle}
+          />
         </InputGroup>
 
         <InputGroup mt={4}>

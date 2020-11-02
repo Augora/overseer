@@ -21,8 +21,8 @@ export default function GitHubWorkflowHandler(props: IGitHubWorkflowHandlerProps
   const latestWorkflow = data ? data.workflow_runs[0] : null;
 
   return isLoading ? (
-    <Box minHeight="250px">
-      <Spinner />
+    <Box minHeight="250px" display="flex" alignItems="center" justifyContent="center">
+      <Spinner size="xl" />
     </Box>
   ) : (
     <GitHubWorkflowCard

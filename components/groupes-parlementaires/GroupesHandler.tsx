@@ -90,7 +90,9 @@ export default function GroupesHandler(props: IGroupesHandler) {
   };
 
   return IsLoading ? (
-    <Spinner />
+    <Box minHeight="250px" display="flex" alignItems="center" justifyContent="center">
+      <Spinner size="xl" />
+    </Box>
   ) : (
     <>
       <Flex
