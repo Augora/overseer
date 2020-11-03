@@ -8,7 +8,7 @@ export default function GroupesParlementaires(props) {
   return (
     <>
       <Head>
-        <title>Groupes Parlementaires</title>
+        <title>Groupes Parlementaires | Augora</title>
       </Head>
       <Box padding={{ base: '0 15px', md: '0 7vw' }}>
         {props.session === null ? (

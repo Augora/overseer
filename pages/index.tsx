@@ -9,7 +9,7 @@ export default function Home(props) {
   return (
     <div className="container">
       <Head>
-        <title>Dashboard Home</title>
+        <title>Dashboard | Augora</title>
       </Head>
       <Box padding={{ base: '0 15px', md: '0 7vw' }}>
         {props.session === null ? (
