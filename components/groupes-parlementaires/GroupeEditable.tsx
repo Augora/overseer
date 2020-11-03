@@ -99,6 +99,7 @@ function GroupeEditable(props: GroupeEditableProps) {
             isDisabled={!IsEditing}
             roundedLeft="0"
             defaultValue={props.GroupeParlementaire.Ordre}
+            width="100%"
             onChange={(v) =>
               props.UpdateFn(
                 Object.assign({}, props.GroupeParlementaire, {
