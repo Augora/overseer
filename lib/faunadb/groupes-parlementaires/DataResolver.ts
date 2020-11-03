@@ -13,6 +13,21 @@ export async function GetAllGroupesParlementaires(token) {
             NomComplet
             Ordre
             Couleur
+            CouleurDetail {
+              HEX
+              HSL {
+                Full
+                H
+                S
+                L
+              }
+              RGB {
+                Full
+                R
+                G
+                B
+              }
+            }
             Actif
           }
         }
