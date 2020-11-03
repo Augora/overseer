@@ -1,8 +1,6 @@
-import { useState, memo } from 'react';
-import { Box } from '@chakra-ui/core';
+import { useState } from 'react';
 import { ChromePicker } from 'react-color';
-import { InputGroup, Input, InputLeftAddon } from '@chakra-ui/core';
-import { IconButton } from '@chakra-ui/core';
+import { InputGroup, Input, InputLeftAddon, Box, NumberInput, IconButton } from '@chakra-ui/core';
 import Color from 'color';
 
 interface GroupeEditableProps {
@@ -97,15 +95,14 @@ function GroupeEditable(props: GroupeEditableProps) {
 
         <InputGroup mt={4}>
           <InputLeftAddon children="Ordre" />
-          <Input
+          <NumberInput
             isDisabled={!IsEditing}
-            type="number"
             roundedLeft="0"
             defaultValue={props.GroupeParlementaire.Ordre}
             onChange={(v) =>
               props.UpdateFn(
                 Object.assign({}, props.GroupeParlementaire, {
-                  Ordre: v.target.value,
+                  Ordre: v.valueOf(),
                 })
               )
             }
