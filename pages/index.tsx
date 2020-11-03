@@ -11,7 +11,7 @@ export default function Home(props) {
       <Head>
         <title>Dashboard Home</title>
       </Head>
-      <Box padding={{ sm: '0 15px', md: '0 7vw' }}>
+      <Box padding={{ base: '0 15px', md: '0 7vw' }}>
         {props.session === null ? (
           'You must log in first.'
         ) : (

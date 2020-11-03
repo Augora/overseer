@@ -8,7 +8,7 @@ interface IGitHubWorkflowGridProps {
 
 export default function GitHubWorkflowGrid(props: IGitHubWorkflowGridProps) {
   return (
-    <SimpleGrid minChildWidth="450px" spacing="40px">
+    <SimpleGrid minChildWidth={{ base: 300, sm: 450 }} spacing="40px">
       <GitHubWorkflowHandler repositoryName="Augora" githubToken={props.githubToken} />
       <GitHubWorkflowHandler repositoryName="Overseer" githubToken={props.githubToken} />
       <GitHubWorkflowHandler repositoryName="Nucleus" githubToken={props.githubToken} />

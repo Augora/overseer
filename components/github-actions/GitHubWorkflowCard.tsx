@@ -38,6 +38,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
       p="5"
       width="100%"
       bg="gray.900"
+      transition="background-color cubic-bezier(1, 0, 0, 1) 250ms"
       _hover={{ bg: 'gray.700' }}
     >
       <Box display="flex" justifyContent="space-between" alignItems="center">

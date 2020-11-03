@@ -95,32 +95,28 @@ export default function GroupesHandler(props: IGroupesHandler) {
     </Box>
   ) : (
     <>
-      <Flex
-        my={{ sm: 5, md: 10 }}
-        justifyContent="space-between"
-        direction={{ sm: 'column', md: 'row' }}
-      >
-        <Flex>
+      <Flex justifyContent="space-between" flexDirection={{ base: 'column', md: 'row' }}>
+        <Flex flexDirection={{ base: 'column', md: 'row' }}>
           <Button
             aria-label="Update staging"
             rightIcon="arrow-up"
             onClick={updateRemoteFunction}
-            mr={{ sm: 10, md: 20 }}
-            mb={{ sm: 5, md: 0 }}
+            mr={{ base: 0, md: 10 }}
+            mb={{ base: 5, md: 10 }}
           >
             Update staging
           </Button>
           <Button
             aria-label="Update staging"
             rightIcon="arrow-up"
-            mr={{ sm: 10, md: 20 }}
-            mb={{ sm: 5, md: 0 }}
+            mr={{ base: 0, md: 10 }}
+            mb={{ base: 5, md: 10 }}
             isDisabled
           >
             Update production
           </Button>
         </Flex>
-        <Box>
+        <Box mb={{ base: 5, md: 10 }}>
           <FormLabel htmlFor="active-groupes">Display inactive groupes</FormLabel>
           <Switch
             id="active-groupes"
