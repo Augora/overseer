@@ -1,10 +1,8 @@
-import { NowRequest, NowResponse } from "@vercel/node";
-import {
-  BlobServiceClient,
-  StorageSharedKeyCredential,
-} from "@azure/storage-blob";
+import { NowRequest, NowResponse } from '@vercel/node';
+import { BlobServiceClient, StorageSharedKeyCredential } from '@azure/storage-blob';
+import { getSession } from 'next-auth/client';
 
-import mime from "mime-types";
+import mime from 'mime-types';
 
 const account = process.env.AZURE_STORAGE_ACCOUNT;
 const accountKey = process.env.AZURE_STORAGE_ACCESS_KEY;
@@ -14,7 +12,7 @@ const blobServiceClient = new BlobServiceClient(
   `https://${account}.blob.core.windows.net`,
   sharedKeyCredential
 );
-const containerClient = blobServiceClient.getContainerClient("images");
+const containerClient = blobServiceClient.getContainerClient('images');
 
 function uploadBlobOnAzureStorage(blobname: string, blobContent: string) {
   const blockBlobClient = containerClient.getBlockBlobClient(blobname);
@@ -40,10 +38,14 @@ async function listBlobOnAzureStorage() {
 }
 
 export default async (req: NowRequest, res: NowResponse) => {
-  if (req.method === "GET") {
+  const session = await getSession({ req });
+  if (!session) {
+    return res.status(401).end();
+  }
+  if (req.method === 'GET') {
     const list = await listBlobOnAzureStorage();
     return res.status(200).json(list);
-  } else if (req.method === "POST" || req.method === "PUT") {
+  } else if (req.method === 'POST' || req.method === 'PUT') {
     const name = req.body.name;
     const content = req.body.content;
 
@@ -53,7 +55,7 @@ export default async (req: NowRequest, res: NowResponse) => {
       return res.status(500).json(err);
     }
     return res.status(204).end();
-  } else if (req.method === "DELETE") {
+  } else if (req.method === 'DELETE') {
   }
-  return res.status(200).json({ lel: "mdr" });
+  return res.status(200).json({ lel: 'mdr' });
 };
