@@ -4,8 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
-import { FaUsers } from 'react-icons/fa';
-import { FaHome } from 'react-icons/fa';
+import { FaUsers, FaHome, FaFolder } from 'react-icons/fa';
 
 function Header(props) {
   const router = useRouter();
@@ -33,6 +32,7 @@ function Header(props) {
       <Flex alignItems="center" justifyContent="space-between" w="100%">
         <Link href="/">
           <PseudoBox
+            transition="color cubic-bezier(1, 0, 0, 1) 250ms"
             _hover={{
               color: 'teal.300',
               cursor: 'pointer',
@@ -47,6 +47,7 @@ function Header(props) {
           <Flex justifyContent="space-around">
             <PseudoBox
               mx="2"
+              transition="color cubic-bezier(1, 0, 0, 1) 250ms"
               _hover={{
                 color: 'teal.300',
                 cursor: 'pointer',
@@ -60,6 +61,7 @@ function Header(props) {
             </PseudoBox>
             <PseudoBox
               mx="2"
+              transition="color cubic-bezier(1, 0, 0, 1) 250ms"
               _hover={{
                 color: 'teal.300',
                 cursor: 'pointer',
@@ -71,6 +73,22 @@ function Header(props) {
                   color={router.pathname === '/groupes-parlementaires' ? 'teal.300' : 'white.300'}
                 >
                   <FaUsers />
+                </Text>
+              </Link>
+            </PseudoBox>
+            <PseudoBox
+              mx="2"
+              _hover={{
+                color: 'teal.300',
+                cursor: 'pointer',
+              }}
+            >
+              <Link href="/files">
+                <Text
+                  fontSize="2xl"
+                  color={router.pathname === '/files' ? 'teal.300' : 'white.300'}
+                >
+                  <FaFolder />
                 </Text>
               </Link>
             </PseudoBox>
