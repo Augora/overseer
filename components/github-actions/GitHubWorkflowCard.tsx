@@ -5,7 +5,6 @@ import {
   Box,
   Button,
   Heading,
-  IconButton,
   Link,
   Menu,
   MenuButton,
@@ -16,6 +15,7 @@ import {
   Text,
 } from '@chakra-ui/core';
 import moment from 'moment';
+import { FaCaretDown } from 'react-icons/fa';
 
 interface IGitHubWorkflowCardProps {
   repositoryName: string;
@@ -70,8 +70,8 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
         props.manualStagingFunction ||
         props.refreshDataFunction ? (
           <Menu>
-            <MenuButton>
-              <IconButton aria-label="Open menu" icon="triangle-down" />
+            <MenuButton as={Button}>
+              <FaCaretDown style={{ height: '100%' }} />
             </MenuButton>
             <MenuList p="0">
               {props.manualProductionFunction && (
