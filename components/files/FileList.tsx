@@ -4,25 +4,33 @@ import { useQuery } from 'react-query';
 import { FaSync, FaArrowUp } from 'react-icons/fa';
 import { useDropzone } from 'react-dropzone';
 
-import { ListFiles } from '../../lib/files/Wrapper';
+import { ListFiles, CreateFile } from '../../lib/files/Wrapper';
 
-function uploadFiles(acceptedFiles: File[]) {
-  acceptedFiles.forEach((file) => {
-    const reader = new FileReader();
+function uploadFiles(refetchMethod: (value: any) => any) {
+  return function processFiles(acceptedFiles: File[]) {
+    const processes = acceptedFiles.map((file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
 
-    reader.onabort = () => console.log('file reading was aborted');
-    reader.onerror = () => console.log('file reading has failed');
-    reader.onload = () => {
-      const binaryStr = reader.result;
-      console.log(file.name, binaryStr);
-    };
-    reader.readAsArrayBuffer(file);
-  });
+        reader.onabort = () => reject('file reading was aborted');
+        reader.onerror = () => reject('file reading has failed');
+        reader.onload = () => {
+          const fileContent = reader.result;
+          if (fileContent instanceof ArrayBuffer) {
+            return reject('Wrong type recognized.');
+          }
+          return resolve(CreateFile(file.name, fileContent));
+        };
+        reader.readAsText(file);
+      });
+    });
+    Promise.all(processes).then(refetchMethod);
+  };
 }
 
-function UploadFileButton() {
+function UploadFileButton(props) {
   const { getRootProps, getInputProps } = useDropzone({
-    onDrop: uploadFiles,
+    onDrop: uploadFiles(props.refetch),
     noDrag: true,
   });
 
@@ -44,7 +52,7 @@ function UploadFileButton() {
 export default function fileList() {
   const { isLoading, data, isFetching, refetch } = useQuery('files', () => ListFiles());
   const { getRootProps } = useDropzone({
-    onDrop: uploadFiles,
+    onDrop: uploadFiles(refetch),
     noClick: true,
   });
 
@@ -72,7 +80,7 @@ export default function fileList() {
         >
           Refesh
         </Button>
-        <UploadFileButton />
+        <UploadFileButton refetch={refetch} />
       </Flex>
       <List spacing={10}>
         {data && data.map((f) => <ListItem key={f.name + '-' + f.etag}>{f.name}</ListItem>)}
