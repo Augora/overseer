@@ -41,9 +41,7 @@ async function UpdateRemoteGroupes(token, groupes) {
       (rgp) => gp._id === rgp._id
     );
     if (foundGroupe) {
-      console.log(`Updating ${gp.Sigle}...`);
       const res = await UpdateGroupeParlementaire(token, gp);
-      console.log(`Updated ${res.data.updateGroupeParlementaire.Sigle}!`);
       return Promise.resolve({
         Action: 'Update',
         Data: {
@@ -81,7 +79,6 @@ export default function GroupesHandler(props: IGroupesHandler) {
     UpdateRemoteGroupes(props.faunaToken, GroupesParlementaires)
       .then((promises) => Promise.all(promises))
       .then((data) => {
-        console.log('updates', data);
         GetAllGroupesParlementaires(props.faunaToken).then((data) => {
           setGroupesParlementaires(data.data.GroupesParlementairesDetails.data);
           setIsLoading(false);

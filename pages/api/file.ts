@@ -69,16 +69,16 @@ function parseRequest(session, req: NowRequest): IProcessType {
     };
   }
 
-  if (req.method === 'GET') {
+  if (req.method.toUpperCase() === 'GET') {
     return {
       operation: EOPERATION.READ,
     };
-  } else if (req.method === 'POST' || req.method === 'PUT') {
+  } else if (req.method.toUpperCase() === 'POST' || req.method.toUpperCase() === 'PUT') {
     const name = req.body.name;
     const content = req.body.content;
     if (name && content) {
       return {
-        operation: req.method === 'POST' ? EOPERATION.CREATE : EOPERATION.UPDATE,
+        operation: req.method.toUpperCase() === 'POST' ? EOPERATION.CREATE : EOPERATION.UPDATE,
         body: {
           name,
           content,
@@ -87,10 +87,10 @@ function parseRequest(session, req: NowRequest): IProcessType {
     } else {
       return {
         operation: EOPERATION.ERROR,
-        errorMessage: `${req.method} method should have name and content properties in body.`,
+        errorMessage: `${req.method.toUpperCase()} method should have name and content properties in body.`,
       };
     }
-  } else if (req.method === 'DELETE') {
+  } else if (req.method.toUpperCase() === 'DELETE') {
     const name = req.body.name;
     if (name) {
       return {
