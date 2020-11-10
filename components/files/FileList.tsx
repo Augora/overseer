@@ -38,7 +38,7 @@ function UploadFileButton(props) {
     <Button
       {...getRootProps()}
       aria-label="Upload file"
-      rightIcon={FaArrowUp}
+      rightIcon={<FaArrowUp />}
       width={{ base: 'auto', md: 150 }}
       mr={{ base: 0, md: 10 }}
       mb={{ base: 5, md: 10 }}
@@ -71,7 +71,7 @@ export default function fileList() {
       <Flex flexDirection={{ base: 'column', md: 'row' }}>
         <Button
           aria-label="Refresh"
-          rightIcon={isFetching ? Spinner : FaSync}
+          rightIcon={isFetching ? <Spinner /> : <FaSync />}
           onClick={() => refetch()}
           width={{ base: 'auto', md: 150 }}
           mr={{ base: 0, md: 10 }}
