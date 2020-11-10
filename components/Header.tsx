@@ -1,5 +1,5 @@
-import { Button, Flex, Text, Heading, PseudoBox } from '@chakra-ui/core';
-import { signIn, signOut, useSession } from 'next-auth/client';
+import { Button, Flex, Text, Heading, Box } from '@chakra-ui/core';
+import { signIn, signOut } from 'next-auth/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -31,7 +31,7 @@ function Header(props) {
       </Head>
       <Flex alignItems="center" justifyContent="space-between" w="100%">
         <Link href="/">
-          <PseudoBox
+          <Box
             transition="color cubic-bezier(1, 0, 0, 1) 250ms"
             _hover={{
               color: 'teal.300',
@@ -41,11 +41,11 @@ function Header(props) {
             <Heading as="h1" size="lg">
               Overseer
             </Heading>
-          </PseudoBox>
+          </Box>
         </Link>
         {props.session && (
           <Flex justifyContent="space-around">
-            <PseudoBox
+            <Box
               mx="2"
               transition="color cubic-bezier(1, 0, 0, 1) 250ms"
               _hover={{
@@ -58,8 +58,8 @@ function Header(props) {
                   <FaHome />
                 </Text>
               </Link>
-            </PseudoBox>
-            <PseudoBox
+            </Box>
+            <Box
               mx="2"
               transition="color cubic-bezier(1, 0, 0, 1) 250ms"
               _hover={{
@@ -75,8 +75,8 @@ function Header(props) {
                   <FaUsers />
                 </Text>
               </Link>
-            </PseudoBox>
-            <PseudoBox
+            </Box>
+            <Box
               mx="2"
               _hover={{
                 color: 'teal.300',
@@ -91,7 +91,7 @@ function Header(props) {
                   <FaFolder />
                 </Text>
               </Link>
-            </PseudoBox>
+            </Box>
           </Flex>
         )}
         <Button onClick={props.session ? signOut : signIn} variant="solid" size="lg">

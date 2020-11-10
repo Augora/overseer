@@ -1,4 +1,3 @@
-/* tslint:disable */
 import React from 'react';
 import {
   Badge,
@@ -10,12 +9,11 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  PseudoBox,
   Spinner,
   Text,
 } from '@chakra-ui/core';
 import moment from 'moment';
-import { FaCaretDown } from 'react-icons/fa';
+import { FaCaretDown, FaArrowRight } from 'react-icons/fa';
 
 interface IGitHubWorkflowCardProps {
   repositoryName: string;
@@ -32,7 +30,7 @@ interface IGitHubWorkflowCardProps {
 
 export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
   return (
-    <PseudoBox
+    <Box
       borderRadius="5px"
       minHeight="250px"
       p="5"
@@ -49,10 +47,9 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
             </Link>
           </Text>
           <Badge
-            rounded="full"
-            px="2"
-            py="1"
+            rounded="5px"
             mr="10px"
+            fontSize="sm"
             bg={
               props.lastRunStatus === 'success'
                 ? 'green.500'
@@ -102,8 +99,8 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
 
       <Box my="4" display="flex" justifyContent="start" alignItems="center">
         <Button
-          rightIcon="arrow-forward"
-          variantColor="teal"
+          rightIcon={<FaArrowRight />}
+          colorScheme="teal"
           variant="outline"
           mr="20px"
           onClick={() => window.open(props.logsUrl, '_blank')}
@@ -111,8 +108,8 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
           <Text>Logs</Text>
         </Button>
         <Button
-          rightIcon="arrow-forward"
-          variantColor="teal"
+          rightIcon={<FaArrowRight />}
+          colorScheme="teal"
           variant="outline"
           mr="20px"
           isDisabled
@@ -120,6 +117,6 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
           <Text>Runs details</Text>
         </Button>
       </Box>
-    </PseudoBox>
+    </Box>
   );
 }

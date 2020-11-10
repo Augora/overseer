@@ -1,5 +1,7 @@
-import { Spinner, Button, Box, Switch, FormLabel, Stack, Flex } from '@chakra-ui/core';
+import { Spinner, Button, Box, Switch, FormLabel, Flex } from '@chakra-ui/core';
 import React, { useState, useEffect } from 'react';
+import { FaArrowUp } from 'react-icons/fa';
+
 import {
   GetAllGroupesParlementaires,
   CreateGroupeParlementaire,
@@ -96,7 +98,7 @@ export default function GroupesHandler(props: IGroupesHandler) {
         <Flex flexDirection={{ base: 'column', md: 'row' }}>
           <Button
             aria-label="Update staging"
-            rightIcon="arrow-up"
+            rightIcon={<FaArrowUp />}
             onClick={updateRemoteFunction}
             mr={{ base: 0, md: 10 }}
             mb={{ base: 5, md: 10 }}
@@ -105,7 +107,7 @@ export default function GroupesHandler(props: IGroupesHandler) {
           </Button>
           <Button
             aria-label="Update staging"
-            rightIcon="arrow-up"
+            rightIcon={<FaArrowUp />}
             mr={{ base: 0, md: 10 }}
             mb={{ base: 5, md: 10 }}
             isDisabled
@@ -113,7 +115,7 @@ export default function GroupesHandler(props: IGroupesHandler) {
             Update production
           </Button>
         </Flex>
-        <Box mb={{ base: 5, md: 10 }}>
+        <Flex mb={{ base: 5, md: 10 }}>
           <FormLabel htmlFor="active-groupes">Display inactive groupes</FormLabel>
           <Switch
             id="active-groupes"
@@ -121,7 +123,7 @@ export default function GroupesHandler(props: IGroupesHandler) {
             isChecked={DisplayInactiveGroupes}
             onChange={() => setDisplayInactiveGroupes(!DisplayInactiveGroupes)}
           />
-        </Box>
+        </Flex>
       </Flex>
       <GroupeGrid
         GroupesParlementaires={GroupesParlementaires.filter(

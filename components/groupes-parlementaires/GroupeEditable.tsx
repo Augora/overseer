@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ChromePicker } from 'react-color';
 import { InputGroup, Input, InputLeftAddon, Box, NumberInput, IconButton } from '@chakra-ui/core';
 import Color from 'color';
+import { FaCog, FaCheck } from 'react-icons/fa';
 
 interface GroupeEditableProps {
   GroupeParlementaire: GroupeParlementaire;
@@ -54,7 +55,7 @@ function GroupeEditable(props: GroupeEditableProps) {
         <IconButton
           border="none"
           aria-label="Edit"
-          icon={IsEditing ? 'check' : 'settings'}
+          icon={IsEditing ? <FaCheck /> : <FaCog />}
           onClick={() => {
             setIsEditing(!IsEditing);
           }}
@@ -68,12 +69,7 @@ function GroupeEditable(props: GroupeEditableProps) {
       >
         <InputGroup mt={4}>
           <InputLeftAddon children="Sigle" />
-          <Input
-            roundedLeft="0"
-            isReadOnly={true}
-            type="text"
-            defaultValue={props.GroupeParlementaire.Sigle}
-          />
+          <Input isReadOnly={true} type="text" defaultValue={props.GroupeParlementaire.Sigle} />
         </InputGroup>
 
         <InputGroup mt={4}>
@@ -81,7 +77,6 @@ function GroupeEditable(props: GroupeEditableProps) {
           <Input
             isDisabled={!IsEditing}
             type="text"
-            roundedLeft="0"
             defaultValue={props.GroupeParlementaire.NomComplet}
             onChange={(v) =>
               props.UpdateFn(
@@ -95,15 +90,14 @@ function GroupeEditable(props: GroupeEditableProps) {
 
         <InputGroup mt={4}>
           <InputLeftAddon children="Ordre" />
-          <NumberInput
+          <Input
             isDisabled={!IsEditing}
-            roundedLeft="0"
+            type="number"
             defaultValue={props.GroupeParlementaire.Ordre}
-            width="100%"
             onChange={(v) =>
               props.UpdateFn(
                 Object.assign({}, props.GroupeParlementaire, {
-                  Ordre: v.valueOf(),
+                  Ordre: v.target.value,
                 })
               )
             }
