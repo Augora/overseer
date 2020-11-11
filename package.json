@@ -12,7 +12,7 @@
   "dependencies": {
     "@apollo/client": "^3.2.5",
     "@apollo/react-hooks": "^4.0.0",
-    "@azure/storage-blob": "^12.2.1",
+    "@azure/storage-blob": "^12.3.0",
     "@chakra-ui/core": "next",
     "framer-motion": "latest",
     "axios": "^0.21.0",
