@@ -11,6 +11,7 @@ import {
   MenuList,
   Spinner,
   Text,
+  useColorMode,
 } from '@chakra-ui/core';
 import moment from 'moment';
 import { FaCaretDown, FaArrowRight } from 'react-icons/fa';
@@ -29,33 +30,33 @@ interface IGitHubWorkflowCardProps {
 }
 
 export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
+  const { colorMode } = useColorMode();
   return (
     <Box
       borderRadius="5px"
       minHeight="250px"
       p="5"
       width="100%"
-      bg="gray.900"
+      bg={colorMode === 'light' ? 'gray.100' : 'gray.900'}
       transition="background-color cubic-bezier(1, 0, 0, 1) 250ms"
-      _hover={{ bg: 'gray.700' }}
+      _hover={{ bg: colorMode === 'light' ? 'gray.300' : 'gray.700' }}
     >
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Heading m="0" size="lg">
           <Text width="100%" m="0" as="span" mr="10px">
-            <Link href={props.repositoryUrl} color="inherit" target="_blank">
+            <Link href={props.repositoryUrl} target="_blank">
               {props.repositoryName}
             </Link>
           </Text>
           <Badge
             rounded="5px"
             mr="10px"
-            fontSize="sm"
-            bg={
+            colorScheme={
               props.lastRunStatus === 'success'
-                ? 'green.500'
+                ? 'green'
                 : props.lastRunStatus === 'failure'
-                ? 'red.500'
-                : 'orange.500'
+                ? 'red'
+                : 'orange'
             }
           >
             {props.lastRunStatus}
