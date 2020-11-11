@@ -1,16 +1,16 @@
-import { theme } from '@chakra-ui/core';
+import { extendTheme } from '@chakra-ui/core';
 
-export default {
-  ...theme,
+const config = {
+  useSystemColorMode: true,
+  initialColorMode: 'dark',
   colors: {
-    ...theme.colors,
     brand: {
       900: '#1a365d',
       800: '#153e75',
       700: '#2a69ac',
     },
   },
-  // breakpoints: ['30em', '48em', '62em', '80em'],
+  breakpoints: ['30em', '48em', '62em', '80em'],
   fonts: {
     heading: '"Avenir Next", sans-serif',
     body: 'system-ui, sans-serif',
@@ -29,3 +29,7 @@ export default {
     '6xl': '4rem',
   },
 };
+
+const customTheme = extendTheme({ config });
+
+export default customTheme;
