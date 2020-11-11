@@ -11,7 +11,7 @@ export default class MyDocument extends Document {
       <Html>
         <Head />
         <body>
-          <ColorModeScript initialColorMode="dark" />
+          <ColorModeScript initialColorMode="system" />
           <Main />
           <NextScript />
         </body>
