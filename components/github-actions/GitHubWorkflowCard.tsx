@@ -3,6 +3,7 @@ import {
   Badge,
   Box,
   Button,
+  Flex,
   Heading,
   Link,
   Menu,
@@ -41,29 +42,28 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
       transition="background-color cubic-bezier(1, 0, 0, 1) 250ms"
       _hover={{ bg: colorMode === 'light' ? 'gray.300' : 'gray.700' }}
     >
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Heading m="0" size="lg">
-          <Text width="100%" m="0" as="span" mr="10px">
-            <Link href={props.repositoryUrl} target="_blank">
+      <Flex justifyContent="space-between">
+        <Box>
+          <Heading size="lg">
+            <Link href={props.repositoryUrl} target="_blank" mr="10px">
               {props.repositoryName}
             </Link>
-          </Text>
-          <Badge
-            rounded="5px"
-            mr="10px"
-            colorScheme={
-              props.lastRunStatus === 'success'
-                ? 'green'
-                : props.lastRunStatus === 'failure'
-                ? 'red'
-                : 'orange'
-            }
-          >
-            {props.lastRunStatus}
-          </Badge>
-
-          {props.isFetching && <Spinner />}
-        </Heading>
+            <Badge
+              rounded="5px"
+              mr="10px"
+              colorScheme={
+                props.lastRunStatus === 'success'
+                  ? 'green'
+                  : props.lastRunStatus === 'failure'
+                  ? 'red'
+                  : 'orange'
+              }
+            >
+              {props.lastRunStatus}
+            </Badge>
+            {props.isFetching && <Spinner />}
+          </Heading>
+        </Box>
         {props.manualProductionFunction ||
         props.manualStagingFunction ||
         props.refreshDataFunction ? (
@@ -90,7 +90,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
             </MenuList>
           </Menu>
         ) : null}
-      </Box>
+      </Flex>
 
       <Text my="2">{props.branchName}</Text>
 

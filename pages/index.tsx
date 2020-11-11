@@ -25,5 +25,5 @@ export default function Home(props) {
 export async function getServerSideProps(ctx: NextPageContext) {
   const session = await getSession(ctx);
 
-  return { props: { session } };
+  return { props: { session, cookies: ctx.req.headers.cookie ?? '' } };
 }

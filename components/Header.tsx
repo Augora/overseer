@@ -1,13 +1,14 @@
-import { Button, Flex, Text, Heading, Box } from '@chakra-ui/core';
+import { Button, Flex, Text, Heading, Box, useColorMode } from '@chakra-ui/core';
 import { signIn, signOut } from 'next-auth/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
-import { FaUsers, FaHome, FaFolder } from 'react-icons/fa';
+import { FaUsers, FaHome, FaFolder, FaSun, FaMoon } from 'react-icons/fa';
 
 function Header(props) {
   const router = useRouter();
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Flex
@@ -94,9 +95,14 @@ function Header(props) {
             </Box>
           </Flex>
         )}
-        <Button onClick={props.session ? signOut : signIn} variant="solid" size="lg">
-          {props.session ? 'Sign out' : 'Sign in'}
-        </Button>
+        <Box>
+          <Button onClick={toggleColorMode} size="lg" mr="5">
+            {colorMode === 'light' ? <FaMoon /> : <FaSun />}
+          </Button>
+          <Button onClick={props.session ? signOut : signIn} size="lg">
+            {props.session ? 'Sign out' : 'Sign in'}
+          </Button>
+        </Box>
       </Flex>
     </Flex>
   );
