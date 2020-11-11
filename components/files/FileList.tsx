@@ -1,10 +1,11 @@
-import { List, ListItem, Box, Spinner, Button, Flex } from '@chakra-ui/core';
+import { List, Box, Spinner, Button, Flex } from '@chakra-ui/core';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { FaSync, FaArrowUp } from 'react-icons/fa';
 import { useDropzone } from 'react-dropzone';
 
 import { ListFiles, CreateFile } from '../../lib/files/Wrapper';
+import FileListeItem from './FileListItem';
 
 function uploadFiles(refetchMethod: (value: any) => any) {
   return function processFiles(acceptedFiles: File[]) {
@@ -78,12 +79,15 @@ export default function fileList() {
           mb={{ base: 5, md: 10 }}
           isDisabled={isFetching}
         >
-          Refesh
+          Refresh
         </Button>
         <UploadFileButton refetch={refetch} />
       </Flex>
-      <List spacing={10}>
-        {data && data.map((f) => <ListItem key={f.name + '-' + f.etag}>{f.name}</ListItem>)}
+      <List>
+        {data &&
+          data.map((f) => (
+            <FileListeItem key={f.name + '-' + f.etag} name={f.name}></FileListeItem>
+          ))}
       </List>
     </Box>
   );
