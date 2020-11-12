@@ -24,14 +24,20 @@ function Header(props) {
       align="center"
       justify="space-between"
       wrap="wrap"
-      w="100%"
       mb={10}
       p={5}
-      bg={['primary.500', 'primary.500', 'transparent', 'transparent']}
       boxShadow="0 0 10px rgba(0,0,0,.5)"
     >
       {IsRouteLoading && (
-        <Progress size="xs" isIndeterminate position="absolute" top="0" left="0" width="100%" />
+        <Progress
+          size="xs"
+          isIndeterminate
+          bg="transparent"
+          position="absolute"
+          top="0"
+          left="0"
+          width="100%"
+        />
       )}
       <Head>
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
