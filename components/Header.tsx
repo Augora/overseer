@@ -1,14 +1,22 @@
-import { Button, Flex, Text, Heading, Box, useColorMode } from '@chakra-ui/core';
-import { signIn, signOut } from 'next-auth/client';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import Head from 'next/head';
+import { signIn, signOut } from 'next-auth/client';
+import { Button, Flex, Text, Heading, Box, useColorMode, Progress } from '@chakra-ui/core';
 
 import { FaUsers, FaHome, FaFolder, FaSun, FaMoon } from 'react-icons/fa';
 
 function Header(props) {
   const router = useRouter();
   const { colorMode, toggleColorMode } = useColorMode();
+  const [IsRouteLoading, setIsRouteLoading] = useState(false);
+
+  useEffect(() => {
+    Router.events.on('routeChangeStart', () => setIsRouteLoading(true));
+    Router.events.on('routeChangeComplete', () => setIsRouteLoading(false));
+    Router.events.on('routeChangeError', () => setIsRouteLoading(false));
+  }, []);
 
   return (
     <Flex
@@ -22,6 +30,9 @@ function Header(props) {
       bg={['primary.500', 'primary.500', 'transparent', 'transparent']}
       boxShadow="0 0 10px rgba(0,0,0,.5)"
     >
+      {IsRouteLoading && (
+        <Progress size="xs" isIndeterminate position="absolute" top="0" left="0" width="100%" />
+      )}
       <Head>
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
