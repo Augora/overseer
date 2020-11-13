@@ -1,11 +1,24 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
 import Head from 'next/head';
 import { signIn, signOut } from 'next-auth/client';
-import { Button, Flex, Text, Heading, Box, useColorMode, Progress } from '@chakra-ui/react';
+import {
+  Button,
+  Flex,
+  Text,
+  Heading,
+  Box,
+  useColorMode,
+  Progress,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  MenuDivider,
+} from '@chakra-ui/react';
 
-import { FaUsers, FaHome, FaFolder, FaSun, FaMoon } from 'react-icons/fa';
+import { FaUsers, FaHome, FaFolder, FaSun, FaMoon, FaBars } from 'react-icons/fa';
 
 function Header(props) {
   const router = useRouter();
@@ -62,7 +75,7 @@ function Header(props) {
           </Box>
         </Link>
         {props.session && (
-          <Flex justifyContent="space-around">
+          <Flex justifyContent="flex-end" display={{ base: 'none', md: 'flex' }}>
             <Box
               mx="2"
               transition="color cubic-bezier(1, 0, 0, 1) 250ms"
@@ -73,7 +86,7 @@ function Header(props) {
             >
               <Link href="/">
                 <Text fontSize="2xl" color={router.pathname === '/' ? 'teal.300' : 'white.300'}>
-                  <FaHome />
+                  Home
                 </Text>
               </Link>
             </Box>
@@ -90,7 +103,7 @@ function Header(props) {
                   fontSize="2xl"
                   color={router.pathname === '/groupes-parlementaires' ? 'teal.300' : 'white.300'}
                 >
-                  <FaUsers />
+                  Groupes
                 </Text>
               </Link>
             </Box>
@@ -106,19 +119,64 @@ function Header(props) {
                   fontSize="2xl"
                   color={router.pathname === '/files' ? 'teal.300' : 'white.300'}
                 >
-                  <FaFolder />
+                  Files
                 </Text>
               </Link>
             </Box>
+            <Box mx="2">
+              <Text fontSize="2xl">|</Text>
+            </Box>
+            <Button onClick={toggleColorMode} mx="2" size="md">
+              {colorMode === 'light' ? <FaMoon /> : <FaSun />}
+            </Button>
+            <Button onClick={props.session ? signOut : signIn} mx="2" size="md">
+              {props.session ? 'Sign out' : 'Sign in'}
+            </Button>
           </Flex>
         )}
-        <Box>
-          <Button onClick={toggleColorMode} size="lg" mr="5">
-            {colorMode === 'light' ? <FaMoon /> : <FaSun />}
-          </Button>
-          <Button onClick={props.session ? signOut : signIn} size="lg">
-            {props.session ? 'Sign out' : 'Sign in'}
-          </Button>
+
+        <Box display={{ base: 'block', md: 'none' }}>
+          <Menu isLazy>
+            <MenuButton size="sm" colorScheme="teal">
+              <FaBars />
+            </MenuButton>
+            <MenuList>
+              <Link href="/">
+                <MenuItem>
+                  <Text fontSize="2xl" color={router.pathname === '/' ? 'teal.300' : 'white.300'}>
+                    Home
+                  </Text>
+                </MenuItem>
+              </Link>
+              <Link href="/groupes-parlementaires">
+                <MenuItem>
+                  <Text
+                    fontSize="2xl"
+                    color={router.pathname === '/groupes-parlementaires' ? 'teal.300' : 'white.300'}
+                  >
+                    Groupes
+                  </Text>
+                </MenuItem>
+              </Link>
+              <Link href="/files">
+                <MenuItem>
+                  <Text
+                    fontSize="2xl"
+                    color={router.pathname === '/files' ? 'teal.300' : 'white.300'}
+                  >
+                    Files
+                  </Text>
+                </MenuItem>
+              </Link>
+              <MenuDivider />
+              <MenuItem onClick={toggleColorMode}>
+                <Text fontSize="2xl">{colorMode === 'light' ? <FaMoon /> : <FaSun />}</Text>
+              </MenuItem>
+              <MenuItem onClick={props.session ? signOut : signIn}>
+                <Text fontSize="2xl">{props.session ? 'Sign out' : 'Sign in'}</Text>
+              </MenuItem>
+            </MenuList>
+          </Menu>
         </Box>
       </Flex>
     </Flex>

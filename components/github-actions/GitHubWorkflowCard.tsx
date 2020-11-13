@@ -69,7 +69,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
         props.refreshDataFunction ? (
           <Menu>
             <MenuButton as={Button}>
-              <FaCaretDown style={{ height: '100%' }} />
+              <FaCaretDown />
             </MenuButton>
             <MenuList p="0">
               {props.manualProductionFunction && (
