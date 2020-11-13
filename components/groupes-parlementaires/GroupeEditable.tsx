@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ChromePicker } from 'react-color';
-import { InputGroup, Input, InputLeftAddon, Box, NumberInput, IconButton } from '@chakra-ui/core';
+import { InputGroup, Input, InputLeftAddon, Box, NumberInput, IconButton } from '@chakra-ui/react';
 import Color from 'color';
 import { FaCog, FaCheck } from 'react-icons/fa';
 

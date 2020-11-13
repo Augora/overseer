@@ -1,4 +1,4 @@
-import { Spinner, Button, Box, Switch, FormLabel, Flex } from '@chakra-ui/core';
+import { Spinner, Button, Box, Switch, FormLabel, Flex } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import { FaArrowUp } from 'react-icons/fa';
 

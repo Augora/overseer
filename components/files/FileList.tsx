@@ -1,4 +1,4 @@
-import { List, Box, Spinner, Button, Flex } from '@chakra-ui/core';
+import { List, Box, Spinner, Button, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { FaSync, FaArrowUp } from 'react-icons/fa';

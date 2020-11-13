@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heading, Divider, Stack, Skeleton, Box, Spinner } from '@chakra-ui/core';
+import { Heading, Divider, Stack, Skeleton, Box, Spinner } from '@chakra-ui/react';
 
 import GitHubActionsBox from './GitHubActionsBox';
 import { GetWorkflows } from '../../lib/github/Workflows';

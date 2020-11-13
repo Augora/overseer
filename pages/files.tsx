@@ -2,7 +2,7 @@ import Head from 'next/head';
 import React from 'react';
 import { getSession } from 'next-auth/client';
 import { NextPageContext } from 'next';
-import { Box } from '@chakra-ui/core';
+import { Box } from '@chakra-ui/react';
 import FileList from '../components/files/FileList';
 
 export default function Home(props) {

@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { Box } from '@chakra-ui/core';
+import { Box } from '@chakra-ui/react';
 import GroupesHandler from '../components/groupes-parlementaires/GroupesHandler';
 import { getSession } from 'next-auth/client';
 import { NextPageContext } from 'next';

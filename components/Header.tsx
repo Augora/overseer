@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
 import Head from 'next/head';
 import { signIn, signOut } from 'next-auth/client';
-import { Button, Flex, Text, Heading, Box, useColorMode, Progress } from '@chakra-ui/core';
+import { Button, Flex, Text, Heading, Box, useColorMode, Progress } from '@chakra-ui/react';
 
 import { FaUsers, FaHome, FaFolder, FaSun, FaMoon } from 'react-icons/fa';
 

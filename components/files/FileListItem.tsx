@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Heading, IconButton, ListItem, Link, useColorMode } from '@chakra-ui/core';
+import { Box, Flex, Heading, IconButton, ListItem, Link, useColorMode } from '@chakra-ui/react';
 
 import { FaEye, FaPen } from 'react-icons/fa';
 

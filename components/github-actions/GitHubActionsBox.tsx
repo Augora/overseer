@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Badge, Link } from '@chakra-ui/core';
+import { Box, Badge, Link } from '@chakra-ui/react';
 import moment from 'moment';
 
 interface IGitHubActionsBoxProps {

@@ -1,4 +1,4 @@
-import { Box, Spinner } from '@chakra-ui/core';
+import { Box, Spinner } from '@chakra-ui/react';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { GetWorkflows } from '../../lib/github/Workflows';

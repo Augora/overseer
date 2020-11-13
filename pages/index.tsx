@@ -3,7 +3,7 @@ import React from 'react';
 import { getSession } from 'next-auth/client';
 import { NextPageContext } from 'next';
 import GitHubWorkflowGrid from '../components/github-actions/GitHubWorkflowGrid';
-import { Box } from '@chakra-ui/core';
+import { Box } from '@chakra-ui/react';
 
 export default function Home(props) {
   return (

@@ -1,4 +1,4 @@
-import { ChakraProvider, cookieStorageManager, localStorageManager } from '@chakra-ui/core';
+import { ChakraProvider, cookieStorageManager, localStorageManager } from '@chakra-ui/react';
 import customTheme from '../config/theme';
 import Header from '../components/Header';
 import { Provider } from 'next-auth/client';
