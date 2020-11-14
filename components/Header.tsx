@@ -137,7 +137,7 @@ function Header(props) {
 
         <Box display={{ base: 'block', md: 'none' }}>
           <Menu isLazy>
-            <MenuButton size="sm" colorScheme="teal">
+            <MenuButton size="sm">
               <FaBars />
             </MenuButton>
             <MenuList>
