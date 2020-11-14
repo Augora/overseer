@@ -14,7 +14,7 @@ import {
   Text,
   useColorMode,
 } from '@chakra-ui/react';
-import moment from 'moment';
+import { formatDistanceToNow, parseJSON } from 'date-fns';
 import { FaCaretDown, FaArrowRight } from 'react-icons/fa';
 
 interface IGitHubWorkflowCardProps {
@@ -95,7 +95,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
       <Text my="2">{props.branchName}</Text>
 
       <Text my="2" color="gray.500" fontSize="sm">
-        {moment(props.createdAt).fromNow()}
+        {formatDistanceToNow(parseJSON(props.createdAt))}
       </Text>
 
       <Box my="4" display="flex" justifyContent="start" alignItems="center">

@@ -32,7 +32,7 @@ function uploadBlobOnAzureStorage(blobname: string, blobContent: string) {
   const blockBlobClient = containerClient.getBlockBlobClient(blobname);
   return blockBlobClient.upload(blobContent, blobContent.length, {
     blobHTTPHeaders: {
-      blobContentType: mime.lookup(blobname),
+      blobContentType: mime.lookup(blobname) || undefined,
     },
   });
 }

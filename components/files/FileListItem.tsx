@@ -24,6 +24,7 @@ import {
 import { FaEye, FaPen, FaTrash } from 'react-icons/fa';
 import { BlobItem } from '@azure/storage-blob';
 import mime from 'mime-types';
+import { formatDistanceToNow, parseJSON } from 'date-fns';
 
 export default function FileListItem(props: BlobItem) {
   const { colorMode } = useColorMode();
@@ -41,7 +42,8 @@ export default function FileListItem(props: BlobItem) {
       <Flex justify="space-between">
         <Box>
           <Heading size="lg">{props.name}</Heading>
-          {(props.properties.contentLength / 1024).toFixed(2)}kb
+          {(props.properties.contentLength / 1024).toFixed(2)}kb |{' '}
+          {formatDistanceToNow(parseJSON(props.properties.lastModified))}
         </Box>
 
         <Box>
