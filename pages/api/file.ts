@@ -1,5 +1,5 @@
 import { NowRequest, NowResponse } from '@vercel/node';
-import { BlobServiceClient, StorageSharedKeyCredential } from '@azure/storage-blob';
+import { BlobServiceClient, StorageSharedKeyCredential, BlobItem } from '@azure/storage-blob';
 import { getSession } from 'next-auth/client';
 
 import mime from 'mime-types';
@@ -20,7 +20,7 @@ async function listBlobOnAzureStorage() {
     includeTags: true,
   });
   let blobItem = await iter.next();
-  let res = new Array();
+  let res = new Array<BlobItem>();
   while (!blobItem.done) {
     res.push(blobItem.value);
     blobItem = await iter.next();
