@@ -85,9 +85,9 @@ export default function fileList() {
       </Flex>
       <List>
         {data &&
-          data.map((f) => (
-            <FileListeItem key={f.name + '-' + f.etag} name={f.name}></FileListeItem>
-          ))}
+          data.map((f) => {
+            return <FileListeItem key={f.name + '-' + f.properties.etag} {...f}></FileListeItem>;
+          })}
       </List>
     </Box>
   );
