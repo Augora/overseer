@@ -30,7 +30,7 @@ async function listBlobOnAzureStorage() {
 
 function uploadBlobOnAzureStorage(blobname: string, blobContent: ArrayBuffer) {
   const blockBlobClient = containerClient.getBlockBlobClient(blobname);
-  return blockBlobClient.upload(blobContent, blobContent.length, {
+  return blockBlobClient.upload(blobContent, blobContent.byteLength, {
     blobHTTPHeaders: {
       blobContentType: mime.lookup(blobname) || undefined,
     },
