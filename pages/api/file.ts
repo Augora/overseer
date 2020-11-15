@@ -28,7 +28,7 @@ async function listBlobOnAzureStorage() {
   return res;
 }
 
-function uploadBlobOnAzureStorage(blobname: string, blobContent: string) {
+function uploadBlobOnAzureStorage(blobname: string, blobContent: ArrayBuffer) {
   const blockBlobClient = containerClient.getBlockBlobClient(blobname);
   return blockBlobClient.upload(blobContent, blobContent.length, {
     blobHTTPHeaders: {
@@ -52,7 +52,7 @@ enum EOPERATION {
 
 interface IBody {
   name?: string;
-  content?: string;
+  content?: ArrayBuffer;
 }
 
 interface IProcessType {
@@ -75,7 +75,7 @@ function parseRequest(session, req: NowRequest): IProcessType {
     };
   } else if (req.method.toUpperCase() === 'POST' || req.method.toUpperCase() === 'PUT') {
     const name = req.body.name;
-    const content = req.body.content;
+    const content = Buffer.from(req.body.content, 'base64');
     if (name && content) {
       return {
         operation: req.method.toUpperCase() === 'POST' ? EOPERATION.CREATE : EOPERATION.UPDATE,

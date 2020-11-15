@@ -7,6 +7,16 @@ import { useDropzone } from 'react-dropzone';
 import { ListFiles, CreateFile } from '../../lib/files/Wrapper';
 import FileListeItem from './FileListItem';
 
+function arrayBufferToBase64(buffer) {
+  let binary = '';
+  let bytes = new Uint8Array(buffer);
+  let len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
+}
+
 function uploadFiles(refetchMethod: (value: any) => any) {
   return function processFiles(acceptedFiles: File[]) {
     const processes = acceptedFiles.map((file) => {
@@ -18,11 +28,11 @@ function uploadFiles(refetchMethod: (value: any) => any) {
         reader.onload = () => {
           const fileContent = reader.result;
           if (fileContent instanceof ArrayBuffer) {
-            return reject('Wrong type recognized.');
+            return resolve(CreateFile(file.name, arrayBufferToBase64(fileContent)));
           }
-          return resolve(CreateFile(file.name, fileContent));
+          return reject('Wrong type recognized.');
         };
-        reader.readAsText(file);
+        reader.readAsArrayBuffer(file);
       });
     });
     Promise.all(processes).then(refetchMethod);
