@@ -20,6 +20,21 @@ import {
 
 import { FaUsers, FaHome, FaFolder, FaSun, FaMoon, FaBars } from 'react-icons/fa';
 
+const routes = [
+  {
+    Label: 'Home',
+    URL: '/',
+  },
+  {
+    Label: 'Groupes',
+    URL: '/groupes-parlementaires',
+  },
+  {
+    Label: 'Files',
+    URL: '/files',
+  },
+];
+
 function Header(props) {
   const router = useRouter();
   const { colorMode, toggleColorMode } = useColorMode();
@@ -30,6 +45,34 @@ function Header(props) {
     Router.events.on('routeChangeComplete', () => setIsRouteLoading(false));
     Router.events.on('routeChangeError', () => setIsRouteLoading(false));
   }, []);
+
+  const routeLinks = routes.map((r) => (
+    <Box
+      key={r.URL}
+      mx="2"
+      transition="color cubic-bezier(1, 0, 0, 1) 250ms"
+      _hover={{
+        color: 'teal.300',
+        cursor: 'pointer',
+      }}
+    >
+      <Link href="/">
+        <Text fontSize="2xl" color={router.pathname === r.URL ? 'teal.300' : 'white.300'}>
+          {r.Label}
+        </Text>
+      </Link>
+    </Box>
+  ));
+
+  const routeMenuLinks = routes.map((r) => (
+    <Link key={r.URL} href="/files">
+      <MenuItem>
+        <Text fontSize="2xl" color={router.pathname === r.URL ? 'teal.300' : 'white.300'}>
+          {r.Label}
+        </Text>
+      </MenuItem>
+    </Link>
+  ));
 
   return (
     <Flex
@@ -74,101 +117,28 @@ function Header(props) {
             </Heading>
           </Box>
         </Link>
-        {props.session && (
-          <Flex justifyContent="flex-end" display={{ base: 'none', md: 'flex' }}>
-            <Box
-              mx="2"
-              transition="color cubic-bezier(1, 0, 0, 1) 250ms"
-              _hover={{
-                color: 'teal.300',
-                cursor: 'pointer',
-              }}
-            >
-              <Link href="/">
-                <Text fontSize="2xl" color={router.pathname === '/' ? 'teal.300' : 'white.300'}>
-                  Home
-                </Text>
-              </Link>
-            </Box>
-            <Box
-              mx="2"
-              transition="color cubic-bezier(1, 0, 0, 1) 250ms"
-              _hover={{
-                color: 'teal.300',
-                cursor: 'pointer',
-              }}
-            >
-              <Link href="/groupes-parlementaires">
-                <Text
-                  fontSize="2xl"
-                  color={router.pathname === '/groupes-parlementaires' ? 'teal.300' : 'white.300'}
-                >
-                  Groupes
-                </Text>
-              </Link>
-            </Box>
-            <Box
-              mx="2"
-              _hover={{
-                color: 'teal.300',
-                cursor: 'pointer',
-              }}
-            >
-              <Link href="/files">
-                <Text
-                  fontSize="2xl"
-                  color={router.pathname === '/files' ? 'teal.300' : 'white.300'}
-                >
-                  Files
-                </Text>
-              </Link>
-            </Box>
+        <Flex justifyContent="flex-end" display={{ base: 'none', md: 'flex' }}>
+          {props.session && routeLinks}
+          {props.session && (
             <Box mx="2">
               <Text fontSize="2xl">|</Text>
             </Box>
-            <Button onClick={toggleColorMode} mx="2" size="md">
-              {colorMode === 'light' ? <FaMoon /> : <FaSun />}
-            </Button>
-            <Button onClick={props.session ? signOut : signIn} mx="2" size="md">
-              {props.session ? 'Sign out' : 'Sign in'}
-            </Button>
-          </Flex>
-        )}
-
+          )}
+          <Button onClick={toggleColorMode} mx="2" size="md">
+            {colorMode === 'light' ? <FaMoon /> : <FaSun />}
+          </Button>
+          <Button onClick={props.session ? signOut : signIn} mx="2" size="md">
+            {props.session ? 'Sign out' : 'Sign in'}
+          </Button>
+        </Flex>
         <Box display={{ base: 'block', md: 'none' }}>
           <Menu isLazy>
             <MenuButton size="sm">
               <FaBars />
             </MenuButton>
             <MenuList>
-              <Link href="/">
-                <MenuItem>
-                  <Text fontSize="2xl" color={router.pathname === '/' ? 'teal.300' : 'white.300'}>
-                    Home
-                  </Text>
-                </MenuItem>
-              </Link>
-              <Link href="/groupes-parlementaires">
-                <MenuItem>
-                  <Text
-                    fontSize="2xl"
-                    color={router.pathname === '/groupes-parlementaires' ? 'teal.300' : 'white.300'}
-                  >
-                    Groupes
-                  </Text>
-                </MenuItem>
-              </Link>
-              <Link href="/files">
-                <MenuItem>
-                  <Text
-                    fontSize="2xl"
-                    color={router.pathname === '/files' ? 'teal.300' : 'white.300'}
-                  >
-                    Files
-                  </Text>
-                </MenuItem>
-              </Link>
-              <MenuDivider />
+              {props.session && routeMenuLinks}
+              {props.session && <MenuDivider />}
               <MenuItem onClick={toggleColorMode}>
                 <Text fontSize="2xl">{colorMode === 'light' ? <FaMoon /> : <FaSun />}</Text>
               </MenuItem>
