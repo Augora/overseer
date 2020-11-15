@@ -34,7 +34,7 @@ export default function GitHubWorkflowHandler(props: IGitHubWorkflowHandlerProps
       branchName={latestWorkflow.head_branch}
       createdAt={latestWorkflow.updated_at}
       isFetching={isFetching}
-      refreshDataFunction={refetch}
+      refetch={refetch}
     />
   );
 }

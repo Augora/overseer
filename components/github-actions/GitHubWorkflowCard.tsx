@@ -6,16 +6,12 @@ import {
   Flex,
   Heading,
   Link,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Spinner,
   Text,
   useColorMode,
 } from '@chakra-ui/react';
 import { formatDistanceToNow, parseJSON } from 'date-fns';
-import { FaCaretDown, FaArrowRight } from 'react-icons/fa';
+import { FaSync, FaArrowRight } from 'react-icons/fa';
 
 interface IGitHubWorkflowCardProps {
   repositoryName: string;
@@ -25,9 +21,7 @@ interface IGitHubWorkflowCardProps {
   createdAt: string;
   isFetching: boolean;
   logsUrl: string;
-  refreshDataFunction?: Function;
-  manualProductionFunction?: Function;
-  manualStagingFunction?: Function;
+  refetch: Function;
 }
 
 export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
@@ -61,35 +55,16 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
             >
               {props.lastRunStatus}
             </Badge>
-            {props.isFetching && <Spinner />}
           </Heading>
         </Box>
-        {props.manualProductionFunction ||
-        props.manualStagingFunction ||
-        props.refreshDataFunction ? (
-          <Menu>
-            <MenuButton as={Button}>
-              <FaCaretDown />
-            </MenuButton>
-            <MenuList p="0">
-              {props.manualProductionFunction && (
-                <MenuItem border="none" onClick={() => props.manualProductionFunction()}>
-                  Trigger production workflow
-                </MenuItem>
-              )}
-              {props.manualStagingFunction && (
-                <MenuItem border="none" onClick={() => props.manualStagingFunction()}>
-                  Trigger staging workflow
-                </MenuItem>
-              )}
-              {props.refreshDataFunction && (
-                <MenuItem border="none" onClick={() => props.refreshDataFunction()}>
-                  Refresh data
-                </MenuItem>
-              )}
-            </MenuList>
-          </Menu>
-        ) : null}
+        <Button
+          aria-label="Refresh"
+          rightIcon={props.isFetching ? <Spinner size="sm" /> : <FaSync />}
+          onClick={() => props.refetch()}
+          isDisabled={props.isFetching}
+        >
+          Refresh
+        </Button>
       </Flex>
 
       <Text my="2">{props.branchName}</Text>

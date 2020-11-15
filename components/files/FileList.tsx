@@ -72,7 +72,7 @@ export default function fileList() {
       <Flex flexDirection={{ base: 'column', md: 'row' }}>
         <Button
           aria-label="Refresh"
-          rightIcon={isFetching ? <Spinner /> : <FaSync />}
+          rightIcon={isFetching ? <Spinner size="sm" /> : <FaSync />}
           onClick={() => refetch()}
           width={{ base: 'auto', md: 150 }}
           mr={{ base: 0, md: 10 }}
