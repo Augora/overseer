@@ -15,6 +15,7 @@ export default function GitHubWorkflowHandler(props: IGitHubWorkflowHandlerProps
     () => GetWorkflows(props.githubToken, props.repositoryName),
     {
       refetchInterval: 10000,
+      cacheTime: 0,
     }
   );
 
