@@ -86,7 +86,13 @@ export default function fileList() {
       <List>
         {data &&
           data.map((f) => {
-            return <FileListeItem key={f.name + '-' + f.properties.etag} {...f}></FileListeItem>;
+            return (
+              <FileListeItem
+                key={f.name + '-' + f.properties.etag}
+                refetch={refetch}
+                {...f}
+              ></FileListeItem>
+            );
           })}
       </List>
     </Box>
