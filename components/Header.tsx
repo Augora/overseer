@@ -56,7 +56,7 @@ function Header(props) {
         cursor: 'pointer',
       }}
     >
-      <Link href="/">
+      <Link href={r.URL}>
         <Text fontSize="2xl" color={router.pathname === r.URL ? 'teal.300' : 'white.300'}>
           {r.Label}
         </Text>
@@ -65,7 +65,7 @@ function Header(props) {
   ));
 
   const routeMenuLinks = routes.map((r) => (
-    <Link key={r.URL} href="/files">
+    <Link key={r.URL} href={r.URL}>
       <MenuItem>
         <Text fontSize="2xl" color={router.pathname === r.URL ? 'teal.300' : 'white.300'}>
           {r.Label}
