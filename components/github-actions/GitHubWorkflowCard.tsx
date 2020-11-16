@@ -5,6 +5,7 @@ import {
   Button,
   Flex,
   Heading,
+  IconButton,
   Link,
   Spinner,
   Text,
@@ -57,14 +58,12 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
             </Badge>
           </Heading>
         </Box>
-        <Button
+        <IconButton
           aria-label="Refresh"
-          rightIcon={props.isFetching ? <Spinner size="sm" /> : <FaSync />}
+          icon={props.isFetching ? <Spinner size="sm" /> : <FaSync />}
           onClick={() => props.refetch()}
           isDisabled={props.isFetching}
-        >
-          Refresh
-        </Button>
+        />
       </Flex>
 
       <Text my="2">{props.branchName}</Text>
@@ -82,15 +81,6 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
           onClick={() => window.open(props.logsUrl, '_blank')}
         >
           <Text>Logs</Text>
-        </Button>
-        <Button
-          rightIcon={<FaArrowRight />}
-          colorScheme="teal"
-          variant="outline"
-          mr="20px"
-          isDisabled
-        >
-          <Text>Runs details</Text>
         </Button>
       </Box>
     </Box>

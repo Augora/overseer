@@ -16,6 +16,7 @@ export default function GitHubWorkflowHandler(props: IGitHubWorkflowHandlerProps
     {
       refetchInterval: 10000,
       cacheTime: 0,
+      staleTime: 0,
     }
   );
 
