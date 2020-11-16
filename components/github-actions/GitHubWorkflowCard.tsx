@@ -33,9 +33,9 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
       minHeight="250px"
       p="5"
       width="100%"
-      bg={colorMode === 'light' ? 'gray.100' : 'gray.900'}
+      bg={colorMode === 'light' ? 'gray.200' : 'gray.900'}
       transition="background-color cubic-bezier(1, 0, 0, 1) 250ms"
-      _hover={{ bg: colorMode === 'light' ? 'gray.300' : 'gray.700' }}
+      _hover={{ bg: colorMode === 'light' ? 'gray.400' : 'gray.700' }}
     >
       <Flex justifyContent="space-between">
         <Box>
