@@ -11,9 +11,7 @@ export function UpdateUserPassword(userEmail: string, newPassword: string) {
 }
 
 export function DoesUserExists(userEmail: string): Promise<Boolean> {
-  return GetProvidedFaunaDBClient().query(
-    Exists(Match(Index('users_by_email'), 'bacas.kevin@hotmail.fr'))
-  );
+  return GetProvidedFaunaDBClient().query(Exists(Match(Index('users_by_email'), userEmail)));
 }
 
 export function GetUserPassword(userEmail: string, password: string) {
