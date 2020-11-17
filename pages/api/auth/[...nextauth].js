@@ -11,10 +11,12 @@ const options = {
     Providers.GitHub({
       clientId: process.env.OVERSEER_APP_CLIENTID,
       clientSecret: process.env.OVERSEER_APP_CLIENTSECRET,
+      scope: ['user:email'],
     }),
   ],
   callbacks: {
     signIn: async (user, account, profile) => {
+      console.log('user, account, profile', user, account, profile);
       if (
         user.email !== null &&
         user.email.length > 0 &&
@@ -37,12 +39,22 @@ const options = {
       }
     },
     redirect: async (url, baseUrl) => {
+      console.log('url, baseUrl', url, baseUrl);
       return Promise.resolve(baseUrl);
     },
     session: async (session, user) => {
+      console.log('session, user', session, user);
       return Promise.resolve(Object.assign({}, session, { user }));
     },
     jwt: async (token, user, account, profile, isNewUser) => {
+      console.log(
+        'token, user, account, profile, isNewUser',
+        token,
+        user,
+        account,
+        profile,
+        isNewUser
+      );
       if (token && token.faunaDBToken && !user && !account && !profile) {
         return Promise.resolve(token);
       }
