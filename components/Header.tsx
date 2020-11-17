@@ -57,9 +57,9 @@ function Header(props) {
       }}
     >
       <Link href={r.URL}>
-        <Text fontSize="2xl" color={router.pathname === r.URL ? 'teal.300' : 'white.300'}>
+        <Button color={router.pathname === r.URL ? 'teal.300' : 'white.300'} variant="ghost">
           {r.Label}
-        </Text>
+        </Button>
       </Link>
     </Box>
   ));
@@ -104,30 +104,28 @@ function Header(props) {
         <meta name="theme-color" content="#ffffff" />
       </Head>
       <Flex alignItems="center" justifyContent="space-between" w="100%">
-        <Link href="/">
-          <Box
-            transition="color cubic-bezier(1, 0, 0, 1) 250ms"
-            _hover={{
-              color: 'teal.300',
-              cursor: 'pointer',
-            }}
-          >
-            <Heading as="h1" size="lg">
-              Overseer
-            </Heading>
-          </Box>
-        </Link>
-        <Flex justifyContent="flex-end" display={{ base: 'none', md: 'flex' }}>
-          {props.session && routeLinks}
-          {props.session && (
-            <Box mx="2">
-              <Text fontSize="2xl">|</Text>
+        <Flex>
+          <Link href="/">
+            <Box
+              mr="10"
+              transition="color cubic-bezier(1, 0, 0, 1) 250ms"
+              _hover={{
+                color: 'teal.300',
+                cursor: 'pointer',
+              }}
+            >
+              <Heading as="h1" size="lg">
+                Overseer
+              </Heading>
             </Box>
-          )}
-          <Button onClick={toggleColorMode} mx="2" size="md">
+          </Link>
+          <Flex display={{ base: 'none', md: 'flex' }}>{props.session && routeLinks}</Flex>
+        </Flex>
+        <Flex justifyContent="flex-end" display={{ base: 'none', md: 'flex' }}>
+          <Button onClick={toggleColorMode} mx="2" variant="ghost">
             {colorMode === 'light' ? <FaMoon /> : <FaSun />}
           </Button>
-          <Button onClick={props.session ? signOut : signIn} mx="2" size="md">
+          <Button onClick={props.session ? signOut : signIn} mx="2" variant="ghost">
             {props.session ? 'Sign out' : 'Sign in'}
           </Button>
         </Flex>
