@@ -1,22 +1,50 @@
 import { GetProvidedFaunaDBClient } from '../FaunaDBDriver';
 import fauna from 'faunadb';
-const { Update, Match, Select, Get, Index, Exists, Login } = fauna.query;
+const {
+  Update,
+  Match,
+  Select,
+  Get,
+  Index,
+  Exists,
+  Equals,
+  Login,
+  Create,
+  Collection,
+} = fauna.query;
 
-export function UpdateUserPassword(userEmail: string, newPassword: string) {
+export function CreateUser(username: string) {
   return GetProvidedFaunaDBClient().query(
-    Update(Select('ref', Get(Match(Index('users_by_email'), userEmail))), {
+    Create(Collection('User'), {
+      data: {
+        name: username,
+        isAdmin: false,
+      },
+    })
+  );
+}
+
+export function UpdateUserPassword(username: string, newPassword: string) {
+  return GetProvidedFaunaDBClient().query(
+    Update(Select('ref', Get(Match(Index('user_by_name'), username))), {
       credentials: { password: newPassword },
     })
   );
 }
 
-export function DoesUserExists(userEmail: string): Promise<Boolean> {
-  return GetProvidedFaunaDBClient().query(Exists(Match(Index('users_by_email'), userEmail)));
+export function DoesUserExists(username: string): Promise<Boolean> {
+  return GetProvidedFaunaDBClient().query(Exists(Match(Index('user_by_name'), username)));
 }
 
-export function GetUserPassword(userEmail: string, password: string) {
+export function IsUserAdmin(username: string): Promise<Boolean> {
   return GetProvidedFaunaDBClient().query(
-    Login(Match(Index('users_by_email'), userEmail), {
+    Equals(Select('isAdmin', Select('data', Get(Match(Index('user_by_name'), username)))), true)
+  );
+}
+
+export function GetUserPassword(username: string, password: string) {
+  return GetProvidedFaunaDBClient().query(
+    Login(Match(Index('user_by_name'), username), {
       password,
     })
   );

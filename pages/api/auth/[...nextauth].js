@@ -1,9 +1,11 @@
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
 import {
+  CreateUser,
   UpdateUserPassword,
   DoesUserExists,
   GetUserPassword,
+  IsUserAdmin,
 } from '../../../lib/faunadb/users/DataResolver';
 
 const options = {
@@ -17,26 +19,37 @@ const options = {
   callbacks: {
     signIn: async (user, account, profile) => {
       console.log('user, account, profile', user, account, profile);
+      console.log('profile.login :>> ', profile.login);
+      console.log('account.accessToken :>> ', account.accessToken);
       if (
-        user.email !== null &&
-        user.email.length > 0 &&
+        profile.login !== null &&
+        profile.login.length > 0 &&
         account.accessToken !== null &&
         account.accessToken.length > 0
       ) {
-        const userExists = await DoesUserExists(user.email);
+        const userExists = await DoesUserExists(profile.login);
+        console.log('userExists :>> ', userExists);
         if (userExists) {
-          return UpdateUserPassword(user.email, account.accessToken)
-            .then(true)
-            .catch((e) => {
-              console.error(e);
-              throw new e();
-            });
+          const isAdmin = await IsUserAdmin(profile.login);
+          console.log('isAdmin :>> ', isAdmin);
+          if (isAdmin) {
+            return UpdateUserPassword(profile.login, account.accessToken)
+              .then(true)
+              .catch((e) => {
+                console.error(e);
+                throw new e();
+              });
+          }
         } else {
-          return Promise.resolve(false);
+          console.log('profile :>> ', profile);
+          try {
+            await CreateUser(profile.login);
+          } catch (e) {
+            console.error(e);
+          }
         }
-      } else {
-        return Promise.resolve(false);
       }
+      return Promise.resolve(false);
     },
     redirect: async (url, baseUrl) => {
       console.log('url, baseUrl', url, baseUrl);
@@ -67,7 +80,7 @@ const options = {
         account.accessToken !== null &&
         account.accessToken.length > 0
       ) {
-        const userPassword = await GetUserPassword(user.email, account.accessToken);
+        const userPassword = await GetUserPassword(profile.login, account.accessToken);
         userToken = userPassword.secret;
       }
       return Promise.resolve(Object.assign({}, token, account, { faunaDBToken: userToken }));
