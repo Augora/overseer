@@ -75,8 +75,8 @@ const options = {
       if (
         user &&
         account &&
-        user.email !== null &&
-        user.email.length > 0 &&
+        profile.login !== null &&
+        profile.login.length > 0 &&
         account.accessToken !== null &&
         account.accessToken.length > 0
       ) {
