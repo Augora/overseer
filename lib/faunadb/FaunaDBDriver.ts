@@ -1,10 +1,8 @@
 import { Client } from 'faunadb';
 
-const client = new Client({
-  secret: process.env.FAUNADB_TOKEN,
-  timeout: 60,
-});
-
-export function GetProvidedFaunaDBClient(): Client {
-  return client;
+export function GetProvidedFaunaDBClient(token?: string): Client {
+  return new Client({
+    secret: token || process.env.FAUNADB_TOKEN,
+    timeout: 60,
+  });
 }

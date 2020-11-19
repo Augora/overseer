@@ -33,6 +33,10 @@ const routes = [
     Label: 'Files',
     URL: '/files',
   },
+  {
+    Label: 'Users',
+    URL: '/users',
+  },
 ];
 
 function Header(props) {
@@ -50,14 +54,13 @@ function Header(props) {
     <Box
       key={r.URL}
       mx="2"
-      transition="color cubic-bezier(1, 0, 0, 1) 250ms"
       _hover={{
-        color: 'teal.300',
+        color: 'teal.200',
         cursor: 'pointer',
       }}
     >
       <Link href={r.URL}>
-        <Button color={router.pathname === r.URL ? 'teal.300' : 'white.300'} variant="ghost">
+        <Button color={router.pathname === r.URL ? 'teal.200' : 'none'} variant="ghost">
           {r.Label}
         </Button>
       </Link>
@@ -67,7 +70,7 @@ function Header(props) {
   const routeMenuLinks = routes.map((r) => (
     <Link key={r.URL} href={r.URL}>
       <MenuItem>
-        <Text fontSize="2xl" color={router.pathname === r.URL ? 'teal.300' : 'white.300'}>
+        <Text fontSize="2xl" color={router.pathname === r.URL ? 'teal.200' : 'none'}>
           {r.Label}
         </Text>
       </MenuItem>
@@ -108,7 +111,6 @@ function Header(props) {
           <Link href="/">
             <Box
               mr="10"
-              transition="color cubic-bezier(1, 0, 0, 1) 250ms"
               _hover={{
                 color: 'teal.300',
                 cursor: 'pointer',

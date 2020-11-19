@@ -1,5 +1,5 @@
 import { GetProvidedFaunaDBClient } from '../FaunaDBDriver';
-import fauna from 'faunadb';
+import fauna, { values } from 'faunadb';
 const {
   Update,
   Match,
@@ -11,6 +11,11 @@ const {
   Login,
   Create,
   Collection,
+  Map,
+  Documents,
+  Paginate,
+  Lambda,
+  Var,
 } = fauna.query;
 
 export function CreateUser(username: string) {
@@ -46,6 +51,45 @@ export function GetUserPassword(username: string, password: string) {
   return GetProvidedFaunaDBClient().query(
     Login(Match(Index('user_by_name'), username), {
       password,
+    })
+  );
+}
+
+export function GetUsers(token: string) {
+  return GetProvidedFaunaDBClient(token)
+    .query<
+      values.Document<
+        {
+          name: string;
+          isAdmin: boolean;
+        }[]
+      >
+    >(
+      Map(
+        Paginate(Documents(Collection('User')), { size: 1000 }),
+        Lambda('X', Select('data', Get(Var('X'))))
+      )
+    )
+    .then((d) => d.data);
+}
+
+export function CreateUserWithAdminRole(token: string, username: string, isAdmin: boolean) {
+  return GetProvidedFaunaDBClient(token).query(
+    Create(Collection('User'), {
+      data: {
+        name: username,
+        isAdmin,
+      },
+    })
+  );
+}
+
+export function UpdateUserAdminRole(token: string, username: string, isAdmin: boolean) {
+  return GetProvidedFaunaDBClient(token).query(
+    Update(Select('ref', Get(Match(Index('user_by_name'), username))), {
+      data: {
+        isAdmin,
+      },
     })
   );
 }
