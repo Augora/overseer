@@ -16,10 +16,11 @@ import {
   Stack,
   useDisclosure,
 } from '@chakra-ui/react';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTable } from 'react-table';
 import UserBox from './UserBox';
 import { FaPlusCircle } from 'react-icons/fa';
+import { CreateUserWithAdminRole } from '../../lib/faunadb/users/DataResolver';
 
 interface IUsersGridProps {
   token: string;
@@ -27,6 +28,7 @@ interface IUsersGridProps {
     name: string;
     isAdmin: boolean;
   }[];
+  refetch: Function;
 }
 
 export default function UsersGrid(props: IUsersGridProps) {
@@ -50,7 +52,9 @@ export default function UsersGrid(props: IUsersGridProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const usernameField = React.useRef();
-  const isAdminField = React.useRef();
+
+  const [Username, setUsername] = useState('');
+  const [IsAdmin, setIsAdmin] = useState(false);
 
   const parsedRows = rows.map((row) => {
     return {
@@ -69,7 +73,6 @@ export default function UsersGrid(props: IUsersGridProps) {
           ref={btnRef}
           mr={{ base: 0, md: 10 }}
           mb={{ base: 5, md: 10 }}
-          isDisabled
         >
           Create user
         </Button>
@@ -95,11 +98,23 @@ export default function UsersGrid(props: IUsersGridProps) {
               <Stack spacing="5">
                 <Box>
                   <FormLabel htmlFor="Username">Username</FormLabel>
-                  <Input id="Username" placeholder="KevinBacas" ref={usernameField} />
+                  <Input
+                    id="Username"
+                    value={Username}
+                    placeholder="KevinBacas"
+                    ref={usernameField}
+                    onChange={(e) => {
+                      setUsername(e.target.value);
+                    }}
+                  />
                 </Box>
 
                 <Box>
-                  <Checkbox colorScheme="teal" ref={isAdminField}>
+                  <Checkbox
+                    colorScheme="teal"
+                    checked={IsAdmin}
+                    onChange={(e) => setIsAdmin(e.target.checked)}
+                  >
                     Is admin?
                   </Checkbox>
                 </Box>
@@ -110,7 +125,19 @@ export default function UsersGrid(props: IUsersGridProps) {
               <Button variant="outline" mr={3} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme="teal">Save</Button>
+              <Button
+                colorScheme="teal"
+                onClick={() => {
+                  CreateUserWithAdminRole(props.token, Username, IsAdmin).then(() =>
+                    props.refetch()
+                  );
+                  setUsername('');
+                  setIsAdmin(false);
+                  onClose();
+                }}
+              >
+                Save
+              </Button>
             </DrawerFooter>
           </DrawerContent>
         </DrawerOverlay>

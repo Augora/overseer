@@ -9,12 +9,12 @@ interface IUsersHandlerProps {
 }
 
 export default function UsersHandler(props: IUsersHandlerProps) {
-  const { data, isLoading } = useQuery('users', () => GetUsers(props.token));
+  const { data, isLoading, refetch } = useQuery('users', () => GetUsers(props.token));
   return isLoading ? (
     <Box minHeight="250px" display="flex" alignItems="center" justifyContent="center">
       <Spinner size="xl" />
     </Box>
   ) : (
-    <UsersGrid token={props.token} data={data} />
+    <UsersGrid token={props.token} data={data} refetch={refetch} />
   );
 }
