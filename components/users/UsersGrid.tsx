@@ -79,7 +79,7 @@ export default function UsersGrid(props: IUsersGridProps) {
       </Flex>
       <SimpleGrid minChildWidth="300px" spacing="40px">
         {parsedRows.map((row) => (
-          <UserBox token={props.token} name={row.name} isAdmin={row.isAdmin} />
+          <UserBox key={row.name} token={props.token} name={row.name} isAdmin={row.isAdmin} />
         ))}
       </SimpleGrid>
       <Drawer
