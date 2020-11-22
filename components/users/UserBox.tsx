@@ -1,12 +1,14 @@
 import React from 'react';
-import { Box, Heading, useColorMode, Checkbox, CheckboxGroup, Link } from '@chakra-ui/react';
+import { Box, Heading, useColorMode, Checkbox, Link, Flex, IconButton } from '@chakra-ui/react';
 import { ScaleFade } from '@chakra-ui/transition';
-import { UpdateUserAdminRole } from '../../lib/faunadb/users/DataResolver';
+import { DeleteUser, UpdateUserAdminRole } from '../../lib/faunadb/users/DataResolver';
+import { FaTrash } from 'react-icons/fa';
 
 interface IUserBoxProps {
   token: string;
   name: string;
   isAdmin: boolean;
+  refetch: Function;
 }
 
 export default function UserBox(props: IUserBoxProps) {
@@ -20,11 +22,20 @@ export default function UserBox(props: IUserBoxProps) {
         transition="background-color cubic-bezier(1, 0, 0, 1) 200ms"
         _hover={{ bg: colorMode === 'light' ? 'gray.300' : 'gray.700' }}
       >
-        <Link href={`https://github.com/${props.name}`}>
-          <Heading size="lg" mb="5">
-            {props.name}
-          </Heading>
-        </Link>
+        <Flex justifyContent="space-between">
+          <Link href={`https://github.com/${props.name}`}>
+            <Heading size="lg" mb="5">
+              {props.name}
+            </Heading>
+          </Link>
+          <IconButton
+            aria-label="Remove"
+            icon={<FaTrash />}
+            onClick={() => {
+              DeleteUser(props.token, props.name).then(() => props.refetch());
+            }}
+          />
+        </Flex>
         <Checkbox
           defaultIsChecked={props.isAdmin}
           colorScheme="teal"

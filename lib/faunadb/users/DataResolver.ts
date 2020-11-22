@@ -16,6 +16,7 @@ const {
   Paginate,
   Lambda,
   Var,
+  Delete,
 } = fauna.query;
 
 export function CreateUser(username: string) {
@@ -91,5 +92,11 @@ export function UpdateUserAdminRole(token: string, username: string, isAdmin: bo
         isAdmin,
       },
     })
+  );
+}
+
+export function DeleteUser(token: string, username: string) {
+  return GetProvidedFaunaDBClient(token).query(
+    Delete(Select('ref', Get(Match(Index('user_by_name'), username))))
   );
 }
