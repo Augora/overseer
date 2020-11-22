@@ -24,9 +24,7 @@ export default function UserBox(props: IUserBoxProps) {
       >
         <Flex justifyContent="space-between">
           <Link href={`https://github.com/${props.name}`}>
-            <Heading size="lg" mb="5">
-              {props.name}
-            </Heading>
+            <Heading size="lg">{props.name}</Heading>
           </Link>
           <IconButton
             aria-label="Remove"
