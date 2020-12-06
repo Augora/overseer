@@ -46,6 +46,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
                 {props.repositoryName}
               </Link>
               <Badge
+                p="5px"
                 rounded="5px"
                 mr="10px"
                 colorScheme={
