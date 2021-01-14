@@ -40,7 +40,7 @@
     "@types/node": "^14.14.10",
     "@types/react": "^17.0.0",
     "@types/react-dropzone": "^5.1.0",
-    "@vercel/node": "^1.8.5",
+    "@vercel/node": "^1.9.0",
     "eslint": "^7.15.0",
     "eslint-config-prettier": "^7.0.0",
     "eslint-plugin-prettier": "^3.2.0",
