@@ -1,8 +1,12 @@
 import { ChakraProvider, cookieStorageManager, localStorageManager } from '@chakra-ui/react';
+import { Provider } from 'next-auth/client';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query-devtools';
+
 import customTheme from '../config/theme';
 import Header from '../components/Header';
-import { Provider } from 'next-auth/client';
-import { ReactQueryDevtools } from 'react-query-devtools';
+
+const queryClient = new QueryClient();
 
 function getColorModeManager(cookies) {
   return typeof cookies === 'string' ? cookieStorageManager(cookies) : localStorageManager;
@@ -13,9 +17,11 @@ export default function MyApp({ Component, pageProps }) {
   return (
     <Provider session={pageProps.session}>
       <ChakraProvider theme={customTheme} colorModeManager={colorModeManager}>
-        <Header session={pageProps.session} />
-        <Component {...pageProps} />
-        <ReactQueryDevtools initialIsOpen={false} />
+        <QueryClientProvider client={queryClient}>
+          <Header session={pageProps.session} />
+          <Component {...pageProps} />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
       </ChakraProvider>
     </Provider>
   );
