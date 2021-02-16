@@ -24,7 +24,7 @@
     "graphql": "^15.5.0",
     "lodash": "^4.17.20",
     "mime-types": "^2.1.28",
-    "next": "10.0.6",
+    "next": "10.0.7",
     "next-auth": "^3.3.0",
     "react": "17.0.1",
     "react-color": "^2.19.3",
