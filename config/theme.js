@@ -10,7 +10,7 @@ export default extendTheme({
       700: '#2a69ac',
     },
   },
-  breakpoints: ['30em', '48em', '62em', '80em'],
+  breakpoints: { sm: '30em', md: '48em', lg: '62em', xl: '80em' },
   fonts: {
     heading: '"Avenir Next", sans-serif',
     body: 'system-ui, sans-serif',
