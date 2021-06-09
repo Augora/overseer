@@ -108,13 +108,13 @@
   dependencies:
     "@azure/core-asynciterator-polyfill" "^1.0.0"
 
-"@azure/core-tracing@1.0.0-preview.10":
-  version "1.0.0-preview.10"
-  resolved "https://registry.yarnpkg.com/@azure/core-tracing/-/core-tracing-1.0.0-preview.10.tgz#e7060272145dddad4486765030d1b037cd52a8ea"
-  integrity sha512-iIwjtMwQnsxB7cYkugMx+s4W1nfy3+pT/ceo+uW1fv4YDgYe84nh+QP0fEC9IH/3UATLSWbIBemdMHzk2APUrw==
+"@azure/core-tracing@1.0.0-preview.11":
+  version "1.0.0-preview.11"
+  resolved "https://registry.yarnpkg.com/@azure/core-tracing/-/core-tracing-1.0.0-preview.11.tgz#bdfb2ba73cd6c39b7d6c207b9522eb98e08b4ddd"
+  integrity sha512-frF0pJc9HTmKncVokhBxCqipjbql02DThQ1ZJ9wLi7SDMLdPAFyDI5xZNzX5guLz+/DtPkY+SGK2li9FIXqshQ==
   dependencies:
     "@opencensus/web-types" "0.0.7"
-    "@opentelemetry/api" "^0.10.2"
+    "@opentelemetry/api" "1.0.0-rc.0"
     tslib "^2.0.0"
 
 "@azure/core-tracing@1.0.0-preview.8":
@@ -142,18 +142,17 @@
   dependencies:
     tslib "^1.9.3"
 
-"@azure/storage-blob@^12.5.0":
-  version "12.5.0"
-  resolved "https://registry.yarnpkg.com/@azure/storage-blob/-/storage-blob-12.5.0.tgz#1ddd8837d9a15ebe355e795375d13b406f2cb496"
-  integrity sha512-DgoefgODst2IPkkQsNdhtYdyJgSsAZC1pEujO6aD5y7uFy5GnzhYliobSrp204jYRyK5XeJ9iiePmy/SPtTbLA==
+"@azure/storage-blob@^12.6.0":
+  version "12.6.0"
+  resolved "https://registry.yarnpkg.com/@azure/storage-blob/-/storage-blob-12.6.0.tgz#9905d80e5f908a573cc65e1cb8302abc32818844"
+  integrity sha512-cAzsae+5ZdhugQfIT7o5SlVyF2Sc+HygZdPO41ZYdXklfGUyEt+5K4PyM5HQDc0MTVt6x7+waXcaAXT2eF9E6A==
   dependencies:
     "@azure/abort-controller" "^1.0.0"
     "@azure/core-http" "^1.2.0"
     "@azure/core-lro" "^1.0.2"
     "@azure/core-paging" "^1.1.1"
-    "@azure/core-tracing" "1.0.0-preview.10"
+    "@azure/core-tracing" "1.0.0-preview.11"
     "@azure/logger" "^1.0.0"
-    "@opentelemetry/api" "^0.10.2"
     events "^3.0.0"
     tslib "^2.0.0"
 
@@ -949,6 +948,11 @@
   integrity sha512-L7RMuZr5LzMmZiQSQDy9O1jo0q+DaLy6XpYJfIGfYSfoJA5qzYwUP3sP1uMIQ549DvxAgM3ng85EaPTM/hUHwQ==
   dependencies:
     "@opentelemetry/context-base" "^0.14.0"
+
+"@opentelemetry/api@1.0.0-rc.0":
+  version "1.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@opentelemetry/api/-/api-1.0.0-rc.0.tgz#0c7c3f5e1285f99cedb563d74ad1adb9822b5144"
+  integrity sha512-iXKByCMfrlO5S6Oh97BuM56tM2cIBB0XsL/vWF/AtJrJEKx4MC/Xdu0xDsGXMGcNWpqF7ujMsjjnp0+UHBwnDQ==
 
 "@opentelemetry/api@^0.10.2":
   version "0.10.2"
@@ -4107,12 +4111,7 @@ ts-pnp@^1.1.6:
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.2.0.tgz#a500ad084b0798f1c3071af391e65912c86bca92"
   integrity sha512-csd+vJOb/gkzvcCHgTGSChYpy5f1/XKNsmvBGO4JXS+z1v2HobugDz4s1IeFXM3wZB44uczs+eazB5Q/ccdhQw==
 
-tslib@^1.0.0, tslib@^1.10.0, tslib@^1.9.3:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.13.0.tgz#c881e13cc7015894ed914862d276436fa9a47043"
-  integrity sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
-
-tslib@^1.13.0, tslib@^1.14.1:
+tslib@^1.0.0, tslib@^1.10.0, tslib@^1.13.0, tslib@^1.14.1, tslib@^1.9.3:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
