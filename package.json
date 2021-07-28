@@ -23,7 +23,7 @@
     "framer-motion": "^3.0.0",
     "graphql": "^15.5.0",
     "lodash": "^4.17.21",
-    "mime-types": "^2.1.29",
+    "mime-types": "^2.1.32",
     "next": "10.0.9",
     "next-auth": "^3.13.1",
     "react": "17.0.1",
