@@ -38,7 +38,7 @@
   "devDependencies": {
     "@types/mime-types": "^2.1.0",
     "@types/node": "^14.14.35",
-    "@types/react": "^17.0.3",
+    "@types/react": "^17.0.30",
     "@types/react-dropzone": "^5.1.0",
     "@vercel/node": "^1.9.1",
     "eslint": "^7.22.0",
