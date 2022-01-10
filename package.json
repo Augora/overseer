@@ -10,7 +10,7 @@
     "prettier": "prettier --write {components,config,lib,pages}/**/*.{js,ts,jsx,tsx}"
   },
   "dependencies": {
-    "@apollo/client": "^3.4.11",
+    "@apollo/client": "^3.5.6",
     "@apollo/react-hooks": "^4.0.0",
     "@azure/storage-blob": "^12.8.0",
     "@chakra-ui/react": "^1.6.7",
