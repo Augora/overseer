@@ -16,8 +16,9 @@ import {
   MenuList,
   MenuDivider,
 } from '@chakra-ui/react';
-
 import { FaUsers, FaHome, FaFolder, FaSun, FaMoon, FaBars } from 'react-icons/fa';
+
+import supabase from '../lib/supabase/Client';
 
 const routes = [
   {
@@ -126,7 +127,17 @@ function Header(props) {
           <Button onClick={toggleColorMode} mx="2" variant="ghost">
             {colorMode === 'light' ? <FaMoon /> : <FaSun />}
           </Button>
-          <Button mx="2" variant="ghost">
+          <Button
+            mx="2"
+            variant="ghost"
+            onClick={() =>
+              props.session
+                ? supabase.auth.signOut()
+                : supabase.auth.signIn({
+                    provider: 'github',
+                  })
+            }
+          >
             {props.session ? 'Sign out' : 'Sign in'}
           </Button>
         </Flex>
