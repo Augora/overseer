@@ -6,40 +6,9 @@ import { FaCog, FaCheck } from 'react-icons/fa';
 import { ScaleFade } from '@chakra-ui/transition';
 
 interface GroupeEditableProps {
-  GroupeParlementaire: GroupeParlementaire;
+  GroupeParlementaire: Types.Canonical.GroupeParlementaire;
   UpdateFn: Function;
   RemoveFn: Function;
-}
-
-interface GroupeParlementaire {
-  _id: string;
-  Sigle: string;
-  NomComplet?: string;
-  Couleur?: string;
-  CouleurDetail?: CouleurDetail;
-  URLImage?: string;
-  Ordre?: number;
-  Actif?: boolean;
-}
-
-interface CouleurDetail {
-  HSL: HSLDetail;
-  RGB: RGBDetail;
-  HEX: string;
-}
-
-interface HSLDetail {
-  Full: string;
-  H: number;
-  S: number;
-  L: number;
-}
-
-interface RGBDetail {
-  Full: string;
-  R: number;
-  G: number;
-  B: number;
 }
 
 function GroupeEditable(props: GroupeEditableProps) {
@@ -48,7 +17,7 @@ function GroupeEditable(props: GroupeEditableProps) {
   return (
     <ScaleFade initialScale={0.9} in={true}>
       <Box
-        border={props.GroupeParlementaire.Actif ? 'none' : '2px dashed lightGray'}
+        border={props.GroupeParlementaire.Actif ? '2px dashed transparent' : '2px dashed lightGray'}
         borderRadius="5px"
         p={5}
         backgroundColor={props.GroupeParlementaire.Couleur}

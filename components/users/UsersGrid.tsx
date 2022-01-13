@@ -20,13 +20,12 @@ import React, { useMemo, useState } from 'react';
 import { useTable } from 'react-table';
 import UserBox from './UserBox';
 import { FaPlusCircle } from 'react-icons/fa';
-import { CreateUserWithAdminRole } from '../../lib/faunadb/users/DataResolver';
+// import { CreateUserWithAdminRole } from '../../lib/faunadb/users/DataResolver';
 
 interface IUsersGridProps {
-  token: string;
   data: {
-    name: string;
-    isAdmin: boolean;
+    UserId: string;
+    Role: boolean;
   }[];
   refetch: Function;
 }
@@ -36,11 +35,11 @@ export default function UsersGrid(props: IUsersGridProps) {
     () => [
       {
         Header: 'Name',
-        accessor: 'name',
+        accessor: 'UserId',
       },
       {
         Header: 'Is admin?',
-        accessor: 'isAdmin',
+        accessor: 'Role',
       },
     ],
     []
@@ -58,8 +57,8 @@ export default function UsersGrid(props: IUsersGridProps) {
 
   const parsedRows = rows.map((row) => {
     return {
-      name: row.original.name,
-      isAdmin: row.original.isAdmin,
+      name: row.original.user_metadata.full_name,
+      isAdmin: row.original.userRole.Role === 'Admin',
     };
   });
 
@@ -79,13 +78,7 @@ export default function UsersGrid(props: IUsersGridProps) {
       </Flex>
       <SimpleGrid minChildWidth="300px" spacing="40px">
         {parsedRows.map((row) => (
-          <UserBox
-            key={row.name}
-            token={props.token}
-            name={row.name}
-            isAdmin={row.isAdmin}
-            refetch={props.refetch}
-          />
+          <UserBox key={row.name} name={row.name} isAdmin={row.isAdmin} refetch={props.refetch} />
         ))}
       </SimpleGrid>
       <Drawer
@@ -134,9 +127,9 @@ export default function UsersGrid(props: IUsersGridProps) {
               <Button
                 colorScheme="teal"
                 onClick={() => {
-                  CreateUserWithAdminRole(props.token, Username, IsAdmin).then(() =>
-                    props.refetch()
-                  );
+                  // CreateUserWithAdminRole(props.token, Username, IsAdmin).then(() =>
+                  //   props.refetch()
+                  // );
                   setUsername('');
                   setIsAdmin(false);
                   onClose();

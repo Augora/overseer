@@ -1,11 +1,10 @@
 import React from 'react';
 import { Box, Heading, useColorMode, Checkbox, Link, Flex, IconButton } from '@chakra-ui/react';
 import { ScaleFade } from '@chakra-ui/transition';
-import { DeleteUser, UpdateUserAdminRole } from '../../lib/faunadb/users/DataResolver';
+// import { DeleteUser, UpdateUserAdminRole } from '../../lib/faunadb/users/DataResolver';
 import { FaTrash } from 'react-icons/fa';
 
 interface IUserBoxProps {
-  token: string;
   name: string;
   isAdmin: boolean;
   refetch: Function;
@@ -30,7 +29,7 @@ export default function UserBox(props: IUserBoxProps) {
             aria-label="Remove"
             icon={<FaTrash />}
             onClick={() => {
-              DeleteUser(props.token, props.name).then(() => props.refetch());
+              // DeleteUser(props.token, props.name).then(() => props.refetch());
             }}
           />
         </Flex>
@@ -38,7 +37,7 @@ export default function UserBox(props: IUserBoxProps) {
           defaultIsChecked={props.isAdmin}
           colorScheme="teal"
           onChange={(e) => {
-            UpdateUserAdminRole(props.token, props.name, e.target.checked);
+            // UpdateUserAdminRole(props.token, props.name, e.target.checked);
           }}
         >
           Is admin?

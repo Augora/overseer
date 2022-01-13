@@ -121,7 +121,7 @@ function Header(props) {
               </Heading>
             </Box>
           </Link>
-          <Flex display={{ base: 'none', md: 'flex' }}>{props.session && routeLinks}</Flex>
+          <Flex display={{ base: 'none', md: 'flex' }}>{props.user && routeLinks}</Flex>
         </Flex>
         <Flex justifyContent="flex-end" display={{ base: 'none', md: 'flex' }}>
           <Button onClick={toggleColorMode} mx="2" variant="ghost">
@@ -131,14 +131,14 @@ function Header(props) {
             mx="2"
             variant="ghost"
             onClick={() =>
-              props.session
+              props.user
                 ? supabase.auth.signOut()
                 : supabase.auth.signIn({
                     provider: 'github',
                   })
             }
           >
-            {props.session ? 'Sign out' : 'Sign in'}
+            {props.user ? 'Sign out' : 'Sign in'}
           </Button>
         </Flex>
         <Box display={{ base: 'block', md: 'none' }}>
@@ -147,13 +147,13 @@ function Header(props) {
               <FaBars />
             </MenuButton>
             <MenuList>
-              {props.session && routeMenuLinks}
-              {props.session && <MenuDivider />}
+              {props.user && routeMenuLinks}
+              {props.user && <MenuDivider />}
               <MenuItem onClick={toggleColorMode}>
                 <Text fontSize="2xl">{colorMode === 'light' ? <FaMoon /> : <FaSun />}</Text>
               </MenuItem>
               <MenuItem>
-                <Text fontSize="2xl">{props.session ? 'Sign out' : 'Sign in'}</Text>
+                <Text fontSize="2xl">{props.user ? 'Sign out' : 'Sign in'}</Text>
               </MenuItem>
             </MenuList>
           </Menu>

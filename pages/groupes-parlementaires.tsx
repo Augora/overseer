@@ -1,28 +1,35 @@
 import Head from 'next/head';
 import { Box } from '@chakra-ui/react';
 import GroupesHandler from '../components/groupes-parlementaires/GroupesHandler';
-import { getSession } from 'next-auth/client';
-import { NextPageContext } from 'next';
+import supabase from '../lib/supabase/Client';
+import { User } from '@supabase/supabase-js';
+import isNull from 'lodash/isNull';
 
-export default function GroupesParlementaires(props) {
+interface IGroupesParlementairesProps {
+  user: User;
+  token: string;
+}
+
+export default function GroupesParlementaires({ user }: IGroupesParlementairesProps) {
   return (
     <>
       <Head>
         <title>Groupes Parlementaires | Augora</title>
       </Head>
       <Box padding={{ base: '0 15px', md: '0 7vw' }}>
-        {props.session === null ? (
-          'You must log in first.'
-        ) : (
-          <GroupesHandler faunaToken={props.session.user.faunaDBToken} />
-        )}
+        {isNull(user) ? 'You must log in first.' : <GroupesHandler />}
       </Box>
     </>
   );
 }
 
-export async function getServerSideProps(ctx: NextPageContext) {
-  const session = await getSession(ctx);
+export async function getServerSideProps({ req }) {
+  const { user, error, token, data } = await supabase.auth.api.getUserByCookie(req);
 
-  return { props: { session, cookies: ctx.req.headers.cookie ?? '' } };
+  if (error) {
+    console.error(error);
+    return { props: { errorMessage: error.message } };
+  }
+
+  return { props: { user, token, data } };
 }

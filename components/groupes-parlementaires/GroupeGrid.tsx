@@ -4,7 +4,7 @@ import GroupeEditable from './GroupeEditable';
 import sortBy from 'lodash/sortBy';
 
 interface IGroupeGrid {
-  GroupesParlementaires: any[];
+  GroupesParlementaires: Types.Canonical.GroupeParlementaire[];
   CreateFn: Function;
   UpdateFn: Function;
   RemoveFn: Function;
@@ -15,7 +15,7 @@ export default function GroupeGrid(props: IGroupeGrid) {
     <SimpleGrid minChildWidth="300px" spacing="40px">
       {sortBy(props.GroupesParlementaires, ['Ordre']).map((gp) => (
         <GroupeEditable
-          key={gp._id}
+          key={gp.Sigle}
           GroupeParlementaire={gp}
           UpdateFn={props.UpdateFn}
           RemoveFn={props.RemoveFn}

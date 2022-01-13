@@ -9,8 +9,9 @@ import { Auth } from '@supabase/ui';
 import GitHubWorkflowGrid from '../components/github-actions/GitHubWorkflowGrid';
 import supabase from '../lib/supabase/Client';
 
-export default function Home() {
-  const { user, session } = Auth.useUser();
+export default function Home({ errorMessage }) {
+  const { session } = Auth.useUser();
+
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       fetch('/api/auth', {
@@ -28,8 +29,12 @@ export default function Home() {
         <title>Dashboard | Augora</title>
       </Head>
       <Box padding={{ base: '0 15px', md: '0 7vw' }}>
-        {isUndefined(user) || isNull(user) ? (
-          'You must log in first.'
+        {isUndefined(session) || isNull(session) ? (
+          !isNull(errorMessage) || !isUndefined(errorMessage) ? (
+            errorMessage
+          ) : (
+            'You must log in first.'
+          )
         ) : (
           <GitHubWorkflowGrid githubToken={session.provider_token} />
         )}
@@ -43,8 +48,8 @@ export async function getServerSideProps({ req }) {
 
   if (error) {
     console.error(error);
+    return { props: { errorMessage: error.message } };
   }
 
-  // If there is a user, return it.
   return { props: { user, token, data } };
 }

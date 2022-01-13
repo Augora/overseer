@@ -3,15 +3,19 @@ import React, { useState, useEffect } from 'react';
 import { FaArrowUp } from 'react-icons/fa';
 
 import {
-  GetAllGroupesParlementaires,
-  CreateGroupeParlementaire,
-  UpdateGroupeParlementaire,
-} from '../../lib/faunadb/groupes-parlementaires/DataResolver';
+  GetGroupesFromSupabase,
+  CreateGroupeParlementaireToSupabase,
+  UpdateGroupeParlementaireToSupabase,
+} from '../../lib/supabase/groupes-parlementaires/DataResolver';
 import GroupeGrid from './GroupeGrid';
 
-function UpdateGroupeParlementaireFromArray(groupes, id, updatedGroupe) {
+function UpdateGroupeParlementaireFromArray(
+  groupes: Types.Canonical.GroupeParlementaire[],
+  sigle: string,
+  updatedGroupe: Types.Canonical.GroupeParlementaire
+) {
   const newGroupes = groupes.map((gp) => {
-    if (gp._id === id) {
+    if (gp.Sigle === sigle) {
       return updatedGroupe;
     } else {
       return gp;
@@ -20,13 +24,15 @@ function UpdateGroupeParlementaireFromArray(groupes, id, updatedGroupe) {
   return newGroupes;
 }
 
-function RemoveGroupeParlementaireFromArray(groupes, id) {
-  return groupes.filter((gp) => gp._id !== id);
+function RemoveGroupeParlementaireFromArray(
+  groupes: Types.Canonical.GroupeParlementaire[],
+  sigle: string
+) {
+  return groupes.filter((gp) => gp.Sigle !== sigle);
 }
 
 function GenerateNewGroupeParlementaire() {
   return {
-    _id: `CUSTOM_${Math.random()}`,
     Sigle: '',
     NomComplet: '',
     Couleur: 'hsla(0, 0%, 0%, 1)',
@@ -37,55 +43,55 @@ function GenerateNewGroupeParlementaire() {
 }
 
 async function UpdateRemoteGroupes(token, groupes) {
-  const res = await GetAllGroupesParlementaires(token);
-  return groupes.map(async (gp) => {
-    const foundGroupe = res.data.GroupesParlementairesDetails.data.find(
-      (rgp) => gp._id === rgp._id
-    );
-    if (foundGroupe) {
-      const res = await UpdateGroupeParlementaire(token, gp);
-      return Promise.resolve({
-        Action: 'Update',
-        Data: {
-          Sigle: res.data.updateGroupeParlementaire.Sigle,
-        },
-      });
-    }
-    return Promise.resolve({
-      Action: 'Nothing',
-      Data: {
-        Sigle: res.data.updateGroupeParlementaire.Sigle,
-      },
-    });
-  });
+  // const res = await GetAllGroupesParlementaires(token);
+  // return groupes.map(async (gp) => {
+  //   const foundGroupe = res.data.GroupesParlementairesDetails.data.find(
+  //     (rgp) => gp._id === rgp._id
+  //   );
+  //   if (foundGroupe) {
+  //     const res = await UpdateGroupeParlementaire(gp);
+  //     return Promise.resolve({
+  //       Action: 'Update',
+  //       Data: {
+  //         Sigle: res.data.updateGroupeParlementaire.Sigle,
+  //       },
+  //     });
+  //   }
+  //   return Promise.resolve({
+  //     Action: 'Nothing',
+  //     Data: {
+  //       Sigle: res.data.updateGroupeParlementaire.Sigle,
+  //     },
+  //   });
+  // });
 }
 
-interface IGroupesHandler {
-  faunaToken: string;
-}
-
-export default function GroupesHandler(props: IGroupesHandler) {
+export default function GroupesHandler() {
   const [IsLoading, setIsLoading] = useState(true);
-  const [GroupesParlementaires, setGroupesParlementaires] = useState([]);
+  const [GroupesParlementaires, setGroupesParlementaires] = useState<
+    Types.Canonical.GroupeParlementaire[]
+  >([]);
   const [DisplayInactiveGroupes, setDisplayInactiveGroupes] = useState(false);
 
   useEffect(() => {
-    GetAllGroupesParlementaires(props.faunaToken).then((data) => {
-      setGroupesParlementaires(data.data.GroupesParlementairesDetails.data);
+    GetGroupesFromSupabase().then((data) => {
+      console.log('GetAllGroupesParlementaires', data);
+      setGroupesParlementaires(data);
       setIsLoading(false);
     });
   }, []);
 
   const updateRemoteFunction = () => {
-    setIsLoading(true);
-    UpdateRemoteGroupes(props.faunaToken, GroupesParlementaires)
-      .then((promises) => Promise.all(promises))
-      .then((data) => {
-        GetAllGroupesParlementaires(props.faunaToken).then((data) => {
-          setGroupesParlementaires(data.data.GroupesParlementairesDetails.data);
-          setIsLoading(false);
-        });
-      });
+    // setIsLoading(true);
+    // UpdateRemoteGroupes(GroupesParlementaires)
+    //   .then((promises) => Promise.all(promises))
+    //   .then((data) => {
+    //     GetAllGroupesParlementaires().then((data) => {
+    //       console.log('GetAllGroupesParlementaires2', data);
+    //       setGroupesParlementaires(data);
+    //       setIsLoading(false);
+    //     });
+    //   });
   };
 
   return IsLoading ? (
@@ -102,6 +108,7 @@ export default function GroupesHandler(props: IGroupesHandler) {
             onClick={updateRemoteFunction}
             mr={{ base: 0, md: 10 }}
             mb={{ base: 5, md: 10 }}
+            isDisabled
           >
             Update staging
           </Button>
@@ -135,7 +142,7 @@ export default function GroupesHandler(props: IGroupesHandler) {
         }}
         UpdateFn={(gp) => {
           setGroupesParlementaires(
-            UpdateGroupeParlementaireFromArray(GroupesParlementaires, gp._id, gp)
+            UpdateGroupeParlementaireFromArray(GroupesParlementaires, gp.Sigle, gp)
           );
         }}
         RemoveFn={(id) => {

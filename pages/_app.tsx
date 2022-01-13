@@ -19,7 +19,7 @@ export default function MyApp({ Component, pageProps }) {
     <Auth.UserContextProvider supabaseClient={supabase}>
       <ChakraProvider theme={customTheme} colorModeManager={colorModeManager}>
         <QueryClientProvider client={queryClient}>
-          <Header session={pageProps.session} />
+          <Header {...pageProps} />
           <Component {...pageProps} />
           {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         </QueryClientProvider>
