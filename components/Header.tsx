@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
 import Head from 'next/head';
-import { signIn, signOut } from 'next-auth/client';
 import {
   Button,
   Flex,
@@ -127,7 +126,7 @@ function Header(props) {
           <Button onClick={toggleColorMode} mx="2" variant="ghost">
             {colorMode === 'light' ? <FaMoon /> : <FaSun />}
           </Button>
-          <Button onClick={props.session ? signOut : signIn} mx="2" variant="ghost">
+          <Button mx="2" variant="ghost">
             {props.session ? 'Sign out' : 'Sign in'}
           </Button>
         </Flex>
@@ -142,7 +141,7 @@ function Header(props) {
               <MenuItem onClick={toggleColorMode}>
                 <Text fontSize="2xl">{colorMode === 'light' ? <FaMoon /> : <FaSun />}</Text>
               </MenuItem>
-              <MenuItem onClick={props.session ? signOut : signIn}>
+              <MenuItem>
                 <Text fontSize="2xl">{props.session ? 'Sign out' : 'Sign in'}</Text>
               </MenuItem>
             </MenuList>

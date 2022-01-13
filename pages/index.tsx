@@ -1,29 +1,26 @@
 import Head from 'next/head';
 import React from 'react';
-import { getSession } from 'next-auth/client';
 import { NextPageContext } from 'next';
-import GitHubWorkflowGrid from '../components/github-actions/GitHubWorkflowGrid';
 import { Box } from '@chakra-ui/react';
+import isUndefined from 'lodash/isUndefined';
+import isNull from 'lodash/isNull';
 
-export default function Home(props) {
+import supabase from '../lib/supabase/Client';
+import GitHubWorkflowGrid from '../components/github-actions/GitHubWorkflowGrid';
+
+export default function Home({ session }) {
   return (
     <div className="container">
       <Head>
         <title>Dashboard | Augora</title>
       </Head>
       <Box padding={{ base: '0 15px', md: '0 7vw' }}>
-        {props.session === null ? (
+        {isUndefined(session) || isNull(session) ? (
           'You must log in first.'
         ) : (
-          <GitHubWorkflowGrid githubToken={props.session.user.accessToken} />
+          <GitHubWorkflowGrid githubToken={session.user.accessToken} />
         )}
       </Box>
     </div>
   );
-}
-
-export async function getServerSideProps(ctx: NextPageContext) {
-  const session = await getSession(ctx);
-
-  return { props: { session, cookies: ctx.req.headers.cookie ?? '' } };
 }
