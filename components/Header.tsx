@@ -17,6 +17,7 @@ import {
   MenuDivider,
 } from '@chakra-ui/react';
 import { FaUsers, FaHome, FaFolder, FaSun, FaMoon, FaBars } from 'react-icons/fa';
+import { Auth } from '@supabase/ui';
 
 import supabase from '../lib/supabase/Client';
 
@@ -29,10 +30,10 @@ const routes = [
     Label: 'Groupes',
     URL: '/groupes-parlementaires',
   },
-  {
-    Label: 'Files',
-    URL: '/files',
-  },
+  // {
+  //   Label: 'Files',
+  //   URL: '/files',
+  // },
   {
     Label: 'Users',
     URL: '/users',
@@ -43,6 +44,7 @@ function Header(props) {
   const router = useRouter();
   const { colorMode, toggleColorMode } = useColorMode();
   const [IsRouteLoading, setIsRouteLoading] = useState(false);
+  const { session } = Auth.useUser();
 
   useEffect(() => {
     Router.events.on('routeChangeStart', () => setIsRouteLoading(true));
@@ -121,7 +123,7 @@ function Header(props) {
               </Heading>
             </Box>
           </Link>
-          <Flex display={{ base: 'none', md: 'flex' }}>{props.user && routeLinks}</Flex>
+          <Flex display={{ base: 'none', md: 'flex' }}>{session && routeLinks}</Flex>
         </Flex>
         <Flex justifyContent="flex-end" display={{ base: 'none', md: 'flex' }}>
           <Button onClick={toggleColorMode} mx="2" variant="ghost">
@@ -131,14 +133,14 @@ function Header(props) {
             mx="2"
             variant="ghost"
             onClick={() =>
-              props.user
+              session
                 ? supabase.auth.signOut()
                 : supabase.auth.signIn({
                     provider: 'github',
                   })
             }
           >
-            {props.user ? 'Sign out' : 'Sign in'}
+            {session ? 'Sign out' : 'Sign in'}
           </Button>
         </Flex>
         <Box display={{ base: 'block', md: 'none' }}>
@@ -147,13 +149,21 @@ function Header(props) {
               <FaBars />
             </MenuButton>
             <MenuList>
-              {props.user && routeMenuLinks}
-              {props.user && <MenuDivider />}
+              {session && routeMenuLinks}
+              {session && <MenuDivider />}
               <MenuItem onClick={toggleColorMode}>
                 <Text fontSize="2xl">{colorMode === 'light' ? <FaMoon /> : <FaSun />}</Text>
               </MenuItem>
-              <MenuItem>
-                <Text fontSize="2xl">{props.user ? 'Sign out' : 'Sign in'}</Text>
+              <MenuItem
+                onClick={() =>
+                  session
+                    ? supabase.auth.signOut()
+                    : supabase.auth.signIn({
+                        provider: 'github',
+                      })
+                }
+              >
+                <Text fontSize="2xl">{session ? 'Sign out' : 'Sign in'}</Text>
               </MenuItem>
             </MenuList>
           </Menu>

@@ -13,15 +13,18 @@ export default function Home({ errorMessage }) {
   const { session } = Auth.useUser();
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      fetch('/api/auth', {
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      return fetch('/api/setAuthCookie', {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         credentials: 'same-origin',
         body: JSON.stringify({ event, session }),
-      }).then((res) => res.json());
+      });
     });
-  });
+    return () => {
+      authListener.unsubscribe();
+    };
+  }, []);
 
   return (
     <div className="container">
@@ -30,26 +33,11 @@ export default function Home({ errorMessage }) {
       </Head>
       <Box padding={{ base: '0 15px', md: '0 7vw' }}>
         {isUndefined(session) || isNull(session) ? (
-          !isNull(errorMessage) || !isUndefined(errorMessage) ? (
-            errorMessage
-          ) : (
-            'You must log in first.'
-          )
+          'You must log in first.'
         ) : (
           <GitHubWorkflowGrid githubToken={session.provider_token} />
         )}
       </Box>
     </div>
   );
-}
-
-export async function getServerSideProps({ req }) {
-  const { user, error, token, data } = await supabase.auth.api.getUserByCookie(req);
-
-  if (error) {
-    console.error(error);
-    return { props: { errorMessage: error.message } };
-  }
-
-  return { props: { user, token, data } };
 }

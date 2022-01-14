@@ -31,6 +31,7 @@ interface IUsersGridProps {
 }
 
 export default function UsersGrid(props: IUsersGridProps) {
+  console.log(props);
   const columns = useMemo(
     () => [
       {
@@ -57,7 +58,7 @@ export default function UsersGrid(props: IUsersGridProps) {
 
   const parsedRows = rows.map((row) => {
     return {
-      name: row.original.user_metadata.full_name,
+      name: row.original.user_metadata.user_name,
       isAdmin: row.original.userRole.Role === 'Admin',
     };
   });
@@ -72,6 +73,7 @@ export default function UsersGrid(props: IUsersGridProps) {
           ref={btnRef}
           mr={{ base: 0, md: 10 }}
           mb={{ base: 5, md: 10 }}
+          disabled
         >
           Create user
         </Button>
