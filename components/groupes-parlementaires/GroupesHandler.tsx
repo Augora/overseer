@@ -42,28 +42,15 @@ function GenerateNewGroupeParlementaire() {
   };
 }
 
-async function UpdateRemoteGroupes(token, groupes) {
-  // const res = await GetAllGroupesParlementaires(token);
-  // return groupes.map(async (gp) => {
-  //   const foundGroupe = res.data.GroupesParlementairesDetails.data.find(
-  //     (rgp) => gp._id === rgp._id
-  //   );
-  //   if (foundGroupe) {
-  //     const res = await UpdateGroupeParlementaire(gp);
-  //     return Promise.resolve({
-  //       Action: 'Update',
-  //       Data: {
-  //         Sigle: res.data.updateGroupeParlementaire.Sigle,
-  //       },
-  //     });
-  //   }
-  //   return Promise.resolve({
-  //     Action: 'Nothing',
-  //     Data: {
-  //       Sigle: res.data.updateGroupeParlementaire.Sigle,
-  //     },
-  //   });
-  // });
+async function UpdateRemoteGroupes(localGroupes) {
+  const remoteGroupes = await GetGroupesFromSupabase();
+  return localGroupes.map(async (gp) => {
+    const foundGroupe = remoteGroupes.find((rgp) => gp.Sigle === rgp.Sigle);
+    if (foundGroupe) {
+      return await UpdateGroupeParlementaireToSupabase(gp);
+    }
+    return gp;
+  });
 }
 
 export default function GroupesHandler() {
@@ -75,23 +62,19 @@ export default function GroupesHandler() {
 
   useEffect(() => {
     GetGroupesFromSupabase().then((data) => {
-      console.log('GetAllGroupesParlementaires', data);
       setGroupesParlementaires(data);
       setIsLoading(false);
     });
   }, []);
 
   const updateRemoteFunction = () => {
-    // setIsLoading(true);
-    // UpdateRemoteGroupes(GroupesParlementaires)
-    //   .then((promises) => Promise.all(promises))
-    //   .then((data) => {
-    //     GetAllGroupesParlementaires().then((data) => {
-    //       console.log('GetAllGroupesParlementaires2', data);
-    //       setGroupesParlementaires(data);
-    //       setIsLoading(false);
-    //     });
-    //   });
+    setIsLoading(true);
+    UpdateRemoteGroupes(GroupesParlementaires)
+      .then((promises) => Promise.all(promises))
+      .then((data) => {
+        setIsLoading(false);
+        return data;
+      });
   };
 
   return IsLoading ? (
@@ -108,7 +91,6 @@ export default function GroupesHandler() {
             onClick={updateRemoteFunction}
             mr={{ base: 0, md: 10 }}
             mb={{ base: 5, md: 10 }}
-            isDisabled
           >
             Update staging
           </Button>
