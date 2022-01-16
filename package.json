@@ -37,7 +37,7 @@
     "@types/react": "^17.0.38",
     "@types/react-dropzone": "^5.1.0",
     "@vercel/node": "^1.12.1",
-    "eslint": "^8.6.0",
+    "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.5.1",
