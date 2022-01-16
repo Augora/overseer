@@ -27,11 +27,9 @@ function handleQueryString(queryArg: string | string[]): string {
 
 export default async (req: VercelRequest, res: VercelResponse) => {
   if (req.method === 'GET') {
-    console.log(req.query, req.query.access_token);
     const { user, error, data } = await supabase.auth.api.getUser(
       handleQueryString(req.query.access_token)
     );
-    console.log({ user, error, data });
 
     if (user) {
       const users = await supasbaseService.auth.api
