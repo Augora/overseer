@@ -9,8 +9,8 @@ function handleSupabaseError({ error, ...rest }) {
   return rest;
 }
 
-export function GetUsersFromSupabase() {
-  return axios.get('/api/users').then((d) => d.data);
+export function GetUsersFromSupabase(access_token) {
+  return axios.get(`/api/users?access_token=${access_token}`).then((d) => d.data);
 }
 
 export function GetUserRoleFromSupabase() {

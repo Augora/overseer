@@ -12,6 +12,7 @@ interface IUserBoxProps {
 
 export default function UserBox(props: IUserBoxProps) {
   const { colorMode } = useColorMode();
+
   return (
     <ScaleFade initialScale={0.9} in={true}>
       <Box

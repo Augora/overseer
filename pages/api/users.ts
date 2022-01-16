@@ -1,5 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
+import isArray from 'lodash/isArray';
 
 import supabase from '../../lib/supabase/Client';
 import { GetUserRoleFromSupabase } from '../../lib/supabase/users/DataResolver';
@@ -16,9 +17,22 @@ function handleSupabaseError({ error, ...rest }) {
   return rest;
 }
 
+function handleQueryString(queryArg: string | string[]): string {
+  if (isArray(queryArg)) {
+    return queryArg[0];
+  } else {
+    return queryArg;
+  }
+}
+
 export default async (req: VercelRequest, res: VercelResponse) => {
   if (req.method === 'GET') {
-    const { user, error, token, data } = await supabase.auth.api.getUserByCookie(req);
+    console.log(req.query, req.query.access_token);
+    const { user, error, data } = await supabase.auth.api.getUser(
+      handleQueryString(req.query.access_token)
+    );
+    console.log({ user, error, data });
+
     if (user) {
       const users = await supasbaseService.auth.api
         .listUsers()
