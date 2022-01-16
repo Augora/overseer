@@ -31,7 +31,6 @@ interface IUsersGridProps {
 }
 
 export default function UsersGrid(props: IUsersGridProps) {
-  console.log(props);
   const columns = useMemo(
     () => [
       {
