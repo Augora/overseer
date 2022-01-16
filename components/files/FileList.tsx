@@ -4,7 +4,6 @@ import { useQuery } from 'react-query';
 import { FaSync, FaArrowUp } from 'react-icons/fa';
 import { useDropzone } from 'react-dropzone';
 
-import { ListFiles, CreateFile } from '../../lib/files/Wrapper';
 import FileListeItem from './FileListItem';
 
 function arrayBufferToBase64(buffer) {
@@ -28,7 +27,8 @@ function uploadFiles(refetchMethod: (value: any) => any) {
         reader.onload = () => {
           const fileContent = reader.result;
           if (fileContent instanceof ArrayBuffer) {
-            return resolve(CreateFile(file.name, arrayBufferToBase64(fileContent)));
+            return resolve({});
+            // return resolve(CreateFile(file.name, arrayBufferToBase64(fileContent)));
           }
           return reject('Wrong type recognized.');
         };
@@ -41,7 +41,7 @@ function uploadFiles(refetchMethod: (value: any) => any) {
 
 function UploadFileButton(props) {
   const { getRootProps, getInputProps } = useDropzone({
-    onDrop: uploadFiles(props.refetch),
+    // onDrop: uploadFiles(props.refetch),
     noDrag: true,
   });
 
@@ -61,9 +61,15 @@ function UploadFileButton(props) {
 }
 
 export default function fileList() {
-  const { isLoading, data, isFetching, refetch } = useQuery('files', () => ListFiles());
+  const { isLoading, data, isFetching, refetch } = {
+    isLoading: true,
+    data: [],
+    isFetching: true,
+    refetch: (f) => f,
+  };
+  // const { isLoading, data, isFetching, refetch } = useQuery('files', () => ListFiles());
   const { getRootProps } = useDropzone({
-    onDrop: uploadFiles(refetch),
+    // onDrop: uploadFiles(refetch),
     noClick: true,
   });
 
@@ -83,7 +89,7 @@ export default function fileList() {
         <Button
           aria-label="Refresh"
           rightIcon={isFetching ? <Spinner size="sm" /> : <FaSync />}
-          onClick={() => refetch()}
+          // onClick={() => refetch()}
           width={{ base: 'auto', md: 150 }}
           mr={{ base: 0, md: 10 }}
           mb={{ base: 5, md: 10 }}

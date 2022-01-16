@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 import { Box } from '@chakra-ui/react';
-// import FileList from '../components/files/FileList';
+import FileList from '../components/files/FileList';
 
 export default function Home(props) {
   return (

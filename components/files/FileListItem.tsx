@@ -22,17 +22,10 @@ import {
   Select,
 } from '@chakra-ui/react';
 import { FaEye, FaPen, FaTrash } from 'react-icons/fa';
-import { BlobItem } from '@azure/storage-blob';
 import mime from 'mime-types';
 import { formatDistanceToNow, parseJSON } from 'date-fns';
 
-import { RemoveFile } from '../../lib/files/Wrapper';
-
-interface IFileListItemProps {
-  refetch: Function;
-}
-
-export default function FileListItem(props: BlobItem & IFileListItemProps) {
+export default function FileListItem(props) {
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
@@ -69,7 +62,7 @@ export default function FileListItem(props: BlobItem & IFileListItemProps) {
             mx="2"
             aria-label="Remove file"
             icon={<FaTrash />}
-            onClick={() => RemoveFile(props.name).then(() => props.refetch())}
+            // onClick={() => RemoveFile(props.name).then(() => props.refetch())}
           />
         </Box>
       </Flex>
