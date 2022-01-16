@@ -44,7 +44,10 @@ jobs:
         env:
           CI: 'true'
           NODE_ENV: 'production'
-          FAUNADB_TOKEN: ${{ secrets.FAUNADB_TOKEN_ADMIN_STAGING }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL_STAGING }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_STAGING }}
+          NEXT_PRIVATE_SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_KEY_STAGING }}
+
         run: yarn test
 
   deploy:
