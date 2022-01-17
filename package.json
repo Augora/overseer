@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@types/mime-types": "^2.1.1",
-    "@types/node": "^17.0.8",
+    "@types/node": "^17.0.9",
     "@types/react": "^17.0.38",
     "@types/react-dropzone": "^5.1.0",
     "@vercel/node": "^1.12.1",
