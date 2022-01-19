@@ -12,20 +12,6 @@ import supabase from '../lib/supabase/Client';
 export default function Home({ errorMessage }) {
   const { session } = Auth.useUser();
 
-  useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-      return fetch('/api/setAuthCookie', {
-        method: 'POST',
-        headers: new Headers({ 'Content-Type': 'application/json' }),
-        credentials: 'same-origin',
-        body: JSON.stringify({ event, session }),
-      });
-    });
-    return () => {
-      authListener.unsubscribe();
-    };
-  }, []);
-
   return (
     <div className="container">
       <Head>
