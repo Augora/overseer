@@ -1,12 +1,12 @@
 import React from 'react';
 import { Box, Heading, useColorMode, Checkbox, Link, Flex, IconButton } from '@chakra-ui/react';
 import { ScaleFade } from '@chakra-ui/transition';
-// import { DeleteUser, UpdateUserAdminRole } from '../../lib/faunadb/users/DataResolver';
-import { FaTrash } from 'react-icons/fa';
+import { UpsertUserRoleToSupabase } from '../../lib/supabase/users/DataResolver';
+import { User } from '@supabase/supabase-js';
 
 interface IUserBoxProps {
-  name: string;
-  isAdmin: boolean;
+  user: User;
+  userRole: Types.Canonical.UserRole;
   refetch: Function;
 }
 
@@ -23,22 +23,20 @@ export default function UserBox(props: IUserBoxProps) {
         _hover={{ bg: colorMode === 'light' ? 'gray.300' : 'gray.700' }}
       >
         <Flex justifyContent="space-between">
-          <Link href={`https://github.com/${props.name}`}>
-            <Heading size="lg">{props.name}</Heading>
+          <Link href={`https://github.com/${props.user.user_metadata.user_name}`}>
+            <Heading size="lg">{props.user.user_metadata.user_name}</Heading>
           </Link>
-          <IconButton
-            aria-label="Remove"
-            icon={<FaTrash />}
-            onClick={() => {
-              // DeleteUser(props.token, props.name).then(() => props.refetch());
-            }}
-          />
         </Flex>
         <Checkbox
-          defaultIsChecked={props.isAdmin}
+          defaultIsChecked={props.userRole?.Role === 'Admin'}
           colorScheme="teal"
           onChange={(e) => {
-            // UpdateUserAdminRole(props.token, props.name, e.target.checked);
+            UpsertUserRoleToSupabase(
+              Object.assign({}, props.userRole, {
+                Role: e.target.checked ? 'Admin' : 'Member',
+                UserId: props.user.id,
+              })
+            );
           }}
         >
           Is admin?

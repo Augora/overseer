@@ -17,50 +17,28 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import React, { useMemo, useState } from 'react';
-import { useTable } from 'react-table';
+// import { useTable } from 'react-table';
 import UserBox from './UserBox';
 import { FaPlusCircle } from 'react-icons/fa';
 // import { CreateUserWithAdminRole } from '../../lib/faunadb/users/DataResolver';
+import { User } from '@supabase/supabase-js';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 
 interface IUsersGridProps {
-  data: {
-    UserId: string;
-    Role: boolean;
-  }[];
+  data: (User & { userRole: Types.Canonical.UserRole })[];
   refetch: Function;
 }
 
 export default function UsersGrid(props: IUsersGridProps) {
-  const columns = useMemo(
-    () => [
-      {
-        Header: 'Name',
-        accessor: 'UserId',
-      },
-      {
-        Header: 'Is admin?',
-        accessor: 'Role',
-      },
-    ],
-    []
-  );
-  const { rows } = useTable({
-    columns: columns,
-    data: props.data,
-  });
+  console.log({ props });
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const usernameField = React.useRef();
 
   const [Username, setUsername] = useState('');
   const [IsAdmin, setIsAdmin] = useState(false);
-
-  const parsedRows = rows.map((row) => {
-    return {
-      name: row.original.user_metadata.user_name,
-      isAdmin: row.original.userRole.Role === 'Admin',
-    };
-  });
 
   return (
     <>
@@ -78,8 +56,13 @@ export default function UsersGrid(props: IUsersGridProps) {
         </Button>
       </Flex>
       <SimpleGrid minChildWidth="300px" spacing="40px">
-        {parsedRows.map((row) => (
-          <UserBox key={row.name} name={row.name} isAdmin={row.isAdmin} refetch={props.refetch} />
+        {props.data.map((user) => (
+          <UserBox
+            key={user.user_metadata.user_name}
+            user={user}
+            userRole={user.userRole}
+            refetch={props.refetch}
+          />
         ))}
       </SimpleGrid>
       <Drawer

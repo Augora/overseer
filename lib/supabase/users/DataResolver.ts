@@ -15,25 +15,16 @@ export function GetUsersFromSupabase(access_token) {
 
 export function GetUserRoleFromSupabase() {
   return supabase
-    .from('UserRole')
+    .from<Types.Canonical.UserRole>('UserRole')
     .select('*')
     .then(handleSupabaseError)
     .then((d) => d.body);
 }
 
-export function CreateUserRoleToSupabase(data) {
+export function UpsertUserRoleToSupabase(data: Types.Canonical.UserRole) {
   return supabase
-    .from('UserRole')
-    .insert([data])
-    .then(handleSupabaseError)
-    .then((d) => d.body);
-}
-
-export function UpdateUserRoleToSupabase(data) {
-  return supabase
-    .from('UserRole')
-    .update(data)
-    .match({ Sigle: data.Sigle })
+    .from<Types.Canonical.UserRole>('UserRole')
+    .upsert([data])
     .then(handleSupabaseError)
     .then((d) => d.body);
 }
