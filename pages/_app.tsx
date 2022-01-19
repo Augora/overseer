@@ -1,6 +1,6 @@
 import { ChakraProvider, cookieStorageManager, localStorageManager } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query-devtools';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { Auth } from '@supabase/ui';
 import supabase from '../lib/supabase/Client';
 
@@ -21,7 +21,7 @@ export default function MyApp({ Component, pageProps }) {
         <QueryClientProvider client={queryClient}>
           <Header {...pageProps} />
           <Component {...pageProps} />
-          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </ChakraProvider>
     </Auth.UserContextProvider>
