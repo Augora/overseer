@@ -8,15 +8,15 @@ import {
   Text,
   Heading,
   Box,
-  useColorMode,
   Progress,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
   MenuDivider,
+  Avatar,
 } from '@chakra-ui/react';
-import { FaUsers, FaHome, FaFolder, FaSun, FaMoon, FaBars } from 'react-icons/fa';
+import { FaBars } from 'react-icons/fa';
 import { Auth } from '@supabase/ui';
 
 import supabase from '../lib/supabase/Client';
@@ -124,7 +124,14 @@ function Header(props) {
           </Link>
           <Flex display={{ base: 'none', md: 'flex' }}>{session && routeLinks}</Flex>
         </Flex>
-        <Flex justifyContent="flex-end" display={{ base: 'none', md: 'flex' }}>
+        <Flex alignItems="center" justifyContent="flex-end" display={{ base: 'none', md: 'flex' }}>
+          {session && (
+            <Avatar
+              size="sm"
+              name={session.user.user_metadata.preferred_username}
+              src={session.user.user_metadata.avatar_url}
+            />
+          )}
           <Button
             mx="2"
             variant="ghost"
