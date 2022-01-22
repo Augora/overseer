@@ -18,9 +18,9 @@ export default function UserBox(props: IUserBoxProps) {
       <Box
         borderRadius="5px"
         p="5"
-        bg={colorMode === 'light' ? 'gray.400' : 'gray.900'}
+        bg={'gray.900'}
         transition="background-color cubic-bezier(1, 0, 0, 1) 200ms"
-        _hover={{ bg: colorMode === 'light' ? 'gray.300' : 'gray.700' }}
+        _hover={{ bg: 'gray.700' }}
       >
         <Flex justifyContent="space-between">
           <Link href={`https://github.com/${props.user.user_metadata.user_name}`}>

@@ -42,7 +42,6 @@ const routes = [
 
 function Header(props) {
   const router = useRouter();
-  const { colorMode, toggleColorMode } = useColorMode();
   const [IsRouteLoading, setIsRouteLoading] = useState(false);
   const { session } = Auth.useUser();
 
@@ -126,9 +125,6 @@ function Header(props) {
           <Flex display={{ base: 'none', md: 'flex' }}>{session && routeLinks}</Flex>
         </Flex>
         <Flex justifyContent="flex-end" display={{ base: 'none', md: 'flex' }}>
-          <Button onClick={toggleColorMode} mx="2" variant="ghost">
-            {colorMode === 'light' ? <FaMoon /> : <FaSun />}
-          </Button>
           <Button
             mx="2"
             variant="ghost"
@@ -151,9 +147,6 @@ function Header(props) {
             <MenuList>
               {session && routeMenuLinks}
               {session && <MenuDivider />}
-              <MenuItem onClick={toggleColorMode}>
-                <Text fontSize="2xl">{colorMode === 'light' ? <FaMoon /> : <FaSun />}</Text>
-              </MenuItem>
               <MenuItem
                 onClick={() =>
                   session

@@ -36,7 +36,7 @@ export default function FileListItem(props) {
       p="5"
       borderRadius="5px"
       transition="background-color cubic-bezier(1, 0, 0, 1) 200ms"
-      _hover={{ bg: colorMode === 'light' ? 'gray.300' : 'gray.700' }}
+      _hover={{ bg: 'gray.700' }}
     >
       <Flex justify="space-between">
         <Box>
