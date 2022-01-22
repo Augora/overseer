@@ -7,6 +7,9 @@ import supabase from '../lib/supabase/Client';
 import customTheme from '../config/theme';
 import Header from '../components/Header';
 
+import '@fontsource/roboto-slab/700.css';
+import '@fontsource/roboto-slab/400.css';
+
 const queryClient = new QueryClient();
 
 function getColorModeManager(cookies) {

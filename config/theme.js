@@ -12,9 +12,8 @@ export default extendTheme({
   },
   breakpoints: { sm: '30em', md: '48em', lg: '62em', xl: '80em' },
   fonts: {
-    heading: '"Avenir Next", sans-serif',
-    body: 'system-ui, sans-serif',
-    mono: 'Menlo, monospace',
+    heading: 'Roboto Slab',
+    body: 'Roboto Slab',
   },
   fontSizes: {
     xs: '0.75rem',
