@@ -8,13 +8,21 @@ import UsersGrid from './UsersGrid';
 
 export default function UsersHandler() {
   const { session } = Auth.useUser();
-  const { data, isLoading, refetch } = useQuery('users', () =>
-    GetUsersFromSupabase(session.access_token)
+  const { data, isLoading, refetch, error } = useQuery(
+    'users',
+    () => GetUsersFromSupabase(session.access_token),
+    {
+      retry: false,
+    }
   );
 
   return isLoading ? (
     <Box minHeight="250px" display="flex" alignItems="center" justifyContent="center">
       <Spinner size="xl" />
+    </Box>
+  ) : error ? (
+    <Box minHeight="250px" display="flex" alignItems="center" justifyContent="center">
+      {error}
     </Box>
   ) : (
     <UsersGrid data={data} refetch={refetch} />

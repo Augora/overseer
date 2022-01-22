@@ -31,8 +31,6 @@ interface IUsersGridProps {
 }
 
 export default function UsersGrid(props: IUsersGridProps) {
-  console.log({ props });
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const usernameField = React.useRef();

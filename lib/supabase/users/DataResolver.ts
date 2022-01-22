@@ -10,7 +10,16 @@ function handleSupabaseError({ error, ...rest }) {
 }
 
 export function GetUsersFromSupabase(access_token) {
-  return axios.get(`/api/users?access_token=${access_token}`).then((d) => d.data);
+  return axios
+    .get('/api/users', {
+      headers: {
+        'X-Supabase-Token': access_token,
+      },
+    })
+    .then((d) => d.data)
+    .catch((error) => {
+      throw error.response.data.message;
+    });
 }
 
 export function GetUserRoleFromSupabase() {
