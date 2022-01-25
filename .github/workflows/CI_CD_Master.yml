@@ -40,6 +40,15 @@ jobs:
           CI: 'true'
         run: yarn install
 
+      - name: yarn lint
+        env:
+          CI: 'true'
+          NODE_ENV: 'production'
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL_STAGING }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_STAGING }}
+          NEXT_PRIVATE_SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_KEY_STAGING }}
+        run: yarn lint
+
       - name: yarn test
         env:
           CI: 'true'
@@ -47,7 +56,6 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL_STAGING }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_STAGING }}
           NEXT_PRIVATE_SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_KEY_STAGING }}
-
         run: yarn test
 
   deploy:
