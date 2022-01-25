@@ -60,7 +60,7 @@ function Header(props) {
         cursor: 'pointer',
       }}
     >
-      <Link href={r.URL}>
+      <Link href={r.URL} passHref>
         <Button color={router.pathname === r.URL ? 'teal.200' : 'none'} variant="ghost">
           {r.Label}
         </Button>
@@ -69,7 +69,7 @@ function Header(props) {
   ));
 
   const routeMenuLinks = routes.map((r) => (
-    <Link key={r.URL} href={r.URL}>
+    <Link key={r.URL} href={r.URL} passHref>
       <MenuItem>
         <Text fontSize="2xl" color={router.pathname === r.URL ? 'teal.200' : 'none'}>
           {r.Label}
@@ -109,7 +109,7 @@ function Header(props) {
       </Head>
       <Flex alignItems="center" justifyContent="space-between" w="100%">
         <Flex>
-          <Link href="/">
+          <Link href="/" passHref>
             <Box
               mr="10"
               _hover={{

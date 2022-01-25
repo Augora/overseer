@@ -60,7 +60,7 @@ function UploadFileButton(props) {
   );
 }
 
-export default function fileList() {
+export default function FileList() {
   const { isLoading, data, isFetching, refetch } = {
     isLoading: true,
     data: [],

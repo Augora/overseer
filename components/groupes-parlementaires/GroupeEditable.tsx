@@ -35,12 +35,12 @@ function GroupeEditable(props: GroupeEditableProps) {
 
         <Box>
           <InputGroup mt={4}>
-            <InputLeftAddon children="Sigle" />
+            <InputLeftAddon>Sigle</InputLeftAddon>
             <Input isReadOnly={true} type="text" defaultValue={props.GroupeParlementaire.Sigle} />
           </InputGroup>
 
           <InputGroup mt={4}>
-            <InputLeftAddon children="Nom" />
+            <InputLeftAddon>Nom</InputLeftAddon>
             <Input
               isDisabled={!IsEditing}
               type="text"
@@ -56,7 +56,7 @@ function GroupeEditable(props: GroupeEditableProps) {
           </InputGroup>
 
           <InputGroup mt={4}>
-            <InputLeftAddon children="Ordre" />
+            <InputLeftAddon>Ordre</InputLeftAddon>
             <Input
               isDisabled={!IsEditing}
               type="number"

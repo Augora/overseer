@@ -26,7 +26,7 @@ function handleQueryString(queryArg: string | string[]): string {
   }
 }
 
-export default async (req: VercelRequest, res: VercelResponse) => {
+export default async function Users(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'GET') {
     const { user, error } = await supabase.auth.api.getUser(
       handleQueryString(req.headers['x-supabase-token'])
@@ -67,4 +67,4 @@ export default async (req: VercelRequest, res: VercelResponse) => {
   }
 
   return res.status(404).end();
-};
+}
