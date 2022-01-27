@@ -1,0 +1,55 @@
+name: CI Pull Request
+on: pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # Virtual envs : https://help.github.com/en/articles/virtual-environments-for-github-actions
+        os: [macOS-latest, windows-latest, ubuntu-latest]
+        node-version: [16.x]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Yarn cache directory
+        id: yarn-cache-dir
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Yarn cache
+        uses: actions/cache@v1
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir.outputs.dir }}
+          key: ${{ matrix.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ matrix.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+            ${{ matrix.os }}-yarn-
+
+      - name: yarn install
+        env:
+          CI: 'true'
+        run: yarn install
+
+      - name: yarn lint
+        env:
+          CI: 'true'
+          NODE_ENV: 'production'
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL_STAGING }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_STAGING }}
+          NEXT_PRIVATE_SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_KEY_STAGING }}
+        run: yarn lint
+
+      - name: yarn test
+        env:
+          CI: 'true'
+          NODE_ENV: 'production'
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL_STAGING }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_STAGING }}
+          NEXT_PRIVATE_SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_KEY_STAGING }}
+        run: yarn test
