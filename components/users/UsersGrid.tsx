@@ -53,7 +53,7 @@ export default function UsersGrid(props: IUsersGridProps) {
           Create user
         </Button>
       </Flex>
-      <SimpleGrid minChildWidth="300px" spacing="40px">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
         {props.data.map((user) => (
           <UserBox
             key={user.user_metadata.user_name}
@@ -62,7 +62,7 @@ export default function UsersGrid(props: IUsersGridProps) {
             refetch={props.refetch}
           />
         ))}
-      </SimpleGrid>
+      </div>
       <Drawer
         isOpen={isOpen}
         placement="right"

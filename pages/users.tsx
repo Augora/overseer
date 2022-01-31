@@ -10,7 +10,7 @@ export default function Home(props) {
   const { session } = Auth.useUser();
 
   return (
-    <div className="container">
+    <div>
       <Head>
         <title>Users | Augora</title>
       </Head>

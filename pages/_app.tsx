@@ -2,11 +2,12 @@ import { ChakraProvider, cookieStorageManager, localStorageManager } from '@chak
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Auth } from '@supabase/ui';
-import supabase from '../lib/supabase/Client';
 
+import supabase from '../lib/supabase/Client';
 import customTheme from '../config/theme';
 import Header from '../components/Header';
 
+import '../styles/global.css';
 import '@fontsource/roboto-slab/700.css';
 import '@fontsource/roboto-slab/400.css';
 

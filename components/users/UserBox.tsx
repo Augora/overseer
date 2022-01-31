@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Heading, useColorMode, Checkbox, Link, Flex, IconButton } from '@chakra-ui/react';
+import { Checkbox, Link } from '@chakra-ui/react';
 import { ScaleFade } from '@chakra-ui/transition';
 import { UpsertUserRoleToSupabase } from '../../lib/supabase/users/DataResolver';
 import { User } from '@supabase/supabase-js';
@@ -11,22 +11,23 @@ interface IUserBoxProps {
 }
 
 export default function UserBox(props: IUserBoxProps) {
-  const { colorMode } = useColorMode();
-
+  console.log(props);
   return (
     <ScaleFade initialScale={0.9} in={true}>
-      <Box
-        borderRadius="5px"
-        p="5"
-        bg={'gray.900'}
-        transition="background-color cubic-bezier(1, 0, 0, 1) 200ms"
-        _hover={{ bg: 'gray.700' }}
-      >
-        <Flex justifyContent="space-between">
-          <Link href={`https://github.com/${props.user.user_metadata.user_name}`}>
-            <Heading size="lg">{props.user.user_metadata.user_name}</Heading>
+      <div className="rounded-md p-5 bg-gray-900 hover:bg-gray-700">
+        <div className="flex flex-row justify-between">
+          <Link
+            href={`https://github.com/${props.user.user_metadata.user_name}`}
+            className="flex flex-col"
+          >
+            <p className="text-3xl font-bold">{props.user.user_metadata.user_name}</p>
           </Link>
-        </Flex>
+          <img
+            className="inline object-cover w-12 h-12 rounded-full"
+            src={props.user.user_metadata.avatar_url}
+            alt="Profile image"
+          />
+        </div>
         <Checkbox
           defaultIsChecked={props.userRole?.Role === 'Admin'}
           colorScheme="teal"
@@ -41,7 +42,7 @@ export default function UserBox(props: IUserBoxProps) {
         >
           Is admin?
         </Checkbox>
-      </Box>
+      </div>
     </ScaleFade>
   );
 }
