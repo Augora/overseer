@@ -5,7 +5,6 @@ import sortBy from 'lodash/sortBy';
 
 interface IGroupeGrid {
   GroupesParlementaires: Types.Canonical.GroupeParlementaire[];
-  CreateFn: Function;
   UpdateFn: Function;
   RemoveFn: Function;
 }
@@ -21,16 +20,6 @@ export default function GroupeGrid(props: IGroupeGrid) {
           RemoveFn={props.RemoveFn}
         />
       ))}
-      {/* <Box borderRadius="0.3em" minHeight="250px" width="100%" height="100%">
-        <IconButton
-          aria-label="Add Groupe Parlementaire"
-          border="none"
-          icon="add"
-          width="100%"
-          height="100%"
-          onClick={props.CreateFn}
-        />
-      </Box> */}
     </SimpleGrid>
   );
 }

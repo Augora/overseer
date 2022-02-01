@@ -1,19 +1,17 @@
 import Head from 'next/head';
-import React, { useEffect } from 'react';
-import { NextPageContext } from 'next';
+import React from 'react';
 import { Box } from '@chakra-ui/react';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 import { Auth } from '@supabase/ui';
 
 import GitHubWorkflowGrid from '../components/github-actions/GitHubWorkflowGrid';
-import supabase from '../lib/supabase/Client';
 
 export default function Home({ errorMessage }) {
   const { session } = Auth.useUser();
 
   return (
-    <div className="container">
+    <div>
       <Head>
         <title>Dashboard | Augora</title>
       </Head>

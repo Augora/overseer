@@ -4,7 +4,6 @@ import { Box } from '@chakra-ui/react';
 import { Auth } from '@supabase/ui';
 
 import UsersHandler from '../components/users/UsersHandler';
-import supabase from '../lib/supabase/Client';
 
 export default function Home(props) {
   const { session } = Auth.useUser();

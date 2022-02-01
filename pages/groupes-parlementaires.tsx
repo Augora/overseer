@@ -1,8 +1,6 @@
 import Head from 'next/head';
 import { Box } from '@chakra-ui/react';
 import GroupesHandler from '../components/groupes-parlementaires/GroupesHandler';
-import supabase from '../lib/supabase/Client';
-import { User } from '@supabase/supabase-js';
 import isNull from 'lodash/isNull';
 import { Auth } from '@supabase/ui';
 

@@ -4,7 +4,6 @@ import { FaArrowUp } from 'react-icons/fa';
 
 import {
   GetGroupesFromSupabase,
-  CreateGroupeParlementaireToSupabase,
   UpdateGroupeParlementaireToSupabase,
 } from '../../lib/supabase/groupes-parlementaires/DataResolver';
 import GroupeGrid from './GroupeGrid';
@@ -118,10 +117,6 @@ export default function GroupesHandler() {
         GroupesParlementaires={GroupesParlementaires.filter(
           (gp) => gp.Actif || (DisplayInactiveGroupes && !gp.Actif)
         )}
-        CreateFn={() => {
-          const newGroupe = GenerateNewGroupeParlementaire();
-          setGroupesParlementaires(GroupesParlementaires.concat(newGroupe));
-        }}
         UpdateFn={(gp) => {
           setGroupesParlementaires(
             UpdateGroupeParlementaireFromArray(GroupesParlementaires, gp.Sigle, gp)

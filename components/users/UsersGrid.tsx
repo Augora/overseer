@@ -12,18 +12,13 @@ import {
   Flex,
   FormLabel,
   Input,
-  SimpleGrid,
   Stack,
   useDisclosure,
 } from '@chakra-ui/react';
-import React, { useMemo, useState } from 'react';
-// import { useTable } from 'react-table';
+import React, { useState } from 'react';
 import UserBox from './UserBox';
 import { FaPlusCircle } from 'react-icons/fa';
-// import { CreateUserWithAdminRole } from '../../lib/faunadb/users/DataResolver';
 import { User } from '@supabase/supabase-js';
-import isNull from 'lodash/isNull';
-import isUndefined from 'lodash/isUndefined';
 
 interface IUsersGridProps {
   data: (User & { userRole: Types.Canonical.UserRole })[];
@@ -109,9 +104,7 @@ export default function UsersGrid(props: IUsersGridProps) {
               <Button
                 colorScheme="teal"
                 onClick={() => {
-                  // CreateUserWithAdminRole(props.token, Username, IsAdmin).then(() =>
-                  //   props.refetch()
-                  // );
+                  // ToDo: Use CreateUser API
                   setUsername('');
                   setIsAdmin(false);
                   onClose();
