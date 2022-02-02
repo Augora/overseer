@@ -8,7 +8,7 @@ import UsersGrid from './UsersGrid';
 
 export default function UsersHandler() {
   const { session } = Auth.useUser();
-  const { data, isLoading, refetch, error } = useQuery(
+  const { data, isLoading, refetch, error, isFetching } = useQuery(
     'users',
     () => GetUsersFromSupabase(session.access_token),
     {
@@ -25,6 +25,6 @@ export default function UsersHandler() {
       {error}
     </Box>
   ) : (
-    <UsersGrid data={data} refetch={refetch} />
+    <UsersGrid data={data} refetch={refetch} isFetching={isFetching} />
   );
 }

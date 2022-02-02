@@ -7,11 +7,12 @@ import { User } from '@supabase/supabase-js';
 interface IUserBoxProps {
   user: User;
   userRole: Types.Canonical.UserRole;
-  refetch: Function;
+  isFetching: boolean;
 }
 
 export default function UserBox(props: IUserBoxProps) {
   const [isAdmin, setIsAdmin] = useState(props.userRole?.Role === 'Admin');
+  const [canModify, setCanModify] = useState(true);
 
   return (
     <div className="rounded-md p-5 bg-gray-900 hover:bg-gray-700 transition-colors ease-out delay-100">
@@ -34,16 +35,20 @@ export default function UserBox(props: IUserBoxProps) {
           <label className="inline-flex items-center">
             <input
               type="checkbox"
-              className="w-6 h-6 text-teal-500 border-0 rounded-md focus:ring-0"
+              className="w-6 h-6 text-teal-500 border-0 rounded-md focus:ring-0 disabled:opacity-30 disabled:cursor-not-allowed"
               checked={isAdmin}
+              disabled={!canModify || props.isFetching}
               onChange={() => {
-                setIsAdmin(!isAdmin);
+                setCanModify(false);
                 UpsertUserRoleToSupabase(
                   Object.assign({}, props.userRole, {
                     Role: !isAdmin ? 'Admin' : 'Member',
                     UserId: props.user.id,
                   })
-                );
+                ).then(() => {
+                  setCanModify(true);
+                  setIsAdmin(!isAdmin);
+                });
               }}
             />
             <span className="ml-2">Is admin?</span>
