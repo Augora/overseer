@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { UpsertUserRoleToSupabase } from '../../lib/supabase/users/DataResolver';
 import { User } from '@supabase/supabase-js';
+
+import { UpsertUserRoleToSupabase } from '../../lib/supabase/users/DataResolver';
 
 interface IUserBoxProps {
   user: User;

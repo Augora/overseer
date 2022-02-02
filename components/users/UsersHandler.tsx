@@ -1,10 +1,10 @@
-import { Box, Spinner } from '@chakra-ui/react';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { Auth } from '@supabase/ui';
 
 import { GetUsersFromSupabase } from '../../lib/supabase/users/DataResolver';
 import UsersGrid from './UsersGrid';
+import Spinner from '../common/Spinner';
 
 export default function UsersHandler() {
   const { session } = Auth.useUser();
@@ -17,13 +17,11 @@ export default function UsersHandler() {
   );
 
   return isLoading ? (
-    <Box minHeight="250px" display="flex" alignItems="center" justifyContent="center">
-      <Spinner size="xl" />
-    </Box>
+    <div className="flex min-h-[250px] items-center justify-center">
+      <Spinner color="teal" size="lg" />
+    </div>
   ) : error ? (
-    <Box minHeight="250px" display="flex" alignItems="center" justifyContent="center">
-      {error}
-    </Box>
+    <div className="flex min-h-[250px] items-center justify-center">{error}</div>
   ) : (
     <UsersGrid data={data} refetch={refetch} isFetching={isFetching} />
   );
