@@ -1,8 +1,10 @@
-import { Button, Spinner } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import React from 'react';
-import UserBox from './UserBox';
 import { FaSync } from 'react-icons/fa';
 import { User } from '@supabase/supabase-js';
+
+import UserBox from './UserBox';
+import Spinner from '../common/Spinner';
 
 interface IUsersGridProps {
   data: (User & { userRole: Types.Canonical.UserRole })[];
@@ -16,7 +18,7 @@ export default function UsersGrid(props: IUsersGridProps) {
       <div className="flex flex-row">
         <Button
           aria-label="Refresh"
-          rightIcon={props.isFetching ? <Spinner size="sm" /> : <FaSync />}
+          rightIcon={props.isFetching ? <Spinner size="sm" color="gray" /> : <FaSync />}
           onClick={() => props.refetch()}
           mr={{ base: 0, md: 10 }}
           mb={{ base: 5, md: 10 }}
