@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { UpsertUserRoleToSupabase } from '../../lib/supabase/users/DataResolver';
 import { User } from '@supabase/supabase-js';
@@ -20,7 +21,9 @@ export default function UserBox(props: IUserBoxProps) {
             {props.user.user_metadata.user_name}
           </a>
         </Link>
-        <img
+        <Image
+          width="48px"
+          height="48px"
           className="inline object-cover w-12 h-12 rounded-full"
           src={props.user.user_metadata.avatar_url}
           alt="Profile image"
