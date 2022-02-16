@@ -1,7 +1,7 @@
-import { Box, Spinner } from '@chakra-ui/react';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { GetWorkflows } from '../../lib/github/Workflows';
+import Spinner from '../common/Spinner';
 import GitHubWorkflowCard from './GitHubWorkflowCard';
 
 interface IGitHubWorkflowHandlerProps {
@@ -23,9 +23,9 @@ export default function GitHubWorkflowHandler(props: IGitHubWorkflowHandlerProps
   const latestWorkflow = data ? data.workflow_runs[0] : null;
 
   return isLoading ? (
-    <Box minHeight="250px" display="flex" alignItems="center" justifyContent="center">
-      <Spinner size="xl" />
-    </Box>
+    <div className="flex min-h-[250px] items-center justify-center">
+      <Spinner color="teal" size="lg" />
+    </div>
   ) : (
     <GitHubWorkflowCard
       repositoryName={props.repositoryName}
