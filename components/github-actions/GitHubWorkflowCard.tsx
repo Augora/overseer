@@ -76,6 +76,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
             const currentStatus = j.status === 'completed' ? j.conclusion : j.status;
             return (
               <div
+                key={j.id}
                 className={`relative has-tooltip rounded-full w-6 h-6 ${jobStatusToBg[currentStatus]} p-1.5`}
               >
                 {currentStatus === 'cancelled' && <FaSlash fontSize={12} />}
