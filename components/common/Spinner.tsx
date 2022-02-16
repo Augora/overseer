@@ -25,7 +25,7 @@ const sizesW = {
 };
 
 const sizesBorder = {
-  xs: 'border-1',
+  xs: 'border-2',
   sm: 'border-2',
   md: 'border-2',
   lg: 'border-4',

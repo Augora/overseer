@@ -1,92 +1,88 @@
 import React from 'react';
-import {
-  Badge,
-  Box,
-  Button,
-  Flex,
-  Heading,
-  IconButton,
-  Link,
-  Spinner,
-  Text,
-  useColorMode,
-} from '@chakra-ui/react';
+import { Box, Button, Heading, IconButton, Text } from '@chakra-ui/react';
+import Link from 'next/link';
 import { formatDistanceToNow, parseJSON } from 'date-fns';
-import { FaSync, FaArrowRight } from 'react-icons/fa';
-import { ScaleFade } from '@chakra-ui/transition';
+import { FaSync, FaCheck, FaCross, FaSlash, FaXing, FaCog } from 'react-icons/fa';
+import { useQuery, UseQueryResult } from 'react-query';
+import { GetJobs } from '../../lib/github/Workflows';
+import Spinner from '../common/Spinner';
 
-interface IGitHubWorkflowCardProps {
-  repositoryName: string;
-  repositoryUrl: string;
-  lastRunStatus: string;
-  branchName: string;
-  createdAt: string;
-  isFetching: boolean;
-  logsUrl: string;
-  refetch: Function;
+interface EnhancedWorkflowRun extends Types.External.WorkflowRun {
+  parentReactQuery: UseQueryResult;
 }
 
+interface IGitHubWorkflowCardProps extends EnhancedWorkflowRun {
+  githubToken: string;
+}
+
+const statusToBg = {
+  success: 'bg-teal-600',
+  failure: 'bg-red-600',
+  in_progress: '',
+};
+
+const jobStatusToBg = {
+  cancelled: 'bg-gray-500',
+  success: 'bg-green-500',
+  failure: 'bg-red-500',
+  in_progress: 'bg-yellow-500',
+};
+
 export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
-  const { colorMode } = useColorMode();
+  const { data, isLoading } = useQuery(['github-jobs', props.repository.name, props.id], () =>
+    GetJobs(props.githubToken, props.repository.name, props.id.toString())
+  );
+
   return (
-    <ScaleFade initialScale={0.9} in={true}>
-      <Box
-        borderRadius="5px"
-        minHeight="250px"
-        p="5"
-        width="100%"
-        bg={'gray.900'}
-        transition="background-color cubic-bezier(1, 0, 0, 1) 200ms"
-        _hover={{ bg: 'gray.700' }}
-      >
-        <Flex justifyContent="space-between">
-          <Box>
-            <Heading size="lg">
-              <Link href={props.repositoryUrl} target="_blank" mr="10px">
-                {props.repositoryName}
-              </Link>
-              <Badge
-                p="5px"
-                rounded="5px"
-                mr="10px"
-                colorScheme={
-                  props.lastRunStatus === 'success'
-                    ? 'green'
-                    : props.lastRunStatus === 'failure'
-                    ? 'red'
-                    : 'orange'
-                }
-              >
-                {props.lastRunStatus}
-              </Badge>
-            </Heading>
-          </Box>
-          <IconButton
-            aria-label="Refresh"
-            icon={props.isFetching ? <Spinner size="sm" /> : <FaSync />}
-            onClick={() => props.refetch()}
-            isDisabled={props.isFetching}
-          />
-        </Flex>
-
-        <Text my="2">{props.branchName}</Text>
-
-        <Text my="2" color="gray.500" fontSize="sm">
-          {formatDistanceToNow(parseJSON(props.createdAt))}
-        </Text>
-
-        <Box my="4" display="flex" justifyContent="start" alignItems="center">
-          <Button
-            rightIcon={<FaArrowRight />}
-            colorScheme="teal"
-            variant="outline"
-            mr="20px"
-            onClick={() => window.open(props.logsUrl, '_blank')}
+    <div className="rounded-md p-5 bg-gray-900 hover:bg-gray-700 transition-colors ease-out delay-100">
+      <div className="flex flex-row justify-between">
+        <div className="flex flex-row">
+          <Link href={props.repository.html_url}>
+            <a className="flex flex-col text-3xl font-bold hover:underline hover:underline-offset-2">
+              {props.repository.name}
+            </a>
+          </Link>
+          <span
+            className={`items-center justify-center h-6 mx-2 my-2 px-2 py-1 text-sm leading-none ${
+              statusToBg[props.conclusion]
+            } rounded`}
           >
-            <Text>Logs</Text>
-          </Button>
-        </Box>
-      </Box>
-    </ScaleFade>
+            {props.conclusion}
+          </span>
+        </div>
+        <IconButton
+          aria-label="Refresh"
+          icon={props.parentReactQuery.isFetching ? <Spinner size="sm" color="gray" /> : <FaSync />}
+          onClick={() => props.parentReactQuery.refetch()}
+          isDisabled={props.parentReactQuery.isFetching}
+        />
+      </div>
+
+      <div className="text-mg my-2">{props.head_branch}</div>
+
+      <div className="text-mg text-gray-500 my-2">
+        {formatDistanceToNow(parseJSON(props.created_at))}
+      </div>
+
+      {isLoading ? (
+        <div className="flex min-h-[50px] items-center justify-center">
+          <Spinner color="teal" size="md" />
+        </div>
+      ) : (
+        <div className="flex space-x-2">
+          {data.jobs.map((j) => {
+            const currentStatus = j.status === 'completed' ? j.conclusion : j.status;
+            return (
+              <div className={`rounded-full w-6 h-6 ${jobStatusToBg[currentStatus]} p-1.5`}>
+                {currentStatus === 'cancelled' && <FaSlash fontSize={12} />}
+                {currentStatus === 'in_progress' && <FaCog fontSize={12} />}
+                {currentStatus === 'failure' && <FaCross fontSize={12} />}
+                {currentStatus === 'success' && <FaCheck fontSize={12} />}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
   );
 }
