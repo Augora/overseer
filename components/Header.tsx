@@ -148,7 +148,7 @@ function Header(props) {
         </Flex>
         <Box display={{ base: 'block', md: 'none' }}>
           <Menu isLazy>
-            <MenuButton size="sm">
+            <MenuButton>
               <FaBars />
             </MenuButton>
             <MenuList>
