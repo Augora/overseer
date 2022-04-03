@@ -11,7 +11,7 @@
     "prettier": "prettier --write {components,config,lib,pages}/**/*.{js,ts,jsx,tsx}"
   },
   "dependencies": {
-    "@chakra-ui/react": "^1.8.3",
+    "@chakra-ui/react": "^1.8.7",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
     "@fontsource/roboto-slab": "^4.5.4",
