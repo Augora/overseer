@@ -39,7 +39,7 @@
     "@types/react-dropzone": "^5.1.0",
     "@vercel/node": "^1.13.0",
     "autoprefixer": "^10.4.2",
-    "eslint": "^8.9.0",
+    "eslint": "^8.15.0",
     "eslint-config-next": "12.1.0",
     "eslint-config-prettier": "^8.4.0",
     "eslint-plugin-prettier": "^4.0.0",
