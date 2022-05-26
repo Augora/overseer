@@ -21,7 +21,7 @@ export default function UsersHandler() {
       <Spinner color="teal" size="lg" />
     </div>
   ) : error ? (
-    <div className="flex min-h-[250px] items-center justify-center">{error}</div>
+    <div className="flex min-h-[250px] items-center justify-center">{error.toString()}</div>
   ) : (
     <UsersGrid data={data} refetch={refetch} isFetching={isFetching} />
   );
