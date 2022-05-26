@@ -32,6 +32,9 @@ export default function GitHubWorkflowHandler(props: IGitHubWorkflowHandlerProps
     props.repositoriesName.map((repositoryName) => ({
       queryKey: ['github-repos', repositoryName],
       queryFn: () => GetWorkflows(props.githubToken, repositoryName),
+      refetchInterval: 30000,
+      refetchOnWindowFocus: true,
+      refetchIntervalInBackground: false,
     }))
   );
 
