@@ -1,5 +1,5 @@
-import React from 'react';
-import { useQueries, useQuery, UseQueryResult } from 'react-query';
+import React, { useEffect, useState } from 'react';
+import { useQueries, UseQueryResult } from 'react-query';
 import { GetWorkflows } from '../../lib/github/Workflows';
 import Spinner from '../common/Spinner';
 import GitHubWorkflowCard from './GitHubWorkflowCard';
@@ -14,7 +14,20 @@ interface EnhancedWorkflowRun extends Types.External.WorkflowRun {
   parentReactQuery: UseQueryResult;
 }
 
+function orderWorkflows(
+  queries: UseQueryResult<Types.External.GitHubWorkflows, unknown>[]
+): EnhancedWorkflowRun[] {
+  return orderBy(
+    queries.flatMap((q) =>
+      q.data.workflow_runs.map((run) => Object.assign({}, run, { parentReactQuery: q }))
+    ),
+    'created_at',
+    'desc'
+  );
+}
+
 export default function GitHubWorkflowHandler(props: IGitHubWorkflowHandlerProps) {
+  const [workflows, setWorkflows] = useState<EnhancedWorkflowRun[]>([]);
   const queries = useQueries(
     props.repositoriesName.map((repositoryName) => ({
       queryKey: ['github-repos', repositoryName],
@@ -22,17 +35,11 @@ export default function GitHubWorkflowHandler(props: IGitHubWorkflowHandlerProps
     }))
   );
 
-  let workflows: EnhancedWorkflowRun[] = [];
-
-  if (!queries.some((q) => q.isLoading)) {
-    workflows = orderBy(
-      queries.flatMap((q) =>
-        q.data.workflow_runs.map((run) => Object.assign({}, run, { parentReactQuery: q }))
-      ),
-      'created_at',
-      'desc'
-    );
-  }
+  useEffect(() => {
+    if (!queries.some((q) => q.isLoading)) {
+      setWorkflows(orderWorkflows(queries));
+    }
+  }, [queries.some((q) => q.isLoading)]);
 
   return queries.some((q) => q.isLoading) ? (
     <div className="flex min-h-[250px] items-center justify-center">

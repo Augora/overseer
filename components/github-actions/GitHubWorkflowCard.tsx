@@ -31,8 +31,14 @@ const jobStatusToBg = {
 };
 
 export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
-  const { data, isLoading } = useQuery(['github-jobs', props.repository.name, props.id], () =>
-    GetJobs(props.githubToken, props.repository.name, props.id.toString())
+  const { data, isLoading } = useQuery(
+    ['github-jobs', props.repository.name, props.id],
+    () => GetJobs(props.githubToken, props.repository.name, props.id.toString()),
+    {
+      refetchInterval: (data) =>
+        data ? (data.jobs.some((j) => j.status !== 'completed') ? 5000 : false) : false,
+      refetchOnWindowFocus: (data) => data.state.data.jobs.some((j) => j.status !== 'completed'),
+    }
   );
 
   return (
@@ -52,12 +58,12 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
             {props.conclusion}
           </span>
         </div>
-        <IconButton
+        {/* <IconButton
           aria-label="Refresh"
-          icon={props.parentReactQuery.isFetching ? <Spinner size="sm" color="gray" /> : <FaSync />}
-          onClick={() => props.parentReactQuery.refetch()}
-          isDisabled={props.parentReactQuery.isFetching}
-        />
+          icon={isFetching ? <Spinner size="sm" color="gray" /> : <FaSync />}
+          onClick={() => refetch()}
+          isDisabled={isFetching}
+        /> */}
       </div>
 
       <div className="text-mg my-2">{props.head_branch}</div>
