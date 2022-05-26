@@ -38,6 +38,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
       refetchInterval: (data) =>
         data ? (data.jobs.some((j) => j.status !== 'completed') ? 5000 : false) : false,
       refetchOnWindowFocus: (data) => data.state.data.jobs.some((j) => j.status !== 'completed'),
+      refetchIntervalInBackground: false,
     }
   );
 
