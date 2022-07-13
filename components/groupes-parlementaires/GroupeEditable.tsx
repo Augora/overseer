@@ -71,6 +71,22 @@ function GroupeEditable(props: GroupeEditableProps) {
             />
           </InputGroup>
 
+          <InputGroup mt={4}>
+            <InputLeftAddon>IDWikipedia</InputLeftAddon>
+            <Input
+              isDisabled={!IsEditing}
+              type="text"
+              defaultValue={props.GroupeParlementaire.IDWikipedia}
+              onChange={(v) =>
+                props.UpdateFn(
+                  Object.assign({}, props.GroupeParlementaire, {
+                    IDWikipedia: v.target.value,
+                  })
+                )
+              }
+            />
+          </InputGroup>
+
           {IsEditing ? (
             <Box mt={4}>
               <ChromePicker

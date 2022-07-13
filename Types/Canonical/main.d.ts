@@ -4,3 +4,6 @@
 /// <reference path="./AutreMandat.d.ts" />
 /// <reference path="./Depute.d.ts" />
 /// <reference path="./GroupeParlementaire.d.ts" />
+/// <reference path="./OrganismeParlementaire.d.ts" />
+/// <reference path="./DeputeOrganismeParlementaire.d.ts" />
+/// <reference path="./UserRole.d.ts" />
