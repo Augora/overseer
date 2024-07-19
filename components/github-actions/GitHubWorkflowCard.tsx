@@ -4,17 +4,17 @@ import React from 'react';
 import Link from 'next/link';
 import { formatDistanceToNow, parseJSON } from 'date-fns';
 import { ImCross } from 'react-icons/im';
-import { FaSync, FaCheck, FaSlash, FaCog, FaCodeBranch, FaClock } from 'react-icons/fa';
-import { Badge, Card, Chip, Spacer, Spinner, Tooltip } from '@nextui-org/react';
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { FaCheck, FaSlash, FaCog, FaCodeBranch, FaClock } from 'react-icons/fa';
+import { Card, Chip, Spacer, Tooltip } from '@nextui-org/react';
+import { useQuery } from '@tanstack/react-query';
+import { Endpoints } from '@octokit/types';
 
 import { GetJobs } from '../../lib/github/Workflows';
 
-interface EnhancedWorkflowRun extends Types.External.WorkflowRun {
-  parentReactQuery: Types.External.GitHubWorkflows;
-}
+type WorkflowRun =
+  Endpoints['GET /repos/{owner}/{repo}/actions/runs']['response']['data']['workflow_runs'][0];
 
-interface IGitHubWorkflowCardProps extends EnhancedWorkflowRun {
+interface IGitHubWorkflowCardProps extends WorkflowRun {
   githubToken: string;
 }
 
@@ -48,8 +48,20 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
             {props.repository.name}
           </Link>
         </span>
-        <Chip color={props.conclusion === 'success' ? 'success' : 'danger'}>
-          {props.conclusion === 'success' ? 'Success' : 'Error'}
+        <Chip
+          color={
+            props.status === 'in_progress'
+              ? 'warning'
+              : props.conclusion === 'success'
+                ? 'success'
+                : 'danger'
+          }
+        >
+          {props.status === 'in_progress'
+            ? 'In progress'
+            : props.conclusion === 'success'
+              ? 'Success'
+              : 'Error'}
         </Chip>
       </div>
 
@@ -82,6 +94,8 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
       <div className="flex space-x-2">
         {data?.jobs.map((j) => {
           const currentStatus = j.status === 'completed' ? j.conclusion : j.status;
+          if (currentStatus === null) return null;
+
           return (
             <Tooltip content={j.name} key={j.id}>
               <Chip color={jobStatusToColor[currentStatus]}>

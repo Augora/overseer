@@ -4,39 +4,26 @@ import React, { useEffect, useState } from 'react';
 import { useQueries, UseQueryResult } from '@tanstack/react-query';
 import orderBy from 'lodash/orderBy';
 import { Spinner } from '@nextui-org/react';
+import { Endpoints } from '@octokit/types';
 
 import GitHubWorkflowCard from './GitHubWorkflowCard';
-import { GetWorkflows } from '../../lib/github/Workflows';
+import { GetActionsRuns } from '../../lib/github/Workflows';
+
+type WorkflowRuns =
+  Endpoints['GET /repos/{owner}/{repo}/actions/runs']['response']['data']['workflow_runs'][0];
 
 interface IGitHubWorkflowHandlerProps {
   githubToken: string;
   repositoriesName: string[];
 }
 
-interface EnhancedWorkflowRun extends Types.External.WorkflowRun {
-  parentReactQuery: Types.External.GitHubWorkflows;
-}
-
-function orderWorkflows(
-  queries: UseQueryResult<Types.External.GitHubWorkflows, unknown>[],
-): EnhancedWorkflowRun[] {
-  return orderBy(
-    queries.flatMap(
-      (q) =>
-        q.data?.workflow_runs.map((run) => Object.assign({}, run, { parentReactQuery: q.data })) ||
-        [],
-    ),
-    'created_at',
-    'desc',
-  );
-}
-
 export default function GitHubWorkflowHandler(props: IGitHubWorkflowHandlerProps) {
-  const [workflows, setWorkflows] = useState<EnhancedWorkflowRun[]>([]);
+  const [workflows, setWorkflows] = useState<WorkflowRuns[]>([]);
+
   const queries = useQueries({
     queries: props.repositoriesName.map((repositoryName) => ({
       queryKey: ['github-repos', repositoryName],
-      queryFn: () => GetWorkflows(props.githubToken, repositoryName),
+      queryFn: () => GetActionsRuns(props.githubToken, repositoryName),
       refetchInterval: 30000,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: false,
@@ -45,7 +32,7 @@ export default function GitHubWorkflowHandler(props: IGitHubWorkflowHandlerProps
 
   useEffect(() => {
     if (!queries.some((q) => q.isLoading)) {
-      setWorkflows(orderWorkflows(queries));
+      setWorkflows(queries.map((q) => q.data?.workflow_runs).flat() as WorkflowRuns[]);
     }
   }, [queries.some((q) => q.isLoading)]);
 

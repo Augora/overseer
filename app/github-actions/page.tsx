@@ -8,8 +8,6 @@ import useSupabaseSession from '../../lib/react-custom-hooks/useSupabaseSession'
 export default function Page() {
   const session = useSupabaseSession();
 
-  console.log({ session });
-
   if (session === null) {
     return (
       <span className="flex justify-center items-center h-screen text-red-500 text-4xl">
