@@ -32,7 +32,13 @@ export default function GitHubWorkflowHandler(props: IGitHubWorkflowHandlerProps
 
   useEffect(() => {
     if (!queries.some((q) => q.isLoading)) {
-      setWorkflows(queries.map((q) => q.data?.workflow_runs).flat() as WorkflowRuns[]);
+      setWorkflows(
+        orderBy(
+          queries.map((q) => q.data?.workflow_runs).flat() as WorkflowRuns[],
+          'created_at',
+          'desc',
+        ),
+      );
     }
   }, [queries.some((q) => q.isLoading)]);
 

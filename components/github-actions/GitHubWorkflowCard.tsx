@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { formatDistanceToNow, parseJSON } from 'date-fns';
+import { formatDistanceToNow, parseJSON, formatRelative } from 'date-fns';
 import { ImCross } from 'react-icons/im';
 import { FaCheck, FaSlash, FaCog, FaCodeBranch, FaClock } from 'react-icons/fa';
 import { Card, Chip, Spacer, Tooltip } from '@nextui-org/react';
@@ -27,7 +27,7 @@ const jobStatusToColor = {
 };
 
 export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
-  const { data, isLoading } = useQuery({
+  const { data, dataUpdatedAt } = useQuery({
     queryKey: ['github-jobs', props.repository.name, props.id],
     queryFn: () => GetJobs(props.githubToken, props.repository.name, props.id.toString()),
     refetchInterval: (data) =>
@@ -48,21 +48,23 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
             {props.repository.name}
           </Link>
         </span>
-        <Chip
-          color={
-            props.status === 'in_progress'
-              ? 'warning'
+        <Tooltip content={`Last refresh: ${formatRelative(dataUpdatedAt, new Date())}`}>
+          <Chip
+            color={
+              props.status === 'in_progress'
+                ? 'warning'
+                : props.conclusion === 'success'
+                  ? 'success'
+                  : 'danger'
+            }
+          >
+            {props.status === 'in_progress'
+              ? 'In progress'
               : props.conclusion === 'success'
-                ? 'success'
-                : 'danger'
-          }
-        >
-          {props.status === 'in_progress'
-            ? 'In progress'
-            : props.conclusion === 'success'
-              ? 'Success'
-              : 'Error'}
-        </Chip>
+                ? 'Success'
+                : 'Error'}
+          </Chip>
+        </Tooltip>
       </div>
 
       <Spacer y={4} />
