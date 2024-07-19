@@ -102,9 +102,6 @@ function Header() {
                 ? supabase.auth.signOut()
                 : supabase.auth.signInWithOAuth({
                   provider: 'github',
-                  options: {
-                    redirectTo: "http://localhost:3000/"
-                  }
                 })
             }
           >
