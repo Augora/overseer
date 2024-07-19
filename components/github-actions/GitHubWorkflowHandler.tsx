@@ -14,7 +14,7 @@ interface IGitHubWorkflowHandlerProps {
 }
 
 interface EnhancedWorkflowRun extends Types.External.WorkflowRun {
-  parentReactQuery: UseQueryResult;
+  parentReactQuery: Types.External.GitHubWorkflows;
 }
 
 function orderWorkflows(
@@ -23,7 +23,8 @@ function orderWorkflows(
   return orderBy(
     queries.flatMap(
       (q) =>
-        q.data?.workflow_runs.map((run) => Object.assign({}, run, { parentReactQuery: q })) || [],
+        q.data?.workflow_runs.map((run) => Object.assign({}, run, { parentReactQuery: q.data })) ||
+        [],
     ),
     'created_at',
     'desc',

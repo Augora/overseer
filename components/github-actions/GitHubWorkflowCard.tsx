@@ -11,7 +11,7 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { GetJobs } from '../../lib/github/Workflows';
 
 interface EnhancedWorkflowRun extends Types.External.WorkflowRun {
-  parentReactQuery: UseQueryResult;
+  parentReactQuery: Types.External.GitHubWorkflows;
 }
 
 interface IGitHubWorkflowCardProps extends EnhancedWorkflowRun {
