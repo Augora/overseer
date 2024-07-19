@@ -40,7 +40,7 @@ export default function GitHubWorkflowHandler(props: IGitHubWorkflowHandlerProps
         ),
       );
     }
-  }, [queries.some((q) => q.isLoading)]);
+  }, [queries.some((q) => q.isLoading || q.isFetching)]);
 
   return queries.some((q) => q.isLoading) ? (
     <div className="flex justify-center items-center h-screen">
