@@ -8,32 +8,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        # Virtual envs : https://help.github.com/en/articles/virtual-environments-for-github-actions
-        os: [macOS-latest, windows-latest, ubuntu-latest]
-        node-version: [16.x]
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Yarn cache directory
-        id: yarn-cache-dir
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Yarn cache
-        uses: actions/cache@v1
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir.outputs.dir }}
-          key: ${{ matrix.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ matrix.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-            ${{ matrix.os }}-yarn-
+          node-version: 22.x
 
       - name: yarn install
         env:
@@ -46,7 +27,6 @@ jobs:
           NODE_ENV: 'production'
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL_STAGING }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_STAGING }}
-          NEXT_PRIVATE_SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_KEY_STAGING }}
         run: yarn lint
 
       - name: yarn test
@@ -55,7 +35,6 @@ jobs:
           NODE_ENV: 'production'
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL_STAGING }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_STAGING }}
-          NEXT_PRIVATE_SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_KEY_STAGING }}
         run: yarn test
 
   deploy:
@@ -64,12 +43,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: amondnet/vercel-action@v19
+      - uses: amondnet/vercel-action@v25
         with:
-          vercel-token: ${{ secrets.ZEIT_TOKEN }}
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          github-comment: false
           vercel-org-id: ${{ secrets.VERCEL_AUGORA_ORGID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECTID_OVERSEER }}
+          github-comment: false
+          vercel-args: --prod --force --skip-domain
+          vercel-version: "34.3.0"
           alias-domains: |
             backoffice.augora.fr
