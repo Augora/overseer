@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowUp } from 'react-icons/fa';
 import { Spinner } from '@nextui-org/spinner';
-import { Button, ButtonGroup, Card, Skeleton, Spacer, Switch } from '@nextui-org/react';
+import { Button, ButtonGroup, Spacer, Switch } from '@nextui-org/react';
+import { toast } from 'sonner';
 
 import {
   GetGroupesFromSupabase,
@@ -51,6 +52,7 @@ async function UpdateRemoteGroupes(localGroupes) {
 
 export default function GroupesHandler() {
   const [IsLoading, setIsLoading] = useState(true);
+  const [IsUpdatingStaging, setIsUpdatingStaging] = useState(false);
   const [GroupesParlementaires, setGroupesParlementaires] = useState<
     Types.Canonical.GroupeParlementaire[]
   >([]);
@@ -67,13 +69,19 @@ export default function GroupesHandler() {
     });
   }, []);
 
-  const updateRemoteFunction = () => {
-    setIsLoading(true);
+  const updateStaging = () => {
+    setIsUpdatingStaging(true);
     UpdateRemoteGroupes(GroupesParlementaires)
       .then((promises) => Promise.all(promises))
       .then((data) => {
-        setIsLoading(false);
+        toast.success('Staging updated!');
+        setIsUpdatingStaging(false);
         return data;
+      })
+      .catch((err) => {
+        toast.error('Failed to update staging: ' + err.message);
+        setIsUpdatingStaging(false);
+        console.error(err)
       });
   };
 
@@ -87,8 +95,9 @@ export default function GroupesHandler() {
         <ButtonGroup>
           <Button
             aria-label="Update staging"
-            onClick={() => updateRemoteFunction()}
+            onClick={() => updateStaging()}
             color="primary"
+            isLoading={IsUpdatingStaging}
           >
             Update staging
             <FaArrowUp />
