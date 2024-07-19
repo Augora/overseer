@@ -11,8 +11,7 @@ import {
 
 import supabase from '../lib/supabase/Client';
 import { Avatar, Button } from '@nextui-org/react';
-import { Session } from '@supabase/supabase-js'
-import { useEffect, useState } from 'react';
+import useSupabaseSession from '../lib/react-custom-hooks/useSupabaseSession';
 
 const routes = [
   {
@@ -35,21 +34,7 @@ const routes = [
 
 
 function Header() {
-  const [session, setSession] = useState<Session | null>(null)
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    })
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
+  const session = useSupabaseSession();
 
   const pathname = usePathname();
   
