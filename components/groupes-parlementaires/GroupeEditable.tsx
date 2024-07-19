@@ -16,13 +16,17 @@ function GroupeEditable(props: GroupeEditableProps) {
 
   return (
     <Card style={{ backgroundColor: props.GroupeParlementaire.CouleurDetail?.HEX }}>
-      <CardHeader className='flex justify-between'>
+      <CardHeader className="flex justify-between">
         <p className="text-lg uppercase font-bold">{props.GroupeParlementaire.Sigle}</p>
         <Button
-          onClick={() => { setIsEditing(!IsEditing); }}
-        >{IsEditing ? 'Save' : 'Edit'}</Button>
+          onClick={() => {
+            setIsEditing(!IsEditing);
+          }}
+        >
+          {IsEditing ? 'Save' : 'Edit'}
+        </Button>
       </CardHeader>
-      <CardBody className='gap-3'>
+      <CardBody className="gap-3">
         <Input
           label="Nom"
           defaultValue={props.GroupeParlementaire.NomComplet}
@@ -59,38 +63,40 @@ function GroupeEditable(props: GroupeEditableProps) {
             )
           }
         />
-        {IsEditing ? <ChromePicker
-          defaultView="hsl"
-          disableAlpha={true}
-          color={props.GroupeParlementaire.Couleur}
-          onChange={(v) => {
-            const color = Color(v.hex);
+        {IsEditing ? (
+          <ChromePicker
+            defaultView="hsl"
+            disableAlpha={true}
+            color={props.GroupeParlementaire.Couleur}
+            onChange={(v) => {
+              const color = Color(v.hex);
 
-            props.UpdateFn(
-              Object.assign({}, props.GroupeParlementaire, {
-                Couleur: color.hsl().string(),
-                CouleurDetail: {
-                  HEX: color.hex(),
-                  HSL: {
-                    Full: color.hsl().string(0),
-                    H: Math.round(color.hsl().object().h),
-                    S: Math.round(color.hsl().object().s),
-                    L: Math.round(color.hsl().object().l),
+              props.UpdateFn(
+                Object.assign({}, props.GroupeParlementaire, {
+                  Couleur: color.hsl().string(),
+                  CouleurDetail: {
+                    HEX: color.hex(),
+                    HSL: {
+                      Full: color.hsl().string(0),
+                      H: Math.round(color.hsl().object().h),
+                      S: Math.round(color.hsl().object().s),
+                      L: Math.round(color.hsl().object().l),
+                    },
+                    RGB: {
+                      Full: color.rgb().string(0),
+                      R: Math.round(color.rgb().object().r),
+                      G: Math.round(color.rgb().object().g),
+                      B: Math.round(color.rgb().object().b),
+                    },
                   },
-                  RGB: {
-                    Full: color.rgb().string(0),
-                    R: Math.round(color.rgb().object().r),
-                    G: Math.round(color.rgb().object().g),
-                    B: Math.round(color.rgb().object().b),
-                  },
-                },
-              }),
-            );
-          }}
-        /> : null}
-        </CardBody>
+                }),
+              );
+            }}
+          />
+        ) : null}
+      </CardBody>
     </Card>
-      
+
     // <ScaleFade initialScale={0.9} in={true}>
     //   <Box
     //     border={props.GroupeParlementaire.Actif ? '2px dashed transparent' : '2px dashed lightGray'}

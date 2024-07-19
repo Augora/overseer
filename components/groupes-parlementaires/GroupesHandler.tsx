@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { FaArrowUp } from 'react-icons/fa';
-import { Spinner } from "@nextui-org/spinner";
+import { Spinner } from '@nextui-org/spinner';
 import { Button, ButtonGroup, Card, Skeleton, Spacer, Switch } from '@nextui-org/react';
 
 import {
@@ -36,7 +36,7 @@ function RemoveGroupeParlementaireFromArray(
 async function UpdateRemoteGroupes(localGroupes) {
   const remoteGroupes = await GetGroupesFromSupabase();
 
-  if(remoteGroupes === null) {
+  if (remoteGroupes === null) {
     throw new Error('Remotes groups are null');
   }
 
@@ -58,7 +58,7 @@ export default function GroupesHandler() {
 
   useEffect(() => {
     GetGroupesFromSupabase().then((data) => {
-      if(data === null) {
+      if (data === null) {
         throw new Error('No data');
       }
 
@@ -79,7 +79,7 @@ export default function GroupesHandler() {
 
   return IsLoading ? (
     <div className="flex justify-center items-center h-screen">
-      <Spinner size='lg'/>
+      <Spinner size="lg" />
     </div>
   ) : (
     <>
@@ -88,22 +88,18 @@ export default function GroupesHandler() {
           <Button
             aria-label="Update staging"
             onClick={() => updateRemoteFunction()}
-            color='primary'
+            color="primary"
           >
             Update staging
             <FaArrowUp />
           </Button>
-          <Button
-            aria-label="Update production"
-            color='primary'
-            isDisabled
-          >
+          <Button aria-label="Update production" color="primary" isDisabled>
             Update production
             <FaArrowUp />
           </Button>
         </ButtonGroup>
 
-        <Switch 
+        <Switch
           aria-label="Display inactive groups"
           isSelected={DisplayInactiveGroupes}
           onValueChange={setDisplayInactiveGroupes}
