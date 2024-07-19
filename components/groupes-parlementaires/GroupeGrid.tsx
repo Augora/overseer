@@ -1,4 +1,3 @@
-import { Box, IconButton, SimpleGrid } from '@chakra-ui/react';
 import React from 'react';
 import GroupeEditable from './GroupeEditable';
 import sortBy from 'lodash/sortBy';
@@ -11,7 +10,7 @@ interface IGroupeGrid {
 
 export default function GroupeGrid(props: IGroupeGrid) {
   return (
-    <SimpleGrid minChildWidth="300px" spacing="40px">
+    <div className="grid grid-cols-4 gap-4">
       {sortBy(props.GroupesParlementaires, ['Ordre']).map((gp) => (
         <GroupeEditable
           key={gp.Sigle}
@@ -20,6 +19,6 @@ export default function GroupeGrid(props: IGroupeGrid) {
           RemoveFn={props.RemoveFn}
         />
       ))}
-    </SimpleGrid>
+    </div>
   );
 }

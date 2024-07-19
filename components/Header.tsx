@@ -1,175 +1,118 @@
-import React, { useEffect, useState } from 'react';
+"use client";
+
 import Link from 'next/link';
-import Router, { useRouter } from 'next/router';
-import Head from 'next/head';
+import { usePathname } from 'next/navigation'
 import {
-  Button,
-  Flex,
-  Text,
-  Heading,
-  Box,
-  Progress,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  MenuDivider,
-  Avatar,
-} from '@chakra-ui/react';
-import { FaBars } from 'react-icons/fa';
-import { Auth } from '@supabase/ui';
+  Navbar, 
+  NavbarBrand, 
+  NavbarContent, 
+  NavbarItem, 
+} from "@nextui-org/navbar";
 
 import supabase from '../lib/supabase/Client';
+import { Avatar, Button } from '@nextui-org/react';
+import { Session } from '@supabase/supabase-js'
+import { useEffect, useState } from 'react';
 
 const routes = [
   {
     Label: 'Home',
     URL: '/',
   },
-  {
-    Label: 'Groupes',
-    URL: '/groupes-parlementaires',
-  },
+  // {
+  //   Label: 'Groupes',
+  //   URL: '/groupes-parlementaires',
+  // },
   // {
   //   Label: 'Files',
   //   URL: '/files',
   // },
-  {
-    Label: 'Users',
-    URL: '/users',
-  },
+  // {
+  //   Label: 'Users',
+  //   URL: '/users',
+  // },
 ];
 
-function Header(props) {
-  const router = useRouter();
-  const [IsRouteLoading, setIsRouteLoading] = useState(false);
-  const { session } = Auth.useUser();
+
+function Header() {
+  const [session, setSession] = useState<Session | null>(null)
 
   useEffect(() => {
-    Router.events.on('routeChangeStart', () => setIsRouteLoading(true));
-    Router.events.on('routeChangeComplete', () => setIsRouteLoading(false));
-    Router.events.on('routeChangeError', () => setIsRouteLoading(false));
-  }, []);
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    })
 
-  const routeLinks = routes.map((r) => (
-    <Box
-      key={r.URL}
-      mx="2"
-      _hover={{
-        color: 'teal.200',
-        cursor: 'pointer',
-      }}
-    >
-      <Link href={r.URL} passHref>
-        <Button color={router.pathname === r.URL ? 'teal.200' : 'none'} variant="ghost">
-          {r.Label}
-        </Button>
-      </Link>
-    </Box>
-  ));
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
 
-  const routeMenuLinks = routes.map((r) => (
-    <Link key={r.URL} href={r.URL} passHref>
-      <MenuItem>
-        <Text fontSize="2xl" color={router.pathname === r.URL ? 'teal.200' : 'none'}>
-          {r.Label}
-        </Text>
-      </MenuItem>
-    </Link>
-  ));
+    return () => subscription.unsubscribe()
+  }, [])
 
+  const pathname = usePathname();
+  
   return (
-    <Flex
-      as="nav"
-      align="center"
-      justify="space-between"
-      wrap="wrap"
-      mb={10}
-      p={5}
-      boxShadow="0 0 10px rgba(0,0,0,.5)"
-    >
-      {IsRouteLoading && (
-        <Progress
-          size="xs"
-          isIndeterminate
-          bg="transparent"
-          position="absolute"
-          top="0"
-          left="0"
-          width="100%"
-        />
-      )}
-      <Head>
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-        <meta name="theme-color" content="#ffffff" />
-      </Head>
-      <Flex alignItems="center" justifyContent="space-between" w="100%">
-        <Flex>
-          <Link href="/" passHref>
-            <Box
-              mr="10"
-              _hover={{
-                color: 'teal.300',
-                cursor: 'pointer',
-              }}
-            >
-              <Heading as="h1" size="lg">
-                Overseer
-              </Heading>
-            </Box>
-          </Link>
-          <Flex display={{ base: 'none', md: 'flex' }}>{session && routeLinks}</Flex>
-        </Flex>
-        <Flex alignItems="center" justifyContent="flex-end" display={{ base: 'none', md: 'flex' }}>
+    <Navbar isBordered maxWidth='full' classNames={{
+      item: [
+        "flex",
+        "relative",
+        "h-full",
+        "items-center",
+        "data-[active=true]:after:content-['']",
+        "data-[active=true]:after:absolute",
+        "data-[active=true]:after:bottom-0",
+        "data-[active=true]:after:left-0",
+        "data-[active=true]:after:right-0",
+        "data-[active=true]:after:h-[2px]",
+        "data-[active=true]:after:rounded-[2px]",
+        "data-[active=true]:after:bg-primary",
+      ],
+    }}>
+      <NavbarBrand>
+        <Link href="/">
+          <p className="font-bold text-inherit">Overseer</p>
+        </Link>
+      </NavbarBrand>
+      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        {routes.map((r) => (
+          <NavbarItem key={r.URL} isActive={pathname === r.URL}>
+            <Link href={r.URL}>
+              {r.Label}
+            </Link>
+          </NavbarItem>
+          )
+        )}
+      </NavbarContent>
+      <NavbarContent justify="end">
+        <NavbarItem className="hidden sm:flex gap-2">
           {session && (
             <Avatar
-              size="sm"
+            size='md'
               name={session.user.user_metadata.preferred_username}
               src={session.user.user_metadata.avatar_url}
             />
           )}
           <Button
-            mx="2"
-            variant="ghost"
+            color="primary"
+            variant="flat"
             onClick={() =>
               session
                 ? supabase.auth.signOut()
-                : supabase.auth.signIn({
-                    provider: 'github',
-                  })
+                : supabase.auth.signInWithOAuth({
+                  provider: 'github',
+                  options: {
+                    redirectTo: "http://localhost:3000/"
+                  }
+                })
             }
           >
             {session ? 'Sign out' : 'Sign in'}
           </Button>
-        </Flex>
-        <Box display={{ base: 'block', md: 'none' }}>
-          <Menu isLazy>
-            <MenuButton>
-              <FaBars />
-            </MenuButton>
-            <MenuList>
-              {session && routeMenuLinks}
-              {session && <MenuDivider />}
-              <MenuItem
-                onClick={() =>
-                  session
-                    ? supabase.auth.signOut()
-                    : supabase.auth.signIn({
-                        provider: 'github',
-                      })
-                }
-              >
-                <Text fontSize="2xl">{session ? 'Sign out' : 'Sign in'}</Text>
-              </MenuItem>
-            </MenuList>
-          </Menu>
-        </Box>
-      </Flex>
-    </Flex>
+        </NavbarItem>
+      </NavbarContent>
+    </Navbar> 
   );
 }
 

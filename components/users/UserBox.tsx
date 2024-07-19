@@ -45,7 +45,7 @@ export default function UserBox(props: IUserBoxProps) {
                   Object.assign({}, props.userRole, {
                     Role: !isAdmin ? 'Admin' : 'Member',
                     UserId: props.user.id,
-                  })
+                  }),
                 ).then(() => {
                   setCanModify(true);
                   setIsAdmin(!isAdmin);

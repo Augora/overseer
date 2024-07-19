@@ -13,7 +13,7 @@ export default function UsersHandler() {
     () => GetUsersFromSupabase(session.access_token),
     {
       retry: false,
-    }
+    },
   );
 
   return isLoading ? (

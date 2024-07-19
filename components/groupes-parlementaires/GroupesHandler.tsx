@@ -1,6 +1,9 @@
-import { Spinner, Button, Box, Switch, FormLabel, Flex } from '@chakra-ui/react';
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { FaArrowUp } from 'react-icons/fa';
+import { Spinner } from "@nextui-org/spinner";
+import { Button, ButtonGroup, Card, Skeleton, Spacer, Switch } from '@nextui-org/react';
 
 import {
   GetGroupesFromSupabase,
@@ -11,7 +14,7 @@ import GroupeGrid from './GroupeGrid';
 function UpdateGroupeParlementaireFromArray(
   groupes: Types.Canonical.GroupeParlementaire[],
   sigle: string,
-  updatedGroupe: Types.Canonical.GroupeParlementaire
+  updatedGroupe: Types.Canonical.GroupeParlementaire,
 ) {
   const newGroupes = groupes.map((gp) => {
     if (gp.Sigle === sigle) {
@@ -25,24 +28,18 @@ function UpdateGroupeParlementaireFromArray(
 
 function RemoveGroupeParlementaireFromArray(
   groupes: Types.Canonical.GroupeParlementaire[],
-  sigle: string
+  sigle: string,
 ) {
   return groupes.filter((gp) => gp.Sigle !== sigle);
 }
 
-function GenerateNewGroupeParlementaire() {
-  return {
-    Sigle: '',
-    NomComplet: '',
-    Couleur: 'hsla(0, 0%, 0%, 1)',
-    URLImage: '',
-    Ordre: 9000,
-    Actif: true,
-  };
-}
-
 async function UpdateRemoteGroupes(localGroupes) {
   const remoteGroupes = await GetGroupesFromSupabase();
+
+  if(remoteGroupes === null) {
+    throw new Error('Remotes groups are null');
+  }
+
   return localGroupes.map(async (gp) => {
     const foundGroupe = remoteGroupes.find((rgp) => gp.Sigle === rgp.Sigle);
     if (foundGroupe) {
@@ -61,6 +58,10 @@ export default function GroupesHandler() {
 
   useEffect(() => {
     GetGroupesFromSupabase().then((data) => {
+      if(data === null) {
+        throw new Error('No data');
+      }
+
       setGroupesParlementaires(data);
       setIsLoading(false);
     });
@@ -77,49 +78,47 @@ export default function GroupesHandler() {
   };
 
   return IsLoading ? (
-    <Box minHeight="250px" display="flex" alignItems="center" justifyContent="center">
-      <Spinner size="xl" />
-    </Box>
+    <div className="flex justify-center items-center h-screen">
+      <Spinner size='lg'/>
+    </div>
   ) : (
     <>
-      <Flex justifyContent="space-between" flexDirection={{ base: 'column', md: 'row' }}>
-        <Flex flexDirection={{ base: 'column', md: 'row' }}>
+      <div className="flex justify-between flex-col md:flex-row">
+        <ButtonGroup>
           <Button
             aria-label="Update staging"
-            rightIcon={<FaArrowUp />}
-            onClick={updateRemoteFunction}
-            mr={{ base: 0, md: 10 }}
-            mb={{ base: 5, md: 10 }}
+            onClick={() => updateRemoteFunction()}
+            color='primary'
           >
             Update staging
+            <FaArrowUp />
           </Button>
           <Button
-            aria-label="Update staging"
-            rightIcon={<FaArrowUp />}
-            mr={{ base: 0, md: 10 }}
-            mb={{ base: 5, md: 10 }}
+            aria-label="Update production"
+            color='primary'
             isDisabled
           >
             Update production
+            <FaArrowUp />
           </Button>
-        </Flex>
-        <Flex mb={{ base: 5, md: 10 }}>
-          <FormLabel htmlFor="active-groupes">Display inactive groupes</FormLabel>
-          <Switch
-            id="active-groupes"
-            size="lg"
-            isChecked={DisplayInactiveGroupes}
-            onChange={() => setDisplayInactiveGroupes(!DisplayInactiveGroupes)}
-          />
-        </Flex>
-      </Flex>
+        </ButtonGroup>
+
+        <Switch 
+          aria-label="Display inactive groups"
+          isSelected={DisplayInactiveGroupes}
+          onValueChange={setDisplayInactiveGroupes}
+        />
+      </div>
+
+      <Spacer y={4} />
+
       <GroupeGrid
         GroupesParlementaires={GroupesParlementaires.filter(
-          (gp) => gp.Actif || (DisplayInactiveGroupes && !gp.Actif)
+          (gp) => gp.Actif || (DisplayInactiveGroupes && !gp.Actif),
         )}
         UpdateFn={(gp) => {
           setGroupesParlementaires(
-            UpdateGroupeParlementaireFromArray(GroupesParlementaires, gp.Sigle, gp)
+            UpdateGroupeParlementaireFromArray(GroupesParlementaires, gp.Sigle, gp),
           );
         }}
         RemoveFn={(id) => {

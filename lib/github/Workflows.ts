@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export function GetWorkflows(
   token: string,
-  repoName: string
+  repoName: string,
 ): Promise<Types.External.GitHubWorkflows> {
   return axios
     .get(`https://api.github.com/repos/Augora/${repoName}/actions/runs`, {
@@ -16,7 +16,7 @@ export function GetWorkflows(
 export function GetJobs(
   token: string,
   reposName: string,
-  workflowId: string
+  workflowId: string,
 ): Promise<Types.External.GitHubJobs> {
   return axios
     .get(`https://api.github.com/repos/Augora/${reposName}/actions/runs/${workflowId}/jobs`, {

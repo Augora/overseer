@@ -15,14 +15,14 @@ interface EnhancedWorkflowRun extends Types.External.WorkflowRun {
 }
 
 function orderWorkflows(
-  queries: UseQueryResult<Types.External.GitHubWorkflows, unknown>[]
+  queries: UseQueryResult<Types.External.GitHubWorkflows, unknown>[],
 ): EnhancedWorkflowRun[] {
   return orderBy(
     queries.flatMap((q) =>
-      q.data.workflow_runs.map((run) => Object.assign({}, run, { parentReactQuery: q }))
+      q.data.workflow_runs.map((run) => Object.assign({}, run, { parentReactQuery: q })),
     ),
     'created_at',
-    'desc'
+    'desc',
   );
 }
 
@@ -35,7 +35,7 @@ export default function GitHubWorkflowHandler(props: IGitHubWorkflowHandlerProps
       refetchInterval: 30000,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: false,
-    }))
+    })),
   );
 
   useEffect(() => {
