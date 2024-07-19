@@ -18,10 +18,10 @@ const routes = [
     Label: 'Home',
     URL: '/',
   },
-  // {
-  //   Label: 'Groupes',
-  //   URL: '/groupes-parlementaires',
-  // },
+  {
+    Label: 'GitHub Actions',
+    URL: '/github-actions',
+  },
   // {
   //   Label: 'Files',
   //   URL: '/files',

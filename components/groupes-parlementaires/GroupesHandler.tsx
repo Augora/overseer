@@ -81,7 +81,7 @@ export default function GroupesHandler() {
       .catch((err) => {
         toast.error('Failed to update staging: ' + err.message);
         setIsUpdatingStaging(false);
-        console.error(err)
+        console.error(err);
       });
   };
 
@@ -91,7 +91,7 @@ export default function GroupesHandler() {
     </div>
   ) : (
     <>
-      <div className="flex justify-between flex-col md:flex-row">
+      <div className="flex justify-between flex-row">
         <ButtonGroup>
           <Button
             aria-label="Update staging"

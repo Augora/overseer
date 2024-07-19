@@ -10,7 +10,7 @@ interface IGroupeGrid {
 
 export default function GroupeGrid(props: IGroupeGrid) {
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid gap-4 xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
       {sortBy(props.GroupesParlementaires, ['Ordre']).map((gp) => (
         <GroupeEditable
           key={gp.Sigle}
