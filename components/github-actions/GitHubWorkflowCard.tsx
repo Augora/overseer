@@ -4,10 +4,11 @@ import React from 'react';
 import Link from 'next/link';
 import { formatDistanceToNow, parseJSON, formatRelative } from 'date-fns';
 import { ImCross } from 'react-icons/im';
-import { FaCheck, FaSlash, FaCog, FaCodeBranch, FaClock } from 'react-icons/fa';
-import { Card, Chip, Spacer, Tooltip } from '@nextui-org/react';
+import { FaCheck, FaSlash, FaCodeBranch, FaClock, FaSpinner } from 'react-icons/fa';
+import { Button, Card, Chip, Progress, Spacer, Tooltip } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
 import { Endpoints } from '@octokit/types';
+import { CgNotes } from 'react-icons/cg';
 
 import { GetJobs } from '../../lib/github/Workflows';
 
@@ -27,7 +28,7 @@ const jobStatusToColor = {
 };
 
 export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
-  const { data, dataUpdatedAt } = useQuery({
+  const { data, dataUpdatedAt, isLoading, isFetching } = useQuery({
     queryKey: ['github-jobs', props.repository.name, props.id],
     queryFn: () => GetJobs(props.githubToken, props.repository.name, props.id.toString()),
     refetchInterval: (data) =>
@@ -38,12 +39,27 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
   });
 
   return (
-    <Card isPressable className="p-4 min-h-40">
+    <Card isPressable className="p-4 min-h-40 cursor-default">
+      {isLoading || isFetching ? (
+        <>
+          <Progress
+            size="sm"
+            isIndeterminate
+            aria-label="Loading..."
+            className="max-w-md relative bottom-2"
+          />
+        </>
+      ) : (
+        <>
+          <Progress size="sm" isIndeterminate aria-label="Loading..." className="invisible" />
+        </>
+      )}
       <div className="flex justify-between flex-row w-full">
         <span>
           <Link
             href={props.repository.html_url}
             className="text-xl font-bold hover:underline hover:underline-offset-2"
+            target="_blank"
           >
             {props.repository.name}
           </Link>
@@ -72,6 +88,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
       <Link
         href={`${props.repository.html_url}/tree/${props.head_branch}`}
         className="flex hover:underline hover:underline-offset-2"
+        target="_blank"
       >
         <FaCodeBranch />
         <Spacer x={2} />
@@ -91,22 +108,41 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
         </div>
       </div>
 
+      <Spacer y={1} />
+
+      <Link
+        href={`${props.repository.html_url}/actions/runs/${props.id}`}
+        className="flex hover:underline hover:underline-offset-2"
+      >
+        <CgNotes />
+        <Spacer x={2} />
+        <div className="text-mg text-gray-500">Logs</div>
+      </Link>
+
       <Spacer y={4} />
 
-      <div className="flex space-x-2">
+      <div className="flex justify-between flex-row gap-2">
         {data?.jobs.map((j) => {
           const currentStatus = j.status === 'completed' ? j.conclusion : j.status;
           if (currentStatus === null) return null;
 
           return (
             <Tooltip content={j.name} key={j.id}>
-              <Chip color={jobStatusToColor[currentStatus]}>
-                {currentStatus === 'cancelled' && <FaSlash fontSize={12} />}
-                {currentStatus === 'in_progress' && <FaCog fontSize={12} />}
-                {currentStatus === 'failure' && <ImCross fontSize={12} />}
-                {currentStatus === 'success' && <FaCheck fontSize={12} />}
-                {currentStatus === 'skipped' && <FaSlash fontSize={12} />}
-              </Chip>
+              <Link
+                href={`${props.repository.html_url}/actions/runs/${props.id}/job/${j.id}`}
+                className="flex hover:underline hover:underline-offset-2"
+                target="_blank"
+              >
+                <Button color={jobStatusToColor[currentStatus]} isIconOnly>
+                  {currentStatus === 'cancelled' && <FaSlash fontSize={12} />}
+                  {currentStatus === 'in_progress' && (
+                    <FaSpinner className="animate-spinner-ease-spin" fontSize={12} />
+                  )}
+                  {currentStatus === 'failure' && <ImCross fontSize={12} />}
+                  {currentStatus === 'success' && <FaCheck fontSize={12} />}
+                  {currentStatus === 'skipped' && <FaSlash fontSize={12} />}
+                </Button>
+              </Link>
             </Tooltip>
           );
         })}

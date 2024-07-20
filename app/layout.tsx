@@ -18,11 +18,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="dark">
       <body>
-          <Toaster />
-          <Header />
-          <div className="p-10">
-            <Providers>{children}</Providers>
-          </div>
+        <Toaster />
+        <Header />
+        <div className="p-10">
+          <Providers>{children}</Providers>
+        </div>
       </body>
     </html>
   );
