@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import GitHubWorkflowGrid from '../../components/github-actions/GitHubWorkflowGrid';
 import useSupabaseSession from '../../lib/react-custom-hooks/useSupabaseSession';
 
+const queryClient = new QueryClient();
+
 export default function Page() {
   const session = useSupabaseSession();
 
@@ -23,7 +25,6 @@ export default function Page() {
       </span>
     );
   }
-  const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
