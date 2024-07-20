@@ -8,7 +8,7 @@ interface IGitHubWorkflowGridProps {
 export default function GitHubWorkflowGrid(props: IGitHubWorkflowGridProps) {
   return (
     <GitHubWorkflowHandler
-      repositoriesName={['Augora', 'Overseer', 'Nucleus', 'Convey']}
+      repositoriesName={['Augora', 'Overseer', 'Nucleus']}
       githubToken={props.githubToken}
     />
   );
