@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/navbar';
 
 import supabase from '../lib/supabase/Client';
-import { Avatar, Button } from '@nextui-org/react';
+import { Button, Spacer, User } from '@nextui-org/react';
 import useSupabaseSession from '../lib/react-custom-hooks/useSupabaseSession';
 
 const routes = [
@@ -66,14 +66,19 @@ function Header() {
         ))}
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem className="hidden sm:flex gap-2">
+        <NavbarItem className="hidden sm:flex">
           {session && (
-            <Avatar
-              size="md"
+            <User
               name={session.user.user_metadata.preferred_username}
-              src={session.user.user_metadata.avatar_url}
+              description={session.user.user_metadata.full_name}
+              avatarProps={{
+                src: session.user.user_metadata.avatar_url,
+              }}
             />
           )}
+
+          <Spacer x={2} />
+
           <Button
             color="primary"
             variant="flat"
