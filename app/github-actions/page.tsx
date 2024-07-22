@@ -1,14 +1,10 @@
-'use client';
-
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+'use server';
 
 import GitHubWorkflowGrid from '../../components/github-actions/GitHubWorkflowGrid';
-import useSupabaseSession from '../../lib/react-custom-hooks/useSupabaseSession';
+import { GetSession } from '@/lib/supabase/GetSession';
 
-const queryClient = new QueryClient();
-
-export default function Page() {
-  const session = useSupabaseSession();
+export default async function Page() {
+  const session = await GetSession();
 
   if (session === null) {
     return (
@@ -26,9 +22,5 @@ export default function Page() {
     );
   }
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      <GitHubWorkflowGrid githubToken={session.provider_token} />
-    </QueryClientProvider>
-  );
+  return <GitHubWorkflowGrid githubToken={session.provider_token} />;
 }

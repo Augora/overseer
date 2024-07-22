@@ -1,12 +1,10 @@
-'use client';
-
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/navbar';
+import { Navbar, NavbarBrand, NavbarContent } from '@nextui-org/navbar';
 
-import supabase from '../lib/supabase/Client';
-import { Button, Spacer, User } from '@nextui-org/react';
-import useSupabaseSession from '../lib/react-custom-hooks/useSupabaseSession';
+import { NavbarItem, Spacer, User } from '@nextui-org/react';
+import { GetSession } from '@/lib/supabase/GetSession';
+import SignInButton from './SignInButton';
+import NavItem from './NavItem';
 
 const routes = [
   {
@@ -27,10 +25,8 @@ const routes = [
   // },
 ];
 
-function Header() {
-  const session = useSupabaseSession();
-
-  const pathname = usePathname();
+async function Header() {
+  const session = await GetSession();
 
   return (
     <Navbar
@@ -60,9 +56,7 @@ function Header() {
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         {routes.map((r) => (
-          <NavbarItem key={r.URL} isActive={pathname === r.URL}>
-            <Link href={r.URL}>{r.Label}</Link>
-          </NavbarItem>
+          <NavItem key={r.URL} Label={r.Label} URL={r.URL} />
         ))}
       </NavbarContent>
       <NavbarContent justify="end">
@@ -79,19 +73,7 @@ function Header() {
 
           <Spacer x={2} />
 
-          <Button
-            color="primary"
-            variant="flat"
-            onClick={() =>
-              session
-                ? supabase.auth.signOut()
-                : supabase.auth.signInWithOAuth({
-                    provider: 'github',
-                  })
-            }
-          >
-            {session ? 'Sign out' : 'Sign in'}
-          </Button>
+          <SignInButton session={session} />
         </NavbarItem>
       </NavbarContent>
     </Navbar>

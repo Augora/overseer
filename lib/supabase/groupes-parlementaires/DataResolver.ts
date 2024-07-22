@@ -1,6 +1,7 @@
-import supabase from '../Client';
+import { createClient } from '@/lib/supabase/Client';
 
-export function GetGroupesFromSupabase() {
+export async function GetGroupesFromSupabase() {
+  const supabase = await createClient();
   return supabase
     .from('GroupeParlementaire')
     .select()
@@ -8,7 +9,10 @@ export function GetGroupesFromSupabase() {
     .then((d) => d.data);
 }
 
-export function CreateGroupeParlementaireToSupabase(data: Types.Canonical.GroupeParlementaire) {
+export async function CreateGroupeParlementaireToSupabase(
+  data: Types.Canonical.GroupeParlementaire,
+) {
+  const supabase = await createClient();
   return supabase
     .from('GroupeParlementaire')
     .insert([data])
@@ -16,7 +20,10 @@ export function CreateGroupeParlementaireToSupabase(data: Types.Canonical.Groupe
     .then((d) => d.data);
 }
 
-export function UpdateGroupeParlementaireToSupabase(data: Types.Canonical.GroupeParlementaire) {
+export async function UpdateGroupeParlementaireToSupabase(
+  data: Types.Canonical.GroupeParlementaire,
+) {
+  const supabase = await createClient();
   return supabase
     .from('GroupeParlementaire')
     .update(data)
