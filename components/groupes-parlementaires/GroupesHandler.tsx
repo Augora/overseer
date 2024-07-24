@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { FaArrowUp } from 'react-icons/fa';
-import { Spinner } from '@nextui-org/spinner';
 import { Button, ButtonGroup, Spacer, Switch } from '@nextui-org/react';
+import { Spinner } from '@nextui-org/spinner';
+import { useEffect, useState } from 'react';
+import { FaArrowUp } from 'react-icons/fa';
 import { toast } from 'sonner';
 
 import {

@@ -1,15 +1,14 @@
 'use client';
 
-import React from 'react';
-import Link from 'next/link';
-import { formatDistanceToNow, parseJSON, formatRelative } from 'date-fns';
-import { ImCross } from 'react-icons/im';
-import { FaCheck, FaSlash, FaCodeBranch, FaClock, FaSpinner } from 'react-icons/fa';
 import { Button, Card, Chip, Progress, Spacer, Tooltip } from '@nextui-org/react';
-import { useQuery } from '@tanstack/react-query';
 import { Endpoints } from '@octokit/types';
+import { useQuery } from '@tanstack/react-query';
+import { formatDistanceToNow, formatRelative, parseJSON } from 'date-fns';
+import Link from 'next/link';
 import { CgNotes } from 'react-icons/cg';
-
+import { FaCheck, FaClock, FaCodeBranch, FaSlash, FaSpinner } from 'react-icons/fa';
+import { GoWorkflow } from 'react-icons/go';
+import { ImCross } from 'react-icons/im';
 import { GetJobs } from '../../lib/github/Workflows';
 
 type WorkflowRun =
@@ -39,7 +38,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
   });
 
   return (
-    <Card isPressable className="p-4 min-h-40 cursor-default">
+    <Card isPressable className="p-4 min-h-64 cursor-default">
       {isLoading || isFetching ? (
         <>
           <Progress
@@ -54,7 +53,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
           <Progress size="sm" isIndeterminate aria-label="Loading..." className="invisible" />
         </>
       )}
-      <div className="flex justify-between flex-row w-full">
+      <div className="flex items-center justify-between flex-row w-full">
         <span>
           <Link
             href={props.repository.html_url}
@@ -85,19 +84,15 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
 
       <Spacer y={4} />
 
-      <Link
-        href={`${props.repository.html_url}/tree/${props.head_branch}`}
-        className="flex hover:underline hover:underline-offset-2"
-        target="_blank"
-      >
-        <FaCodeBranch />
+      <div className="flex items-center">
+        <GoWorkflow />
         <Spacer x={2} />
-        <div className="text-mg">{props.head_branch}</div>
-      </Link>
+        <div className="text-mg text-gray-500">{props.name}</div>
+      </div>
 
       <Spacer y={1} />
 
-      <div className="flex">
+      <div className="flex items-center">
         <FaClock />
         <Spacer x={2} />
         <div className="text-mg text-gray-500">
@@ -111,12 +106,25 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
       <Spacer y={1} />
 
       <Link
-        href={`${props.repository.html_url}/actions/runs/${props.id}`}
-        className="flex hover:underline hover:underline-offset-2"
+        href={`${props.repository.html_url}/tree/${props.head_branch}`}
+        className="flex items-center hover:underline hover:underline-offset-2  "
+        target="_blank"
+      >
+        <FaCodeBranch />
+        <Spacer x={2} />
+        <div className="text-mg text-nowrap">{props.head_branch}</div>
+      </Link>
+
+      <Spacer y={1} />
+
+      <Link
+        href={props.html_url}
+        className="flex items-center hover:underline hover:underline-offset-2"
+        target="_blank"
       >
         <CgNotes />
         <Spacer x={2} />
-        <div className="text-mg text-gray-500">Logs</div>
+        <div className="text-mg">Logs</div>
       </Link>
 
       <Spacer y={4} />

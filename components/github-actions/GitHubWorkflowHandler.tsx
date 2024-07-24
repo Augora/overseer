@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { useQueries, UseQueryResult } from '@tanstack/react-query';
-import orderBy from 'lodash/orderBy';
 import { Spinner } from '@nextui-org/react';
 import { Endpoints } from '@octokit/types';
+import { useQueries } from '@tanstack/react-query';
+import orderBy from 'lodash/orderBy';
+import { useEffect, useState } from 'react';
 
-import GitHubWorkflowCard from './GitHubWorkflowCard';
 import { GetActionsRuns } from '../../lib/github/Workflows';
+import GitHubWorkflowCard from './GitHubWorkflowCard';
 
 type WorkflowRuns =
   Endpoints['GET /repos/{owner}/{repo}/actions/runs']['response']['data']['workflow_runs'][0];

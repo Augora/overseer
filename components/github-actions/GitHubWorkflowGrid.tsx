@@ -1,8 +1,7 @@
 'use client';
 
-import React from 'react';
-import GitHubWorkflowHandler from './GitHubWorkflowHandler';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import GitHubWorkflowHandler from './GitHubWorkflowHandler';
 
 const queryClient = new QueryClient();
 

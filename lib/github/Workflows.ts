@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { Endpoints } from '@octokit/types';
+import axios from 'axios';
 
 type ActionsRunsResponse = Endpoints['GET /repos/{owner}/{repo}/actions/runs']['response']['data'];
 type JobsResponse =

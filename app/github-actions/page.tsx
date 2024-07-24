@@ -1,7 +1,7 @@
 'use server';
 
-import GitHubWorkflowGrid from '../../components/github-actions/GitHubWorkflowGrid';
 import { GetSession } from '@/lib/supabase/GetSession';
+import GitHubWorkflowGrid from '../../components/github-actions/GitHubWorkflowGrid';
 
 export default async function Page() {
   const session = await GetSession();

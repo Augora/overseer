@@ -1,6 +1,3 @@
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
-
 import { createClient } from '@/lib/supabase/Client';
 
 export async function login() {
@@ -14,11 +11,8 @@ export async function login() {
   });
 
   if (error) {
-    redirect('/error');
+    window.location.replace(`${location.origin}/error`);
   }
-
-  revalidatePath('/', 'layout');
-  redirect('/');
 }
 
 export async function logout() {
@@ -27,8 +21,8 @@ export async function logout() {
   const { error } = await supabase.auth.signOut();
 
   if (error) {
-    redirect('/error');
+    window.location.replace(`${location.origin}/error`);
   }
 
-  redirect('/');
+  window.location.replace(`${location.origin}/`);
 }

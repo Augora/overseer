@@ -1,6 +1,5 @@
-import React from 'react';
-import GroupeEditable from './GroupeEditable';
 import sortBy from 'lodash/sortBy';
+import GroupeEditable from './GroupeEditable';
 
 interface IGroupeGrid {
   GroupesParlementaires: Types.Canonical.GroupeParlementaire[];

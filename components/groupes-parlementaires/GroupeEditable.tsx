@@ -1,9 +1,7 @@
+import { Button, Card, CardBody, CardHeader, Input } from '@nextui-org/react';
+import Color from 'color';
 import { useState } from 'react';
 import { ChromePicker } from 'react-color';
-import Color from 'color';
-import { FaCog, FaCheck } from 'react-icons/fa';
-import { Button, Card, CardBody, CardHeader, Input } from '@nextui-org/react';
-import { set } from 'lodash';
 
 interface GroupeEditableProps {
   GroupeParlementaire: Types.Canonical.GroupeParlementaire;
