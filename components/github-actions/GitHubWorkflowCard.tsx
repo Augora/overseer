@@ -6,7 +6,15 @@ import { useQuery } from '@tanstack/react-query';
 import { formatDistanceToNow, formatRelative, parseJSON } from 'date-fns';
 import Link from 'next/link';
 import { CgNotes } from 'react-icons/cg';
-import { FaCheck, FaClock, FaCodeBranch, FaSlash, FaSpinner } from 'react-icons/fa';
+import {
+  FaBan,
+  FaCheck,
+  FaClock,
+  FaCodeBranch,
+  FaExclamationCircle,
+  FaSlash,
+  FaSpinner,
+} from 'react-icons/fa';
 import { GoWorkflow } from 'react-icons/go';
 import { ImCross } from 'react-icons/im';
 import { GetJobs } from '../../lib/github/Workflows';
@@ -18,14 +26,6 @@ interface IGitHubWorkflowCardProps {
   githubToken: string;
   workflowDetails: WorkflowRun;
 }
-
-const jobStatusToColor = {
-  cancelled: 'default',
-  success: 'success',
-  failure: 'danger',
-  in_progress: 'warning',
-  skipped: 'default',
-};
 
 export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
   const { data, dataUpdatedAt, isLoading, isFetching } = useQuery({
@@ -43,21 +43,22 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
     refetchIntervalInBackground: false,
   });
 
+  var workflowCurrentStatus =
+    (props.workflowDetails.status === 'completed'
+      ? props.workflowDetails.conclusion
+      : props.workflowDetails.status) ?? 'neutral';
+
   return (
     <Card isPressable className="p-4 min-h-64 cursor-default">
       {isLoading || isFetching ? (
-        <>
-          <Progress
-            size="sm"
-            isIndeterminate
-            aria-label="Loading..."
-            className="max-w-md relative bottom-2"
-          />
-        </>
+        <Progress
+          size="sm"
+          isIndeterminate
+          aria-label="Loading..."
+          className="max-w-md relative bottom-2"
+        />
       ) : (
-        <>
-          <Progress size="sm" isIndeterminate aria-label="Loading..." className="invisible" />
-        </>
+        <Progress size="sm" isIndeterminate aria-label="Loading..." className="invisible" />
       )}
       <div className="flex items-center justify-between flex-row w-full">
         <span>
@@ -66,24 +67,12 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
             className="text-xl font-bold hover:underline hover:underline-offset-2"
             target="_blank"
           >
-            {props.workflowDetails.name}
+            {props.workflowDetails.repository.name}
           </Link>
         </span>
         <Tooltip content={`Last refresh: ${formatRelative(dataUpdatedAt, new Date())}`}>
-          <Chip
-            color={
-              props.workflowDetails.status === 'in_progress'
-                ? 'warning'
-                : props.workflowDetails.conclusion === 'success'
-                  ? 'success'
-                  : 'danger'
-            }
-          >
-            {props.workflowDetails.status === 'in_progress'
-              ? 'In progress'
-              : props.workflowDetails.conclusion === 'success'
-                ? 'Success'
-                : 'Error'}
+          <Chip color={statusToColor(workflowCurrentStatus)}>
+            {formatString(workflowCurrentStatus)}
           </Chip>
         </Tooltip>
       </div>
@@ -137,8 +126,8 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
 
       <div className="flex justify-between flex-row gap-2">
         {data?.jobs.map((j) => {
-          const currentStatus = j.status === 'completed' ? j.conclusion : j.status;
-          if (currentStatus === null) return null;
+          const jobCurrentStatus = j.status === 'completed' ? j.conclusion : j.status;
+          if (jobCurrentStatus === null) return null;
 
           return (
             <Tooltip content={j.name} key={j.id}>
@@ -147,14 +136,8 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
                 className="flex hover:underline hover:underline-offset-2"
                 target="_blank"
               >
-                <Button color={jobStatusToColor[currentStatus]} isIconOnly>
-                  {currentStatus === 'cancelled' && <FaSlash fontSize={12} />}
-                  {currentStatus === 'in_progress' && (
-                    <FaSpinner className="animate-spinner-ease-spin" fontSize={12} />
-                  )}
-                  {currentStatus === 'failure' && <ImCross fontSize={12} />}
-                  {currentStatus === 'success' && <FaCheck fontSize={12} />}
-                  {currentStatus === 'skipped' && <FaSlash fontSize={12} />}
+                <Button color={statusToColor(jobCurrentStatus)} isIconOnly>
+                  {statusToReactIcon(jobCurrentStatus)}
                 </Button>
               </Link>
             </Tooltip>
@@ -163,4 +146,66 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
       </div>
     </Card>
   );
+}
+
+function formatString(str: string): string {
+  return str.replace(/_/g, ' ').replace(/\b\w/g, (match) => match.toUpperCase());
+}
+
+function statusToColor(status: string) {
+  switch (status) {
+    case 'cancelled':
+      return 'default';
+    case 'success':
+      return 'success';
+    case 'failure':
+      return 'danger';
+    case 'in_progress':
+      return 'warning';
+    case 'skipped':
+      return 'default';
+    case 'queued':
+      return 'warning';
+    case 'neutral':
+      return 'default';
+    case 'timed_out':
+      return 'danger';
+    case 'action_required':
+      return 'warning';
+    case 'stale':
+      return 'warning';
+    case 'requested':
+      return 'warning';
+    default:
+      return 'default';
+  }
+}
+
+function statusToReactIcon(status: string) {
+  switch (status) {
+    case 'cancelled':
+      return <FaSlash />;
+    case 'queued':
+      return <FaClock />;
+    case 'neutral':
+      return <FaBan />;
+    case 'timed_out':
+      return <FaClock />;
+    case 'action_required':
+      return <FaExclamationCircle />;
+    case 'stale':
+      return <FaClock />;
+    case 'requested':
+      return <FaClock />;
+    case 'in_progress':
+      return <FaSpinner className="animate-spinner-ease-spin" />;
+    case 'failure':
+      return <ImCross />;
+    case 'success':
+      return <FaCheck />;
+    case 'skipped':
+      return <FaSlash />;
+    default:
+      return null;
+  }
 }
