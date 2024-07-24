@@ -49,7 +49,9 @@ export default function GitHubWorkflowHandler(props: IGitHubWorkflowHandlerProps
   ) : (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
       {workflows.map((run) => {
-        return <GitHubWorkflowCard key={run.id} {...run} githubToken={props.githubToken} />;
+        return (
+          <GitHubWorkflowCard key={run.id} workflowDetails={run} githubToken={props.githubToken} />
+        );
       })}
     </div>
   );

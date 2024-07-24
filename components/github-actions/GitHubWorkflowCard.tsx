@@ -14,8 +14,9 @@ import { GetJobs } from '../../lib/github/Workflows';
 type WorkflowRun =
   Endpoints['GET /repos/{owner}/{repo}/actions/runs']['response']['data']['workflow_runs'][0];
 
-interface IGitHubWorkflowCardProps extends WorkflowRun {
+interface IGitHubWorkflowCardProps {
   githubToken: string;
+  workflowDetails: WorkflowRun;
 }
 
 const jobStatusToColor = {
@@ -28,8 +29,13 @@ const jobStatusToColor = {
 
 export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
   const { data, dataUpdatedAt, isLoading, isFetching } = useQuery({
-    queryKey: ['github-jobs', props.repository.name, props.id],
-    queryFn: () => GetJobs(props.githubToken, props.repository.name, props.id.toString()),
+    queryKey: ['github-jobs', props.workflowDetails.repository.name, props.workflowDetails.id],
+    queryFn: () =>
+      GetJobs(
+        props.githubToken,
+        props.workflowDetails.repository.name,
+        props.workflowDetails.id.toString(),
+      ),
     refetchInterval: (data) =>
       data.state.data?.jobs.some((j) => j.status !== 'completed') ? 30000 : false,
     refetchOnWindowFocus: (data) =>
@@ -56,26 +62,26 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
       <div className="flex items-center justify-between flex-row w-full">
         <span>
           <Link
-            href={props.repository.html_url}
+            href={props.workflowDetails.html_url}
             className="text-xl font-bold hover:underline hover:underline-offset-2"
             target="_blank"
           >
-            {props.repository.name}
+            {props.workflowDetails.name}
           </Link>
         </span>
         <Tooltip content={`Last refresh: ${formatRelative(dataUpdatedAt, new Date())}`}>
           <Chip
             color={
-              props.status === 'in_progress'
+              props.workflowDetails.status === 'in_progress'
                 ? 'warning'
-                : props.conclusion === 'success'
+                : props.workflowDetails.conclusion === 'success'
                   ? 'success'
                   : 'danger'
             }
           >
-            {props.status === 'in_progress'
+            {props.workflowDetails.status === 'in_progress'
               ? 'In progress'
-              : props.conclusion === 'success'
+              : props.workflowDetails.conclusion === 'success'
                 ? 'Success'
                 : 'Error'}
           </Chip>
@@ -87,7 +93,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
       <div className="flex items-center">
         <GoWorkflow />
         <Spacer x={2} />
-        <div className="text-mg text-gray-500">{props.name}</div>
+        <div className="text-mg text-gray-500">{props.workflowDetails.name}</div>
       </div>
 
       <Spacer y={1} />
@@ -96,7 +102,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
         <FaClock />
         <Spacer x={2} />
         <div className="text-mg text-gray-500">
-          {formatDistanceToNow(parseJSON(props.created_at), {
+          {formatDistanceToNow(parseJSON(props.workflowDetails.created_at), {
             addSuffix: true,
             includeSeconds: true,
           })}
@@ -106,19 +112,19 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
       <Spacer y={1} />
 
       <Link
-        href={`${props.repository.html_url}/tree/${props.head_branch}`}
+        href={`${props.workflowDetails.html_url}/tree/${props.workflowDetails.head_branch}`}
         className="flex items-center hover:underline hover:underline-offset-2  "
         target="_blank"
       >
         <FaCodeBranch />
         <Spacer x={2} />
-        <div className="text-mg text-nowrap">{props.head_branch}</div>
+        <div className="text-mg text-nowrap">{props.workflowDetails.head_branch}</div>
       </Link>
 
       <Spacer y={1} />
 
       <Link
-        href={props.html_url}
+        href={props.workflowDetails.html_url}
         className="flex items-center hover:underline hover:underline-offset-2"
         target="_blank"
       >
@@ -137,7 +143,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
           return (
             <Tooltip content={j.name} key={j.id}>
               <Link
-                href={`${props.repository.html_url}/actions/runs/${props.id}/job/${j.id}`}
+                href={`${props.workflowDetails.html_url}/actions/runs/${props.workflowDetails.id}/job/${j.id}`}
                 className="flex hover:underline hover:underline-offset-2"
                 target="_blank"
               >
