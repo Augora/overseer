@@ -1,10 +1,10 @@
-import Link from 'next/link';
 import { Navbar, NavbarBrand, NavbarContent } from '@nextui-org/navbar';
+import Link from 'next/link';
 
-import { NavbarItem, Spacer, User } from '@nextui-org/react';
 import { GetSession } from '@/lib/supabase/GetSession';
-import SignInButton from './SignInButton';
+import { NavbarItem, Spacer, User } from '@nextui-org/react';
 import NavItem from './NavItem';
+import SignInButton from './SignInButton';
 
 const routes = [
   {
@@ -51,7 +51,7 @@ async function Header() {
     >
       <NavbarBrand>
         <Link href="/">
-          <p className="font-bold text-inherit">Overseer</p>
+          <p className="font-bold text-2xl">Overseer</p>
         </Link>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">

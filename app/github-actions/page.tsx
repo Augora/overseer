@@ -1,7 +1,10 @@
-'use server';
-
 import { GetSession } from '@/lib/supabase/GetSession';
+import { Metadata } from 'next/types';
 import GitHubWorkflowGrid from '../../components/github-actions/GitHubWorkflowGrid';
+
+export const metadata: Metadata = {
+  title: 'Overseer | GitHub Actions',
+};
 
 export default async function Page() {
   const session = await GetSession();
@@ -9,7 +12,7 @@ export default async function Page() {
   if (session === null) {
     return (
       <span className="flex justify-center items-center h-screen text-red-500 text-4xl">
-        {'You must log in first.'}
+        You must log in first.
       </span>
     );
   }
@@ -17,7 +20,7 @@ export default async function Page() {
   if (session.provider_token === null || session.provider_token === undefined) {
     return (
       <span className="flex justify-center items-center h-screen text-red-500 text-4xl">
-        {'Something wrong happened, please ty again later.'}
+        Something wrong happened, please ty again later.
       </span>
     );
   }

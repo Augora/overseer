@@ -6,7 +6,7 @@ export default async function Page() {
 
   return session === null ? (
     <span className="flex justify-center items-center h-screen text-red-500 text-4xl">
-      {'You must log in first.'}
+      You must log in first.
     </span>
   ) : (
     <GroupesHandler />
