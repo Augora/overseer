@@ -6,16 +6,19 @@ import { useEffect, useState } from 'react';
 import { FaArrowUp } from 'react-icons/fa';
 import { toast } from 'sonner';
 
+import { Database } from '@/Types/supabase';
 import {
   GetGroupesFromSupabase,
   UpdateGroupeParlementaireToSupabase,
 } from '../../lib/supabase/groupes-parlementaires/DataResolver';
 import GroupeGrid from './GroupeGrid';
 
+type GroupeParlementaire = Database['public']['Tables']['GroupeParlementaire']['Row'];
+
 function UpdateGroupeParlementaireFromArray(
-  groupes: Types.Canonical.GroupeParlementaire[],
+  groupes: GroupeParlementaire[],
   sigle: string,
-  updatedGroupe: Types.Canonical.GroupeParlementaire,
+  updatedGroupe: GroupeParlementaire,
 ) {
   const newGroupes = groupes.map((gp) => {
     if (gp.Sigle === sigle) {
@@ -27,10 +30,7 @@ function UpdateGroupeParlementaireFromArray(
   return newGroupes;
 }
 
-function RemoveGroupeParlementaireFromArray(
-  groupes: Types.Canonical.GroupeParlementaire[],
-  sigle: string,
-) {
+function RemoveGroupeParlementaireFromArray(groupes: GroupeParlementaire[], sigle: string) {
   return groupes.filter((gp) => gp.Sigle !== sigle);
 }
 
@@ -53,9 +53,7 @@ async function UpdateRemoteGroupes(localGroupes) {
 export default function GroupesHandler() {
   const [IsLoading, setIsLoading] = useState(true);
   const [IsUpdatingStaging, setIsUpdatingStaging] = useState(false);
-  const [GroupesParlementaires, setGroupesParlementaires] = useState<
-    Types.Canonical.GroupeParlementaire[]
-  >([]);
+  const [GroupesParlementaires, setGroupesParlementaires] = useState<GroupeParlementaire[]>([]);
   const [DisplayInactiveGroupes, setDisplayInactiveGroupes] = useState(false);
 
   useEffect(() => {

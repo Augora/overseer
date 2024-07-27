@@ -1,8 +1,11 @@
+import { Database } from '@/Types/supabase';
 import sortBy from 'lodash/sortBy';
 import GroupeEditable from './GroupeEditable';
 
+type GroupeParlementaire = Database['public']['Tables']['GroupeParlementaire']['Row'];
+
 interface IGroupeGrid {
-  GroupesParlementaires: Types.Canonical.GroupeParlementaire[];
+  GroupesParlementaires: GroupeParlementaire[];
   UpdateFn: Function;
   RemoveFn: Function;
 }

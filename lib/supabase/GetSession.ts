@@ -1,4 +1,4 @@
-import 'server-only';
+'use server';
 
 import { createClient } from '@/lib/supabase/Server';
 
@@ -14,5 +14,16 @@ export async function GetSession() {
     throw new Error('Error while getting session data: ' + sessionError?.message);
   }
 
-  return session;
+  if (session === null) {
+    return null;
+  }
+
+  const { data, error: isAdminError } = await supabase.rpc('is_admin', {
+    _user_id: session?.user?.id,
+  });
+  if (isAdminError) {
+    throw new Error('Error while getting user isAdmin status: ' + isAdminError?.message);
+  }
+
+  return Object.assign(session, { isAdmin: data });
 }

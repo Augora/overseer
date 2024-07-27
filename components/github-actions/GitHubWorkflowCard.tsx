@@ -132,7 +132,7 @@ export default function GitHubWorkflowCard(props: IGitHubWorkflowCardProps) {
           return (
             <Tooltip content={j.name} key={j.id}>
               <Link
-                href={`${props.workflowDetails.html_url}/actions/runs/${props.workflowDetails.id}/job/${j.id}`}
+                href={j.html_url ?? ''}
                 className="flex hover:underline hover:underline-offset-2"
                 target="_blank"
               >
