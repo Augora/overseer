@@ -71,9 +71,8 @@ function GroupeEditable(props: GroupeEditableProps) {
         />
         {IsEditing ? (
           <ChromePicker
-            defaultView="hsl"
             disableAlpha={true}
-            color={props.GroupeParlementaire.Couleur}
+            color={props.GroupeParlementaire.Couleur || ''}
             onChange={(v) => {
               const color = Color(v.hex);
 
